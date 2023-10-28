@@ -1,9 +1,5 @@
-import { getServerAuthSession } from "@/server/auth";
 import { redirect } from "next/navigation";
 
-export default async function Home() {
-  const session = await getServerAuthSession();
-
-  if (!session) return redirect("/sign-in");
-  if (session) return redirect("/dashboard");
+export default function Home() {
+  return redirect("/dashboard");
 }

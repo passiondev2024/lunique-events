@@ -7,9 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function SignIn() {
+export default async function SignIn() {
+  const session = await getServerAuthSession();
+
+  if (session) return redirect("/dashboard");
+
   return (
     <main className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md">
