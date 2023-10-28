@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +31,10 @@ export default function RootLayout({
           "min-h-screen bg-background antialiased",
         )}
       >
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+        <TRPCReactProvider headers={headers()}>
+          <Toaster />
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );

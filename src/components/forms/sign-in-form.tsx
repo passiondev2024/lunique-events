@@ -12,6 +12,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { getCsrfToken } from "next-auth/react";
+import axios from "axios";
+import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please add valid email." }),
@@ -27,8 +30,38 @@ export const EmailSignInForm = () => {
     },
   });
 
-  const onSubmit = (values: FormFields) => {
-    console.log({ values });
+  const { toast } = useToast();
+
+  const successToast = () =>
+    toast({
+      title: "We have sent you verification link",
+      description:
+        "Please check your email inbox, it also might be in your span folder!",
+    });
+  const errorToast = () =>
+    toast({
+      variant: "destructive",
+      title: "Error!",
+      description: "Email sign in failed. Try again!",
+    });
+
+  const onSubmit = async (values: FormFields) => {
+    const csrfToken = await getCsrfToken();
+
+    if (csrfToken) {
+      const response = await axios.post("/api/auth/signin/email", {
+        csrfToken,
+        email: values.email,
+      });
+
+      if (response.status === 200) {
+        successToast();
+      } else {
+        errorToast();
+      }
+    } else {
+      errorToast();
+    }
   };
 
   return (
