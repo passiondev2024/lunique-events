@@ -40,7 +40,7 @@ export const EmailSignInForm = () => {
         description:
           "Please check your email inbox, it also might be in your span folder!",
       }),
-    [],
+    [toast],
   );
   const errorToast = useCallback(
     () =>
@@ -49,7 +49,7 @@ export const EmailSignInForm = () => {
         title: "Error!",
         description: "Email sign in failed. Try again!",
       }),
-    [],
+    [toast],
   );
 
   const onSubmit = async (values: FormFields) => {

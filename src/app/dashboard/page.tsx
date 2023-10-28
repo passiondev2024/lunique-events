@@ -1,12 +1,9 @@
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 
 export default function DashboardPage() {
   return (
     <main>
-      <Link href="/api/auth/signout" className={buttonVariants()}>
-        Sign Out
-      </Link>
+      <SignOutButton variant="outline" />
     </main>
   );
 }
