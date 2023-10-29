@@ -8,6 +8,7 @@ import { toast } from "../ui/use-toast";
 import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { RotateCwIcon } from "lucide-react";
+import { paths } from "@/routes/paths";
 
 export const SocialSignInForm = () => {
   const searchParams = useSearchParams();
@@ -33,7 +34,7 @@ export const SocialSignInForm = () => {
           "This email is already associated with an account. Please try logging in using this email or reach out to our support team for assistance. Thank you!",
       });
 
-      router.replace("/sign-in");
+      router.replace(paths.auth.signIn);
     }
   }, [error, router]);
 
