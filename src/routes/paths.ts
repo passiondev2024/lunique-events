@@ -8,5 +8,6 @@ export const paths = {
     account: "/dashboard/account",
     billing: "/dashboard/billing",
     event: (id: string) => `/dashboard/event/${id}`,
+    eventSettings: (id: string) => `/dashboard/event/${id}/settings`,
   },
 };

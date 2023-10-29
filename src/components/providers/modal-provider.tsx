@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { CreateEventModal } from "../modals/create-event-modal";
+import { ShareEventModal } from "../modals/share-event-modal";
+import { UploadImagesModal } from "../modals/upload-images-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -17,6 +19,8 @@ export const ModalProvider = () => {
   return (
     <>
       <CreateEventModal />
+      <ShareEventModal />
+      <UploadImagesModal />
     </>
   );
 };

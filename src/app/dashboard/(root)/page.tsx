@@ -1,8 +1,8 @@
-import { CreateEventButton } from "@/components/buttons/create-event-button";
+import { OpenModalButton } from "@/components/buttons/open-modal-button";
 import { EventCard } from "@/components/cards/event-card";
 import { events } from "@/lib/data";
 import { paths } from "@/routes/paths";
-import { GalleryThumbnailsIcon } from "lucide-react";
+import { GalleryThumbnailsIcon, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardPage() {
@@ -15,12 +15,14 @@ export default function DashboardPage() {
             Create end manage your events.
           </p>
         </div>
-        <CreateEventButton />
+        <OpenModalButton modalType="create-event" size="sm">
+          <PlusCircleIcon className="mr-1.5 h-5 w-5" /> Create
+        </OpenModalButton>
       </div>
       {!events && (
         <div className="flex h-96 w-full flex-col items-center justify-center gap-8 rounded-lg border border-dashed text-center">
           <div className="h-fit w-fit rounded-full bg-primary/40 p-5">
-            <GalleryThumbnailsIcon className="h-8 w-8 text-primary-foreground" />
+            <GalleryThumbnailsIcon className="h-16 w-16 text-primary-foreground" />
           </div>
           <div className="space-y-1">
             <p className="text-xl font-semibold">No events created</p>
@@ -29,7 +31,9 @@ export default function DashboardPage() {
               started.
             </p>
           </div>
-          <CreateEventButton variant="outline" />
+          <OpenModalButton modalType="create-event" size="sm" variant="outline">
+            <PlusCircleIcon className="mr-1.5 h-5 w-5" /> Create
+          </OpenModalButton>
         </div>
       )}
       {events && (

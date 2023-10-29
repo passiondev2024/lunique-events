@@ -11,8 +11,8 @@ module.exports = {
     container: {
       center: true,
       padding: {
-        DEFAULT: "1rem",
-        "2xl": "2rem",
+        DEFAULT: "2rem",
+        "2xl": "2.1rem",
       },
       screens: {
         "2xl": "1280px",
