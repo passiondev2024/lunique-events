@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { paths } from "@/routes/paths";
 import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -14,7 +15,7 @@ import { redirect } from "next/navigation";
 export default async function SignIn() {
   const session = await getServerAuthSession();
 
-  if (session) return redirect("/dashboard");
+  if (session) return redirect(paths.dashboard.root);
 
   return (
     <main className="flex min-h-screen items-center justify-center">
