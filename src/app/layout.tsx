@@ -5,6 +5,8 @@ import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +32,12 @@ export default function RootLayout({
           "min-h-screen bg-background antialiased",
         )}
       >
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+        <TRPCReactProvider headers={headers()}>
+          <ModalProvider />
+          <Toaster />
+
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );

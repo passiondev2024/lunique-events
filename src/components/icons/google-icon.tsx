@@ -1,4 +1,4 @@
-import { type Icon } from "./type";
+import { type Icon } from "@/types";
 
 export const GoogleIcon = (props: Icon) => (
   <svg
