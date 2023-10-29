@@ -5,6 +5,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { Button, type ButtonProps } from "../ui/button";
+import { RotateCwIcon } from "lucide-react";
 
 export const SignOutButton = (props: ButtonProps) => {
   const router = useRouter();
@@ -21,8 +22,14 @@ export const SignOutButton = (props: ButtonProps) => {
   });
 
   return (
-    <Button {...props} onClick={() => mutate()} disabled={isLoading}>
-      Sign Out
+    <Button
+      onClick={() => mutate()}
+      disabled={isLoading}
+      className="w-[92px]"
+      {...props}
+    >
+      {isLoading && <RotateCwIcon className="mx-auto h-5 w-5 animate-spin" />}
+      {!isLoading && "Sign Out"}
     </Button>
   );
 };

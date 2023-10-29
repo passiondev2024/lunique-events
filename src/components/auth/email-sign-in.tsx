@@ -15,7 +15,8 @@ import { Button } from "../ui/button";
 import { getCsrfToken } from "next-auth/react";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { RotateCwIcon } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please add valid email." }),
@@ -24,6 +25,8 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>;
 
 export const EmailSignInForm = () => {
+  const [sendingEmail, setSendingEmail] = useState(false);
+
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,6 +56,8 @@ export const EmailSignInForm = () => {
   );
 
   const onSubmit = async (values: FormFields) => {
+    setSendingEmail(true);
+
     const csrfToken = await getCsrfToken();
 
     if (csrfToken) {
@@ -69,6 +74,8 @@ export const EmailSignInForm = () => {
     } else {
       errorToast();
     }
+
+    setSendingEmail(false);
   };
 
   return (
@@ -86,8 +93,11 @@ export const EmailSignInForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="mt-5 w-full">
-          Sign In with Email
+        <Button type="submit" disabled={sendingEmail} className="mt-5 w-full">
+          {sendingEmail && (
+            <RotateCwIcon className="mr-1.5 h-5 w-5 animate-spin" />
+          )}
+          {sendingEmail ? "Sending Email..." : "Sign In with Email"}
         </Button>
       </form>
     </Form>

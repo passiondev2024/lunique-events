@@ -1,4 +1,4 @@
-import { EmailSignInForm } from "@/components/auth/sign-in";
+import { EmailSignInForm } from "@/components/auth/email-sign-in";
 import { SocialSignInForm } from "@/components/auth/social-sign-in";
 import {
   Card,
