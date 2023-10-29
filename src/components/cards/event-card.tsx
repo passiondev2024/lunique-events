@@ -7,7 +7,7 @@ import { CalendarIcon, GalleryThumbnailsIcon, MapPinIcon } from "lucide-react";
 interface EventCardProps {
   name: string;
   date: Date;
-  location: string;
+  location?: string;
   image?: string;
 }
 
@@ -28,10 +28,12 @@ export const EventCard = ({ name, date, location, image }: EventCardProps) => {
           <CalendarIcon className="h-5 w-5" />
           {format(date, "do MMMM, yyy")}
         </p>
-        <p className=" flex items-center gap-2 text-zinc-500">
-          <MapPinIcon className="h-5 w-5" />
-          {location}
-        </p>
+        {location && (
+          <p className=" flex items-center gap-2 text-zinc-500">
+            <MapPinIcon className="h-5 w-5" />
+            {location}
+          </p>
+        )}
       </CardFooter>
     </Card>
   );
