@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = "sign-out";
+export type ModalType = "create-event";
 
 interface ModalData {
   data?: string;

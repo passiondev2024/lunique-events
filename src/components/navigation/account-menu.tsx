@@ -37,7 +37,7 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="absolute -right-5 -top-1">
         <div className="p-2">
           {name && <p className="font-medium">{name}</p>}
           {email && <p className="text-sm text-zinc-500">{email}</p>}
@@ -63,11 +63,11 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <button
             disabled={isLoading}
             onClick={() => mutate()}
-            className="flex items-center"
+            className="flex w-full items-center"
           >
             {!isLoading && <LogOutIcon className="mr-1.5 h-4 w-4" />}
             {isLoading && <RotateCwIcon className="mr-1.5 h-4 w-4" />}

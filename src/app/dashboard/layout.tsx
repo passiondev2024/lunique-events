@@ -15,7 +15,7 @@ export default async function RootLayout({
   return (
     <>
       <DashboardNav />
-      <main className="container min-h-[calc(100vh-65px)] py-5">
+      <main className="container min-h-[calc(100vh-65px)] py-6">
         {children}
       </main>
     </>
