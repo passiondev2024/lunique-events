@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    --navbar-height: 65px;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -55,5 +56,16 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .h-full-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+  .h-full-nav {
+    min-height: calc(100vh - 65px);
+    min-height: calc(100svh - 65px);
   }
 }
