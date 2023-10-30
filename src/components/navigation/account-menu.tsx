@@ -43,19 +43,19 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
           {email && <p className="text-sm text-zinc-500">{email}</p>}
         </div>
         <DropdownMenuSeparator />
-        <Link href={paths.dashboard.root}>
+        <Link href={paths.events.root}>
           <DropdownMenuItem>
             <LayoutDashboardIcon className="mr-1.5 h-4 w-4" />
-            Dashboard
+            Events
           </DropdownMenuItem>
         </Link>
-        <Link href={paths.dashboard.account}>
+        <Link href={paths.account.root}>
           <DropdownMenuItem>
             <UserIcon className="mr-1.5 h-4 w-4" />
             Account
           </DropdownMenuItem>
         </Link>
-        <Link href={paths.dashboard.billing}>
+        <Link href={paths.account.billing}>
           <DropdownMenuItem>
             <CreditCardIcon className="mr-1.5 h-4 w-4" />
             Billing

@@ -3,11 +3,13 @@ export const paths = {
   auth: {
     signIn: "/sign-in",
   },
-  dashboard: {
-    root: "/dashboard",
-    account: "/dashboard/account",
-    billing: "/dashboard/billing",
-    event: (id: string) => `/dashboard/event/${id}`,
-    eventSettings: (id: string) => `/dashboard/event/${id}/settings`,
+  events: {
+    root: "/events",
+    event: (id: string) => `/events/${id}`,
+    settings: (id: string) => `/events/${id}/settings`,
+  },
+  account: {
+    root: "/account",
+    billing: `/account/billing`,
   },
 };

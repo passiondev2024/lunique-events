@@ -14,12 +14,12 @@ export default function SettingsLayout({
   const sidebarNavItems = [
     {
       title: "Photos",
-      href: paths.dashboard.event(eventId),
+      href: paths.events.event(eventId),
       icon: <ImageIcon className="mr-1.5 h-4 w-4" />,
     },
     {
       title: "Settings",
-      href: paths.dashboard.eventSettings(eventId),
+      href: paths.events.settings(eventId),
       icon: <SettingsIcon className="mr-1.5 h-4 w-4" />,
     },
   ];
@@ -27,7 +27,7 @@ export default function SettingsLayout({
   return (
     <div className="space-y-6">
       <div className="flex flex-col space-y-3 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className="-mx-4 lg:w-1/5">
+        <aside className="lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
         <main className="flex-1">{children}</main>

@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 export default async function SignIn() {
   const session = await getServerAuthSession();
 
-  if (session) return redirect(paths.dashboard.root);
+  if (session) return redirect(paths.events.root);
 
   return (
     <main className="h-fill flex items-center justify-center">

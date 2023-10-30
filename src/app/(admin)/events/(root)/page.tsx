@@ -5,7 +5,7 @@ import { paths } from "@/routes/paths";
 import { GalleryThumbnailsIcon, PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function DashboardPage() {
+export default function EventsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -40,7 +40,7 @@ export default function DashboardPage() {
         <div className="grid gap-5 md:grid-cols-4">
           {events.map((event) => (
             <Link
-              href={paths.dashboard.event(String(event.id))}
+              href={paths.events.event(String(event.id))}
               key={event.id}
               className="transition duration-200 hover:opacity-80"
             >
