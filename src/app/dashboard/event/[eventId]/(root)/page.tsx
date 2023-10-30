@@ -50,9 +50,9 @@ export default function EventIdPage({
           <GalleryThumbnailsIcon className="h-16 w-16 text-primary-foreground" />
         </div>
         <div className="space-y-1">
-          <p className="text-xl font-semibold">No events created</p>
+          <p className="text-xl font-semibold">No photos added</p>
           <p className="text-sm text-zinc-500">
-            You don&apos;t have any events yet. Create your first event to get
+            You don&apos;t have any photos yet. Upload your first photo to get
             started.
           </p>
         </div>

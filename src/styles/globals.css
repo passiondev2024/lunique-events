@@ -57,15 +57,9 @@
   body {
     @apply bg-background text-foreground;
   }
-}
 
-@layer utilities {
-  .h-full-screen {
+  .h-fill {
     min-height: 100vh;
     min-height: 100svh;
-  }
-  .h-full-nav {
-    min-height: calc(100vh - 65px);
-    min-height: calc(100svh - 65px);
   }
 }

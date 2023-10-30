@@ -18,7 +18,7 @@ export default async function SignIn() {
   if (session) return redirect(paths.dashboard.root);
 
   return (
-    <main className="h-full-screen flex items-center justify-center">
+    <main className="h-fill flex items-center justify-center">
       <div className="w-full max-w-md">
         <Card className="border-none shadow-none">
           <CardHeader className="text-center">

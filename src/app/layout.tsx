@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={cn(
           `font-sans ${inter.variable}`,
-          "min-h-screen bg-background antialiased",
+          "bg-background antialiased",
         )}
       >
         <TRPCReactProvider headers={headers()}>
