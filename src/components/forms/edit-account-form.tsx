@@ -2,17 +2,11 @@
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "../ui/form";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
   name: z.string(),
@@ -25,9 +19,22 @@ export const EditAccountForm = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const { toast } = useToast();
+
+  const onSubmit = (values: FormFields) => {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+        </pre>
+      ),
+    });
+  };
+
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="name"

@@ -14,7 +14,7 @@ export default function EventIdPage({
   const event = events[eventId - 1];
 
   return (
-    <div className="space-y-5 md:space-y-8">
+    <div className="space-y-5 pb-20 md:space-y-8">
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center md:gap-0">
         <div>
           <h1 className="text-2xl font-bold md:text-4xl">{event?.name}</h1>
@@ -45,7 +45,7 @@ export default function EventIdPage({
           </OpenModalButton>
         </div>
       </div>
-      <div className="flex h-96 w-full flex-col items-center justify-center gap-5 rounded-lg border border-dashed text-center">
+      <div className="flex h-96 w-full flex-col items-center justify-center gap-5 rounded-lg border border-dashed text-center md:h-[500px]">
         <div className="h-fit w-fit rounded-full bg-primary/40 p-5">
           <GalleryThumbnailsIcon className="h-16 w-16 text-primary-foreground" />
         </div>
