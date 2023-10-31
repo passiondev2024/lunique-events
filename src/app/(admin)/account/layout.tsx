@@ -1,6 +1,11 @@
 import { SidebarNav } from "@/components/navigation/sidebar-nav";
 import { paths } from "@/routes/paths";
-import { ChevronLeftIcon, CreditCardIcon, UserIcon } from "lucide-react";
+import {
+  BarChart3Icon,
+  ChevronLeftIcon,
+  CreditCardIcon,
+  UserIcon,
+} from "lucide-react";
 import React from "react";
 
 export default function AccountLayout({
@@ -15,9 +20,14 @@ export default function AccountLayout({
       icon: <ChevronLeftIcon className="mr-1.5 h-4 w-4" />,
     },
     {
-      title: "Account",
-      href: paths.account.root,
+      title: "Settings",
+      href: paths.account.settings,
       icon: <UserIcon className="mr-1.5 h-4 w-4" />,
+    },
+    {
+      title: "Usage",
+      href: paths.account.usage,
+      icon: <BarChart3Icon className="mr-1.5 h-4 w-4" />,
     },
     {
       title: "Billing",

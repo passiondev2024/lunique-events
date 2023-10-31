@@ -1,3 +1,6 @@
+import { paths } from "@/routes/paths";
+import { redirect } from "next/navigation";
+
 export default function AccountPage() {
-  return <div>Account page</div>;
+  return redirect(paths.account.settings);
 }

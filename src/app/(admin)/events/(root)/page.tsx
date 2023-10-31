@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function EventsPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5  md:space-y-8">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h1 className="text-4xl font-semibold">Events</h1>
@@ -37,7 +37,7 @@ export default function EventsPage() {
         </div>
       )}
       {events && (
-        <div className="grid gap-5 md:grid-cols-4">
+        <div className="grid gap-5 md:grid-cols-3 md:gap-8">
           {events.map((event) => (
             <Link
               href={paths.events.event(String(event.id))}

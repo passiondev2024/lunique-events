@@ -10,6 +10,8 @@ export const paths = {
   },
   account: {
     root: "/account",
+    settings: "/account/settings",
+    usage: "/account/usage",
     billing: `/account/billing`,
   },
 };

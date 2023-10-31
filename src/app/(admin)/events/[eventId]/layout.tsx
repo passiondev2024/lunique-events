@@ -1,6 +1,6 @@
 import { SidebarNav } from "@/components/navigation/sidebar-nav";
 import { paths } from "@/routes/paths";
-import { ImageIcon, SettingsIcon } from "lucide-react";
+import { ChevronLeftIcon, ImageIcon, SettingsIcon } from "lucide-react";
 
 interface SettingsLayoutProps {
   params: { eventId: string };
@@ -12,6 +12,11 @@ export default function SettingsLayout({
   params: { eventId },
 }: SettingsLayoutProps) {
   const sidebarNavItems = [
+    {
+      title: "Events",
+      href: paths.events.root,
+      icon: <ChevronLeftIcon className="mr-1.5 h-4 w-4" />,
+    },
     {
       title: "Photos",
       href: paths.events.event(eventId),

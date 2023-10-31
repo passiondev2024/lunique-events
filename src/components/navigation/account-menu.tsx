@@ -49,7 +49,7 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
             Events
           </DropdownMenuItem>
         </Link>
-        <Link href={paths.account.root}>
+        <Link href={paths.account.settings}>
           <DropdownMenuItem>
             <UserIcon className="mr-1.5 h-4 w-4" />
             Account
