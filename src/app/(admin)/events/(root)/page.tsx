@@ -1,9 +1,8 @@
 import { OpenModalButton } from "@/components/buttons/open-modal-button";
-import { EventCard } from "@/components/cards/event-card";
+import { ListEvents } from "@/components/partials/event/list-events";
+import { NoEvents } from "@/components/partials/event/no-events";
 import { events } from "@/lib/data";
-import { paths } from "@/routes/paths";
-import { GalleryThumbnailsIcon, PlusCircleIcon } from "lucide-react";
-import Link from "next/link";
+import { PlusCircleIcon } from "lucide-react";
 
 export default function EventsPage() {
   return (
@@ -19,36 +18,8 @@ export default function EventsPage() {
           <PlusCircleIcon className="mr-1.5 h-5 w-5" /> Create
         </OpenModalButton>
       </div>
-      {!events && (
-        <div className="flex h-96 w-full flex-col items-center justify-center gap-8 rounded-lg border border-dashed text-center">
-          <div className="h-fit w-fit rounded-full bg-primary/40 p-5">
-            <GalleryThumbnailsIcon className="h-16 w-16 text-primary-foreground" />
-          </div>
-          <div className="space-y-1">
-            <p className="text-xl font-semibold">No events created</p>
-            <p className="text-sm text-zinc-500">
-              You don&apos;t have any events yet. Create your first event to get
-              started.
-            </p>
-          </div>
-          <OpenModalButton modalType="create-event" size="sm" variant="outline">
-            <PlusCircleIcon className="mr-1.5 h-5 w-5" /> Create
-          </OpenModalButton>
-        </div>
-      )}
-      {events && (
-        <div className="grid gap-5 md:grid-cols-3 md:gap-8">
-          {events.map((event) => (
-            <Link
-              href={paths.events.event(String(event.id))}
-              key={event.id}
-              className="transition duration-200 hover:opacity-80"
-            >
-              <EventCard {...event} />
-            </Link>
-          ))}
-        </div>
-      )}
+      {!events && <NoEvents />}
+      {events && <ListEvents />}
     </div>
   );
 }
