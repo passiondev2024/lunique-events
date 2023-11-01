@@ -32,9 +32,9 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
-          {image && <AvatarImage src={image} />}
-          <AvatarFallback>A</AvatarFallback>
+        <Avatar className="h-9 w-9">
+          {image && <AvatarImage src={image} className="h-9 w-9" />}
+          <AvatarFallback className="h-9 w-9">A</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="absolute -right-5 -top-1">

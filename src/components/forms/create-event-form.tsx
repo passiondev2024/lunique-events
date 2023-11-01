@@ -108,7 +108,7 @@ export const CreateEventForm = () => {
           )}
         />
         <Button className="w-full">
-          <CheckCheckIcon className="mr-1.5 h-5 w-5" /> Create Event
+          <CheckCheckIcon className="mr-1.5 h-4 w-4" /> Create Event
         </Button>
       </form>
     </Form>

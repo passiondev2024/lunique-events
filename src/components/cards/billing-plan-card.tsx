@@ -12,11 +12,12 @@ export const BillingPlanCard = () => {
   return (
     <Card>
       <CardHeader className="space-y-0">
-        <CardTitle className="text-xl">Current Plan</CardTitle>
-        <CardDescription>
-          You are currently on the <Badge className="mx-0.5 w-fit">Free</Badge>{" "}
-          plan
-        </CardDescription>
+        <CardTitle>Current Plan</CardTitle>
+        <div className="flex items-center gap-1">
+          <CardDescription>You are currently on the</CardDescription>
+          <Badge className="mx-0.5 w-fit">Free</Badge>
+          <CardDescription>plan</CardDescription>
+        </div>
         <CardContent className="px-0 py-5">
           <ul className="text-zinc-500">
             <li className="flex items-center">

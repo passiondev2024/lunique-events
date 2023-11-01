@@ -13,11 +13,7 @@ export const NoEventImages = () => (
         started.
       </p>
     </div>
-    <OpenModalButton
-      modalType="upload-event-images"
-      size="sm"
-      variant="outline"
-    >
+    <OpenModalButton modalType="upload-event-images" variant="outline">
       <ShareIcon className="mr-1.5 h-5 w-5" /> Upload
     </OpenModalButton>
   </div>

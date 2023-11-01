@@ -30,18 +30,20 @@ export const EventCard = ({ name, date, location, image }: EventCardProps) => {
           </div>
         )}
       </AspectRatio>
-      <CardFooter className="flex flex-col items-baseline py-3">
-        <p className="text-lg font-semibold leading-8">{name}</p>
-        <p className="flex items-center gap-2 text-zinc-500">
-          <CalendarIcon className="h-5 w-5" />
-          {format(date, "do MMMM, yyy")}
-        </p>
-        {location && (
-          <p className=" flex items-center gap-2 text-zinc-500">
-            <MapPinIcon className="h-5 w-5" />
-            {location}
+      <CardFooter className="relative flex flex-col items-baseline gap-1 py-3">
+        <p className="text-lg font-semibold">{name}</p>
+        <div className="space-y-0.5">
+          <p className="flex items-center gap-2 text-sm text-zinc-500">
+            <CalendarIcon className="h-4 w-4" />
+            {format(date, "do MMMM, yyy")}
           </p>
-        )}
+          {location && (
+            <p className="flex items-center gap-2 text-sm text-zinc-500">
+              <MapPinIcon className="h-4 w-4" />
+              {location}
+            </p>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );

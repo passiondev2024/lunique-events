@@ -8,7 +8,7 @@ export const CreateEventButton = (props: ButtonProps) => {
   const { onOpen } = useModal();
 
   return (
-    <Button size="sm" onClick={() => onOpen("create-event")} {...props}>
+    <Button onClick={() => onOpen("create-event")} {...props}>
       <PlusCircleIcon className="mr-1.5 h-5 w-5" /> Create
     </Button>
   );

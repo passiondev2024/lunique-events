@@ -12,12 +12,11 @@ export const EventActionButtons = ({ event }: EventActionButtonsProps) => (
       modalType="share-event"
       modalData={{ eventId: String(event.id) }}
       variant="outline"
-      size="sm"
     >
       <Share2Icon className="mr-1.5 h-5 w-5" />
       Share
     </OpenModalButton>
-    <OpenModalButton modalType="upload-event-images" size="sm">
+    <OpenModalButton modalType="upload-event-images">
       <ShareIcon className="mr-1.5 h-5 w-5" />
       Upload
     </OpenModalButton>

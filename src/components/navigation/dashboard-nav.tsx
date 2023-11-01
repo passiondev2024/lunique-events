@@ -10,7 +10,7 @@ export const DashboardNav = async () => {
     <nav className="border-b">
       <div className="container mx-auto flex h-16 w-full items-center justify-between">
         <Link href={paths.events.root}>
-          <div className="rounded-md text-xl font-bold tracking-wider text-primary drop-shadow-lg md:font-extrabold">
+          <div className="rounded-md bg-gradient-to-br from-slate-950 via-slate-800 to-slate-600 bg-clip-text text-xl font-extrabold tracking-wider text-transparent">
             Better Event
           </div>
         </Link>

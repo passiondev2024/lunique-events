@@ -46,7 +46,7 @@ export const EditAccountForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Update name</Button>
+        <Button type="submit">Update Name</Button>
       </form>
     </Form>
   );

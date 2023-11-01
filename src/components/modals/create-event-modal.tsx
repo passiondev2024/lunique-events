@@ -23,9 +23,8 @@ export const CreateEventModal = () => {
           <DialogDescription>
             Create a new event here. Click save when you are done.
           </DialogDescription>
-          <div>
-            <CreateEventForm />
-          </div>
+
+          <CreateEventForm />
         </DialogHeader>
       </DialogContent>
     </Dialog>

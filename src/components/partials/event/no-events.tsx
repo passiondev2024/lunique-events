@@ -13,7 +13,7 @@ export const NoEvents = () => (
         started.
       </p>
     </div>
-    <OpenModalButton modalType="create-event" size="sm" variant="outline">
+    <OpenModalButton modalType="create-event" variant="outline">
       <PlusCircleIcon className="mr-1.5 h-5 w-5" /> Create
     </OpenModalButton>
   </div>
