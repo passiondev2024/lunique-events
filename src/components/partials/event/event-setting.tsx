@@ -1,3 +1,5 @@
+"use client";
+
 import { EditEventForm } from "@/components/forms/edit-event-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { useModal } from "@/hooks/use-modal-store";
 import { Trash2Icon } from "lucide-react";
 
 interface EditEventInfo {
@@ -62,20 +65,30 @@ export const EventGalleryConfig = () => (
   </Card>
 );
 
-export const DeleteEvent = () => (
-  <Card className="border-destructive/50">
-    <CardHeader>
-      <CardTitle className="text-destructive">Danger Zone</CardTitle>
-      <CardDescription className="text-destructive/80">
-        Deleting this event will remove all data associated with it. This action
-        cannot be undone.
-      </CardDescription>
-    </CardHeader>
-    <CardContent className="max-w-lg">
-      <Button variant="destructive">
-        <Trash2Icon className="mr-1.5 h-4 w-4" />
-        Delete
-      </Button>
-    </CardContent>
-  </Card>
-);
+interface DeleteEventProps {
+  eventId: string;
+}
+export const DeleteEvent = ({ eventId }: DeleteEventProps) => {
+  const { onOpen } = useModal();
+
+  return (
+    <Card className="border-destructive/50">
+      <CardHeader>
+        <CardTitle className="text-destructive">Danger Zone</CardTitle>
+        <CardDescription className="text-destructive/80">
+          Deleting this event will remove all data associated with it. This
+          action cannot be undone.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="max-w-lg">
+        <Button
+          variant="destructive"
+          onClick={() => onOpen("delete-event", { eventId })}
+        >
+          <Trash2Icon className="mr-1.5 h-4 w-4" />
+          Delete
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};

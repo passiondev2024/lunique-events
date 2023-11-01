@@ -24,7 +24,7 @@ export default function EventSettingsPage({
       <div className="space-y-5">
         <EditEventInfo eventId={eventId} />
         <EventGalleryConfig />
-        <DeleteEvent />
+        <DeleteEvent eventId={eventId} />
       </div>
     </div>
   );

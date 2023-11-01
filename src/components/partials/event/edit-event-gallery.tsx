@@ -37,7 +37,7 @@ export const EditEventGallery = ({
 
   return (
     <div className="space-y-5">
-      <div className="space-y-1.5">
+      <div className="flex items-center gap-3 md:flex-col md:items-start md:gap-1.5">
         {selected.length === 0 && (
           <Button variant="secondary" onClick={handleSelectAll}>
             Select All
@@ -69,7 +69,7 @@ export const EditEventGallery = ({
         orientation="horizontal"
         value={selected}
         onValueChange={setSelected}
-        className="grid grid-cols-3 gap-3 md:grid-cols-5"
+        className="grid grid-cols-3 gap-1.5 md:grid-cols-5 md:gap-2"
       >
         {images.map((image) => (
           <ToggleGroup.Item

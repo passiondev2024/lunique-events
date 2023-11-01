@@ -4,7 +4,8 @@ export type ModalType =
   | "create-event"
   | "share-event"
   | "upload-event-images"
-  | "delete-event-images";
+  | "delete-event-images"
+  | "delete-event";
 
 export type ModalData = {
   eventId?: string;
