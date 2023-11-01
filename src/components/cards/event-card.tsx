@@ -15,7 +15,15 @@ export const EventCard = ({ name, date, location, image }: EventCardProps) => {
   return (
     <Card>
       <AspectRatio ratio={16 / 9}>
-        {image && <Image src={image} alt={name} />}
+        {image && (
+          <Image
+            src={image}
+            alt={name}
+            width={300}
+            height={300}
+            className="h-full w-full rounded-t-lg object-cover"
+          />
+        )}
         {!image && (
           <div className="flex h-full w-full items-center justify-center rounded-t-lg bg-primary/20">
             <GalleryThumbnailsIcon className="h-24 w-24 text-primary-foreground" />

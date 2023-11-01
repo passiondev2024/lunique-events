@@ -1,9 +1,14 @@
 import { create } from "zustand";
 
-export type ModalType = "create-event" | "share-event" | "upload-event-images";
+export type ModalType =
+  | "create-event"
+  | "share-event"
+  | "upload-event-images"
+  | "delete-event-images";
 
 export type ModalData = {
   eventId?: string;
+  images?: string[];
 };
 
 interface ModalStore {

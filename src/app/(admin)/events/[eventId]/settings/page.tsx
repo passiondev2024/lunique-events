@@ -13,8 +13,8 @@ export default function EventSettingsPage({
     eventId: string;
   };
 }) {
-  const eventId = Number(params.eventId);
-  const event = events[eventId - 1];
+  const { eventId } = params;
+  const event = events[Number(eventId) - 1];
 
   return (
     <div className="space-y-5 pb-20 md:space-y-8">

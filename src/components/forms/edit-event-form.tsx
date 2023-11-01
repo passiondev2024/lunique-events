@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { DatePicker } from "../ui/date-picker";
-import { CheckCheckIcon, SaveIcon } from "lucide-react";
+import { SaveIcon } from "lucide-react";
 import { useToast } from "../ui/use-toast";
 import { useModal } from "@/hooks/use-modal-store";
 import { useEffect } from "react";
@@ -32,11 +32,11 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>;
 
 interface EditEventFormProps {
-  id: number;
+  id: string;
 }
 
 export const EditEventForm = ({ id }: EditEventFormProps) => {
-  const event = events[id];
+  const event = events[Number(id)];
 
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),

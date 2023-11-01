@@ -1,11 +1,8 @@
-import { OpenModalButton } from "@/components/buttons/open-modal-button";
+import { EditEventGallery } from "@/components/partials/event/edit-event-gallery";
 import { EventActionButtons } from "@/components/partials/event/event-action-buttons";
 import { EventHeader } from "@/components/partials/event/event-header";
-import { ImageToggleGroup } from "@/components/partials/event/image-toggle-group";
 import { NoEventImages } from "@/components/partials/event/no-event-images";
 import { events, images } from "@/lib/data";
-import { format } from "date-fns";
-import { Share2Icon, ShareIcon } from "lucide-react";
 
 export default function EventIdPage({
   params,
@@ -14,8 +11,8 @@ export default function EventIdPage({
     eventId: string;
   };
 }) {
-  const eventId = Number(params.eventId);
-  const event = events[eventId - 1];
+  const eventId = params.eventId;
+  const event = events[Number(eventId) - 1];
 
   return (
     <div className="space-y-5 pb-20 md:space-y-8">
@@ -24,8 +21,10 @@ export default function EventIdPage({
         {event && <EventActionButtons event={event} />}
       </div>
 
+      {images && event && (
+        <EditEventGallery eventId={String(event.id)} images={images} />
+      )}
       {!images && <NoEventImages />}
-      {images && <ImageToggleGroup />}
     </div>
   );
 }

@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Trash2Icon } from "lucide-react";
 
 interface EditEventInfo {
-  eventId: number;
+  eventId: string;
 }
 
 export const EditEventInfo = ({ eventId }: EditEventInfo) => (
