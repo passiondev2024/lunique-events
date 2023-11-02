@@ -35,7 +35,6 @@ export default function RootLayout({
         <TRPCReactProvider headers={headers()}>
           <ModalProvider />
           <Toaster />
-
           {children}
         </TRPCReactProvider>
       </body>

@@ -1,3 +1,4 @@
+import { type ImageProps } from "@/types";
 import { create } from "zustand";
 
 export type ModalType =
@@ -5,11 +6,14 @@ export type ModalType =
   | "share-event"
   | "upload-event-images"
   | "delete-event-images"
-  | "delete-event";
+  | "delete-event"
+  | "event-gallery";
 
 export type ModalData = {
   eventId?: string;
   images?: string[];
+  galleryImages?: ImageProps[];
+  galleryId?: string;
 };
 
 interface ModalStore {
