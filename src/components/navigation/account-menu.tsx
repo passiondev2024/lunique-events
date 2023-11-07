@@ -70,7 +70,9 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
             className="flex w-full items-center"
           >
             {!isLoading && <LogOutIcon className="mr-1.5 h-4 w-4" />}
-            {isLoading && <RotateCwIcon className="mr-1.5 h-4 w-4" />}
+            {isLoading && (
+              <RotateCwIcon className="mr-1.5 h-4 w-4 animate-spin" />
+            )}
             Sign out
           </button>
         </DropdownMenuItem>

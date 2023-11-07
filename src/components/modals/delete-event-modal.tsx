@@ -11,7 +11,10 @@ import {
 } from "../ui/dialog";
 import { useToast } from "../ui/use-toast";
 import { Button } from "../ui/button";
-import { TrashIcon } from "lucide-react";
+import { RotateCwIcon, TrashIcon } from "lucide-react";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
+import { paths } from "@/routes/paths";
 
 export const DeleteEventModal = () => {
   const { isOpen, type, onClose, data } = useModal();
@@ -19,20 +22,34 @@ export const DeleteEventModal = () => {
 
   const isModalOpen = isOpen && type === "delete-event";
 
-  const { eventId, images } = data;
+  const { eventId } = data;
+
+  const mutation = api.event.delete.useMutation();
+
+  const router = useRouter();
 
   const handleDelete = () => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify({ eventId, images }, null, 2)}
-          </code>
-        </pre>
-      ),
-    });
+    if (eventId) {
+      mutation.mutate(
+        { id: eventId },
+        {
+          onSuccess: (event) => {
+            toast({
+              title: `${event.name} deleted!`,
+            });
 
+            router.push(paths.events.root);
+            router.refresh();
+          },
+          onError: () => {
+            toast({
+              variant: "destructive",
+              title: "Failed to delete event.",
+            });
+          },
+        },
+      );
+    }
     onClose();
   };
 
@@ -45,11 +62,16 @@ export const DeleteEventModal = () => {
         </DialogHeader>
         <DialogFooter className="flex flex-col gap-3">
           <Button
+            disabled={mutation.isLoading}
             variant="destructive"
             className="h-fit w-full"
             onClick={handleDelete}
           >
-            <TrashIcon className="mr-1.5 h-4 w-4" /> Delete
+            {!mutation.isLoading && <TrashIcon className="mr-1.5 h-4 w-4" />}
+            {mutation.isLoading && (
+              <RotateCwIcon className="mr-1.5 h-4 w-4 animate-spin" />
+            )}
+            Delete
           </Button>
           <Button
             variant="secondary"

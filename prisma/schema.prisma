@@ -43,6 +43,9 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+
+    //////////////////////////////////////
+    Event Event[]
 }
 
 model VerificationToken {
@@ -51,4 +54,34 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Event {
+    id       String   @id @default(cuid())
+    name     String
+    date     DateTime
+    location String
+
+    owner   User   @relation(fields: [ownerId], references: [id])
+    ownerId String
+
+    eventSettings EventSettings?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([id, ownerId])
+}
+
+model EventSettings {
+    id String @id @default(cuid())
+
+    isPublic          Boolean @default(true)
+    isWatermarkHidden Boolean @default(false)
+
+    event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+    eventId String @unique
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

@@ -1,10 +1,12 @@
 import { OpenModalButton } from "@/components/buttons/open-modal-button";
 import { ListEvents } from "@/components/partials/event/list-events";
 import { NoEvents } from "@/components/partials/event/no-events";
-import { events } from "@/lib/data";
+import { api } from "@/trpc/server";
 import { PlusCircleIcon } from "lucide-react";
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const events = await api.event.list.query();
+
   return (
     <div className="space-y-5  md:space-y-8">
       <div className="flex items-center justify-between">
@@ -18,8 +20,8 @@ export default function EventsPage() {
           <PlusCircleIcon className="mr-1.5 h-4 w-4" /> Create
         </OpenModalButton>
       </div>
-      {!events && <NoEvents />}
-      {events && <ListEvents />}
+      {events.length === 0 && <NoEvents />}
+      {events && <ListEvents events={events} />}
     </div>
   );
 }

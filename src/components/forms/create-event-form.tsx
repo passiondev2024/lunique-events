@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -8,28 +10,24 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { DatePicker } from "../ui/date-picker";
-import { CheckCheckIcon } from "lucide-react";
+import { CheckCheckIcon, RotateCwIcon } from "lucide-react";
 import { useToast } from "../ui/use-toast";
 import { useModal } from "@/hooks/use-modal-store";
-
-const formSchema = z.object({
-  name: z
-    .string({ required_error: "Please enter event name." })
-    .min(3, { message: "Event name must contain at least 3 characters." }),
-  date: z.date(),
-  location: z.string(),
-});
-
-type FormFileds = z.infer<typeof formSchema>;
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
+import { paths } from "@/routes/paths";
+import {
+  createEventSchema,
+  type CreateEventFields,
+} from "@/validation/create-event";
 
 export const CreateEventForm = () => {
-  const form = useForm<FormFileds>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<CreateEventFields>({
+    resolver: zodResolver(createEventSchema),
     defaultValues: {
       name: "",
       date: new Date(),
@@ -39,18 +37,30 @@ export const CreateEventForm = () => {
 
   const { toast } = useToast();
   const { onClose } = useModal();
+  const router = useRouter();
+  const mutation = api.event.create.useMutation();
 
-  const onSubmit = (values: FormFileds) => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
+  const onSubmit = (values: CreateEventFields) => {
+    mutation.mutate(values, {
+      onSuccess: (event) => {
+        toast({
+          title: event.name,
+          description: "Congratulations, you have created a new event",
+        });
+
+        onClose();
+
+        router.push(paths.events.event(event.id));
+        router.refresh();
+      },
+      onError: () => {
+        toast({
+          variant: "destructive",
+          title: "Error!",
+          description: "Failed to create event. Please try again.",
+        });
+      },
     });
-
-    onClose();
   };
 
   return (
@@ -107,8 +117,12 @@ export const CreateEventForm = () => {
             </FormItem>
           )}
         />
-        <Button className="w-full">
-          <CheckCheckIcon className="mr-1.5 h-4 w-4" /> Create Event
+        <Button className="w-full" disabled={mutation.isLoading}>
+          {mutation.isLoading && (
+            <RotateCwIcon className="mr-1.5 h-4 w-4 animate-spin" />
+          )}
+          {!mutation.isLoading && <CheckCheckIcon className="mr-1.5 h-4 w-4" />}
+          Create Event
         </Button>
       </form>
     </Form>

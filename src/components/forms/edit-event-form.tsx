@@ -15,11 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { DatePicker } from "../ui/date-picker";
-import { SaveIcon } from "lucide-react";
+import { RotateCwIcon, SaveIcon } from "lucide-react";
 import { useToast } from "../ui/use-toast";
-import { useModal } from "@/hooks/use-modal-store";
 import { useEffect } from "react";
-import { events } from "@/lib/data";
+import { type Event } from "@prisma/client";
+import { api } from "@/trpc/react";
 
 const formSchema = z.object({
   name: z
@@ -32,12 +32,10 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>;
 
 interface EditEventFormProps {
-  id: string;
+  event: Event;
 }
 
-export const EditEventForm = ({ id }: EditEventFormProps) => {
-  const event = events[Number(id)];
-
+export const EditEventForm = ({ event }: EditEventFormProps) => {
   const form = useForm<FormFields>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,25 +46,32 @@ export const EditEventForm = ({ id }: EditEventFormProps) => {
   });
 
   useEffect(() => {
-    form.setValue("name", event!.name);
-    form.setValue("date", event!.date);
-    form.setValue("location", event!.location);
+    form.setValue("name", event.name);
+    form.setValue("date", event.date);
+    form.setValue("location", event.location);
   }, [event, form]);
 
   const { toast } = useToast();
-  const { onClose } = useModal();
+
+  const mutation = api.event.update.useMutation();
 
   const onSubmit = (values: FormFields) => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
-    });
-
-    onClose();
+    mutation.mutate(
+      { ...values, id: event.id },
+      {
+        onSuccess: (_event) => {
+          toast({
+            title: `${_event.name} updated!`,
+          });
+        },
+        onError: () => {
+          toast({
+            variant: "destructive",
+            title: "Failed to update event!",
+          });
+        },
+      },
+    );
   };
 
   return (
@@ -123,8 +128,12 @@ export const EditEventForm = ({ id }: EditEventFormProps) => {
             </FormItem>
           )}
         />
-        <Button>
-          <SaveIcon className="mr-1.5 h-5 w-5" /> Save
+        <Button disabled={!form.formState.isDirty || mutation.isLoading}>
+          {!mutation.isLoading && <SaveIcon className="mr-1.5 h-5 w-5" />}
+          {mutation.isLoading && (
+            <RotateCwIcon className="mr-1.5 h-5 w-5 animate-spin" />
+          )}
+          Save
         </Button>
       </form>
     </Form>

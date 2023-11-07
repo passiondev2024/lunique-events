@@ -1,8 +1,8 @@
-import { type events } from "@/lib/data";
+import { type Event } from "@prisma/client";
 import { format } from "date-fns";
 
 interface EventHeaderProps {
-  event: (typeof events)[number];
+  event: Event;
 }
 
 export const EventHeader = ({ event }: EventHeaderProps) => (

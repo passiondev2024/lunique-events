@@ -1,9 +1,13 @@
 import { EventCard } from "@/components/cards/event-card";
-import { events } from "@/lib/data";
 import { paths } from "@/routes/paths";
+import { type Event } from "@prisma/client";
 import Link from "next/link";
 
-export const ListEvents = () => (
+interface ListEventsProps {
+  events: Event[];
+}
+
+export const ListEvents = ({ events }: ListEventsProps) => (
   <div className="grid gap-3 md:grid-cols-4">
     {events.map((event) => (
       <Link

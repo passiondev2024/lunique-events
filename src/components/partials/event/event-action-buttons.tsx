@@ -1,9 +1,9 @@
 import { OpenModalButton } from "@/components/buttons/open-modal-button";
-import { type events } from "@/lib/data";
+import { type Event } from "@prisma/client";
 import { Share2Icon, ShareIcon } from "lucide-react";
 
 interface EventActionButtonsProps {
-  event: (typeof events)[number];
+  event: Event;
 }
 
 export const EventActionButtons = ({ event }: EventActionButtonsProps) => (

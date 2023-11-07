@@ -1,8 +1,5 @@
-"use client";
-
 import { EditEventForm } from "@/components/forms/edit-event-form";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { EventSettingsForm } from "@/components/forms/event-settings-form";
 import {
   Card,
   CardContent,
@@ -10,27 +7,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { useModal } from "@/hooks/use-modal-store";
-import { Trash2Icon } from "lucide-react";
+import { type EventSettings, type Event } from "@prisma/client";
+import { DeleteEventControl } from "./delete-event-control";
 
 interface EditEventInfo {
-  eventId: string;
+  event: Event;
 }
 
-export const EditEventInfo = ({ eventId }: EditEventInfo) => (
+export const EditEventInfo = ({ event }: EditEventInfo) => (
   <Card>
     <CardHeader className="border-b">
       <CardTitle>Event Info</CardTitle>
       <CardDescription>This is the details of your event.</CardDescription>
     </CardHeader>
     <CardContent className="max-w-lg py-5">
-      <EditEventForm id={eventId} />
+      <EditEventForm event={event} />
     </CardContent>
   </Card>
 );
 
-export const EventGalleryConfig = () => (
+interface EventGalleryConfig {
+  settings: EventSettings;
+}
+
+// TODO: create gallery config form
+
+// eslint-disable-next-line
+export const EventGalleryConfig = ({ settings }: EventGalleryConfig) => (
   <Card>
     <CardHeader className="border-b">
       <CardTitle>Configuration</CardTitle>
@@ -38,29 +41,8 @@ export const EventGalleryConfig = () => (
         This is the configuration for your gallery.
       </CardDescription>
     </CardHeader>
-    <CardContent className="space-y-5 py-5">
-      <div className="flex items-center">
-        <div className="flex-1">
-          <p className="text-lg font-medium">Make the gallery public</p>
-          <p className="text-sm text-zinc-500">
-            Allow anyone to view your gallery. Turing this off will make your
-            gallery not accessible to anyone.
-          </p>
-        </div>
-        <Switch defaultChecked />
-      </div>
-      <div className="flex items-center">
-        <div className="flex-1">
-          <div className="flex items-center gap-1.5 text-lg font-medium">
-            Hide Better Event
-            <Badge variant="secondary">Premium</Badge>
-          </div>
-          <p className="text-sm text-zinc-500">
-            Hide &quot;Made with Better Event&quot; badge in your gallery.
-          </p>
-        </div>
-        <Switch disabled />
-      </div>
+    <CardContent className="py-5">
+      <EventSettingsForm settings={settings} />
     </CardContent>
   </Card>
 );
@@ -69,8 +51,6 @@ interface DeleteEventProps {
   eventId: string;
 }
 export const DeleteEvent = ({ eventId }: DeleteEventProps) => {
-  const { onOpen } = useModal();
-
   return (
     <Card className="border-destructive/50">
       <CardHeader>
@@ -81,13 +61,7 @@ export const DeleteEvent = ({ eventId }: DeleteEventProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="max-w-lg">
-        <Button
-          variant="destructive"
-          onClick={() => onOpen("delete-event", { eventId })}
-        >
-          <Trash2Icon className="mr-1.5 h-4 w-4" />
-          Delete
-        </Button>
+        <DeleteEventControl eventId={eventId} />
       </CardContent>
     </Card>
   );
