@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import NextAuthProvider from "@/components/providers/session-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,9 +34,11 @@ export default function RootLayout({
         )}
       >
         <TRPCReactProvider headers={headers()}>
-          <ModalProvider />
-          <Toaster />
-          {children}
+          <NextAuthProvider>
+            <ModalProvider />
+            <Toaster />
+            {children}
+          </NextAuthProvider>
         </TRPCReactProvider>
       </body>
     </html>

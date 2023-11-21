@@ -8,11 +8,7 @@ import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-
-type ImageAttributes = {
-  id: number;
-  src: string;
-};
+import { type ImageAttributes } from "@/types";
 
 interface ImageToggleGroupProps {
   images: ImageAttributes[];
@@ -81,8 +77,8 @@ export const EditEventGallery = ({
               <Image
                 alt={`Gallery image ${image.id}`}
                 src={image.src}
-                width={300}
-                height={300}
+                width={200}
+                height={200}
                 className="h-full rounded-lg object-cover"
               />
             </AspectRatio>

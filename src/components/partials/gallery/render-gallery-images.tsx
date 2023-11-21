@@ -2,34 +2,37 @@
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useModal } from "@/hooks/use-modal-store";
-import { type ImageProps } from "@/types";
+import { api } from "@/trpc/react";
 import Image from "next/image";
-import Link from "next/link";
+import { useMemo } from "react";
 
 interface RenderGalleryImagesProps {
-  galleryId: string;
-  images: ImageProps[];
+  eventId: string;
 }
 
-export const RenderGalleryImages = ({
-  images,
-  galleryId,
-}: RenderGalleryImagesProps) => {
+export const RenderGalleryImages = ({ eventId }: RenderGalleryImagesProps) => {
   const { onOpen } = useModal();
+
+  const { data } = api.event.getImages.useQuery(
+    { eventId },
+    { staleTime: Infinity },
+  );
+
+  const images = useMemo(() => {
+    if (!data) return [];
+    return data.map((image, idx) => ({ id: idx, src: image.url }));
+  }, [data]);
 
   return (
     <>
       {images.map((image, idx) => (
-        <Link
+        <div
           id={`gallery-image-${idx}`}
           key={image.id}
-          href={`/gallery/${galleryId}/?photoId=${idx}`}
-          shallow
-          scroll={false}
           onClick={() =>
             onOpen("event-gallery", {
               galleryImages: images,
-              galleryId: galleryId,
+              currentImage: idx,
             })
           }
         >
@@ -45,7 +48,7 @@ export const RenderGalleryImages = ({
               className="h-full w-full rounded-lg object-cover"
             />
           </AspectRatio>
-        </Link>
+        </div>
       ))}
     </>
   );

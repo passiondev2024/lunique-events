@@ -14,6 +14,7 @@ export type ModalData = {
   images?: string[];
   galleryImages?: ImageProps[];
   galleryId?: string;
+  currentImage?: number;
 };
 
 interface ModalStore {

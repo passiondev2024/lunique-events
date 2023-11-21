@@ -19,43 +19,27 @@ import {
   DownloadIcon,
   XIcon,
 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { type ImageProps } from "@/types";
 import { range } from "@/lib/range";
 import { cn } from "@/lib/utils";
-import { validatePhotoId } from "@/lib/validation";
 
 const swipeConfidenceThreshold = 10000;
 
 export const GalleryModal = () => {
   const [direction, setDirection] = useState(1);
-  const [index, setIndex] = useState<number | null>(null);
+  const [index, setIndex] = useState<number>(0);
   const [filteredImages, setFilteredImages] = useState<
     { image: ImageProps; idx: number }[]
   >([]);
 
-  const router = useRouter();
   const {
     isOpen,
     type,
     onClose,
-    data: { galleryId, galleryImages },
+    data: { galleryImages, currentImage },
   } = useModal();
 
   const isModalOpen = isOpen && type === "event-gallery";
-
-  const params = useSearchParams();
-  const photoId = params.get("photoId");
-
-  useEffect(() => {
-    if (photoId !== null && galleryImages) {
-      if (validatePhotoId(photoId, galleryImages.length)) {
-        setIndex(Number(photoId));
-      } else {
-        onClose();
-      }
-    }
-  }, [photoId, galleryImages, onClose]);
 
   useEffect(() => {
     if (galleryImages && index !== null) {
@@ -71,35 +55,33 @@ export const GalleryModal = () => {
     }
   }, [galleryImages, index]);
 
+  useEffect(() => {
+    if (!currentImage) return;
+    setIndex(currentImage);
+  }, [currentImage]);
+
   // eslint-disable-next-line
   useKeypress("ArrowRight", () => handleRight());
   // eslint-disable-next-line
   useKeypress("ArrowLeft", () => handleLeft());
 
   const handleClose = () => {
-    router.replace(`/gallery/${galleryId}`, { scroll: false });
-
     const imageEl = document.getElementById(`gallery-image-${index}`);
     imageEl?.scrollIntoView({ behavior: "instant", block: "center" });
 
-    setIndex(null);
     onClose();
   };
 
   const handleLeft = () => {
-    if (index && index > 0) {
-      router.push(`/gallery/${galleryId}/?photoId=${index - 1}`);
+    if (index > 0) {
+      setIndex((prev) => prev - 1);
       setDirection(-1);
     }
   };
 
   const handleRight = () => {
-    if (
-      index !== null &&
-      galleryImages &&
-      index !== galleryImages?.length - 1
-    ) {
-      router.push(`/gallery/${galleryId}/?photoId=${index + 1}`);
+    if (galleryImages && index !== galleryImages?.length - 1) {
+      setIndex((prev) => prev + 1);
       setDirection(1);
     }
   };
@@ -113,10 +95,10 @@ export const GalleryModal = () => {
       setDirection(-1);
     }
 
-    router.push(`/gallery/${galleryId}?photoId=${newVal}`);
+    setIndex(newVal);
   };
 
-  if (index === null || !galleryImages) return;
+  if (!galleryImages) return;
 
   return (
     <Dialog.Root open={isModalOpen} onOpenChange={handleClose} modal>

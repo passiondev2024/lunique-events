@@ -1,8 +1,15 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 import { createEventSchema } from "@/validation/create-event";
 import { eventSettingsSchema } from "@/validation/event-settings";
+import { ImageType } from "@prisma/client";
+import { env } from "@/env.mjs";
+import { TRPCError } from "@trpc/server";
 
 export const eventRouter = createTRPCRouter({
   list: protectedProcedure.query(async ({ ctx }) => {
@@ -12,7 +19,7 @@ export const eventRouter = createTRPCRouter({
       },
     });
   }),
-  get: protectedProcedure
+  get: publicProcedure
     .input(
       z.object({
         id: z.string(),
@@ -84,6 +91,53 @@ export const eventRouter = createTRPCRouter({
           date: input.date,
           location: input.location,
         },
+      });
+    }),
+  getImages: publicProcedure
+    .input(z.object({ eventId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const event = await ctx.db.event.findFirst({
+        where: {
+          id: input.eventId,
+        },
+        include: {
+          images: true,
+        },
+      });
+
+      if (!event)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Event not found.",
+        });
+
+      return event.images;
+    }),
+  addImages: protectedProcedure
+    .input(
+      z.object({
+        eventId: z.string(),
+        images: z.array(
+          z.object({
+            key: z.string(),
+            name: z.string(),
+            type: z.enum([ImageType.JPG, ImageType.PNG]),
+          }),
+        ),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { images, eventId } = input;
+
+      const data = images.map((image) => ({
+        eventId,
+        name: image.name,
+        url: `${env.AWS_CLOUDFRONT_DOMAIN}/${image.key}`,
+        type: image.type,
+      }));
+
+      return await ctx.db.image.createMany({
+        data,
       });
     }),
   delete: protectedProcedure

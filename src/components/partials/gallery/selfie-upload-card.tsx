@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -5,21 +7,21 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { events } from "@/lib/data";
 import { paths } from "@/routes/paths";
+import { api } from "@/trpc/react";
 import { format } from "date-fns";
 import { CrownIcon, SparklesIcon, TrashIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
-interface SelfieUploadProps {
-  galleryId: string;
+interface SelfieUploadCardProps {
+  eventId: string;
 }
 
-export const SelfieUploadCard = ({ galleryId }: SelfieUploadProps) => {
-  const event = events[Number(galleryId)];
-
-  if (!event) return redirect(paths.root);
+export const SelfieUploadCard = ({ eventId }: SelfieUploadCardProps) => {
+  const { data: event } = api.event.get.useQuery(
+    { id: eventId },
+    { staleTime: Infinity },
+  );
 
   return (
     <Card className="row-span-2 flex flex-col gap-10 bg-primary/5">
@@ -49,13 +51,15 @@ export const SelfieUploadCard = ({ galleryId }: SelfieUploadProps) => {
           </Button>
         </div>
       </CardContent>
-      <CardFooter className="flex flex-col items-center gap-1">
-        <p className="text-3xl font-bold md:text-4xl">{event?.name}</p>
-        <div className="flex gap-1.5 text-zinc-300">
-          <p>{format(event?.date, "do MMMM, yyy")}</p>
-          <p>@{event?.location}</p>
-        </div>
-      </CardFooter>
+      {event && (
+        <CardFooter className="flex flex-col items-center gap-1">
+          <p className="text-3xl font-bold md:text-4xl">{event.name}</p>
+          <div className="flex gap-1.5 text-zinc-300">
+            <p>{format(event?.date, "do MMMM, yyy")}</p>
+            <p>@{event?.location}</p>
+          </div>
+        </CardFooter>
+      )}
     </Card>
   );
 };

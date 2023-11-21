@@ -6,3 +6,8 @@ type ImageProps = {
   id: number;
   src: string;
 };
+
+type ImageAttributes = {
+  id: number;
+  src: string;
+};

@@ -14,4 +14,8 @@ export const paths = {
     usage: "/account/usage",
     billing: `/account/billing`,
   },
+  gallery: {
+    root: "/gallery",
+    error: "/gallery/error",
+  },
 };

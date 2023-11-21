@@ -5,7 +5,6 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
-    // directUrl = env("DIRECT_URL")
 }
 
 // Necessary for Next auth
@@ -44,7 +43,6 @@ model User {
     accounts      Account[]
     sessions      Session[]
 
-    //////////////////////////////////////
     Event Event[]
 }
 
@@ -66,11 +64,32 @@ model Event {
     ownerId String
 
     eventSettings EventSettings?
+    images        Image[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@index([id, ownerId])
+}
+
+enum ImageType {
+    PNG
+    JPG
+}
+
+model Image {
+    id   String    @id @default(cuid())
+    name String
+    url  String
+    type ImageType
+
+    event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+    eventId String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([eventId])
 }
 
 model EventSettings {
