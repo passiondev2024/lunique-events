@@ -41,6 +41,7 @@ export const CreateEventForm = () => {
   const mutation = api.event.create.useMutation();
 
   const onSubmit = (values: CreateEventFields) => {
+    // TODO: create rekognition collection
     mutation.mutate(values, {
       onSuccess: (event) => {
         toast({

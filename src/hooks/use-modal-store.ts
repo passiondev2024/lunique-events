@@ -1,5 +1,5 @@
-import { type ImageProps } from "@/types";
 import { create } from "zustand";
+import { type Image } from "@prisma/client";
 
 export type ModalType =
   | "create-event"
@@ -12,7 +12,7 @@ export type ModalType =
 export type ModalData = {
   eventId?: string;
   images?: string[];
-  galleryImages?: ImageProps[];
+  galleryImages?: Image[];
   galleryId?: string;
   currentImage?: number;
 };

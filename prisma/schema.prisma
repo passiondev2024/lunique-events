@@ -65,11 +65,24 @@ model Event {
 
     eventSettings EventSettings?
     images        Image[]
+    faces         Face[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@index([id, ownerId])
+}
+
+model Face {
+    id             String @id @default(cuid())
+    indexedFaceId  String
+    indexedImageId String
+    imageKey       String
+
+    Event   Event?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+    eventId String?
+
+    @@index([eventId])
 }
 
 enum ImageType {
@@ -79,6 +92,7 @@ enum ImageType {
 
 model Image {
     id   String    @id @default(cuid())
+    key  String
     name String
     url  String
     type ImageType

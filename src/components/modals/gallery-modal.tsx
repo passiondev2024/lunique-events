@@ -19,9 +19,9 @@ import {
   DownloadIcon,
   XIcon,
 } from "lucide-react";
-import { type ImageProps } from "@/types";
 import { range } from "@/lib/range";
 import { cn } from "@/lib/utils";
+import { type Image as ImageType } from "@prisma/client";
 
 const swipeConfidenceThreshold = 10000;
 
@@ -29,7 +29,7 @@ export const GalleryModal = () => {
   const [direction, setDirection] = useState(1);
   const [index, setIndex] = useState<number>(0);
   const [filteredImages, setFilteredImages] = useState<
-    { image: ImageProps; idx: number }[]
+    { image: ImageType; idx: number }[]
   >([]);
 
   const {
@@ -107,7 +107,7 @@ export const GalleryModal = () => {
           <button className="fixed inset-0 bg-black" onClick={handleClose}>
             <span className="relative">
               <Image
-                src={galleryImages[index]?.src ?? ""}
+                src={galleryImages[index]?.url ?? ""}
                 width={200}
                 height={200}
                 alt="blur"
@@ -148,7 +148,7 @@ export const GalleryModal = () => {
                     }}
                   >
                     <Image
-                      src={galleryImages[index]?.src ?? ""}
+                      src={galleryImages[index]?.url ?? ""}
                       width={1280}
                       height={853}
                       priority
@@ -206,7 +206,7 @@ export const GalleryModal = () => {
                 className="mx-auto mb-6 mt-6 flex aspect-[3/2] h-14"
               >
                 <AnimatePresence initial={false}>
-                  {filteredImages.map(({ image: { src }, idx }) => (
+                  {filteredImages.map(({ image: { url }, idx }) => (
                     <motion.button
                       initial={{
                         width: "0%",
@@ -239,7 +239,7 @@ export const GalleryModal = () => {
                             ? "brightness-110 hover:brightness-110"
                             : "brightness-50 contrast-125 hover:brightness-75",
                         )}
-                        src={src}
+                        src={url}
                       />
                     </motion.button>
                   ))}

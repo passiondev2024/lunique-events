@@ -4,7 +4,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useModal } from "@/hooks/use-modal-store";
 import { api } from "@/trpc/react";
 import Image from "next/image";
-import { useMemo } from "react";
+// import { useMemo } from "react";
 
 interface RenderGalleryImagesProps {
   eventId: string;
@@ -13,19 +13,13 @@ interface RenderGalleryImagesProps {
 export const RenderGalleryImages = ({ eventId }: RenderGalleryImagesProps) => {
   const { onOpen } = useModal();
 
-  const { data } = api.event.getImages.useQuery(
-    { eventId },
-    { staleTime: Infinity },
-  );
+  const { data } = api.event.getImages.useQuery({ eventId });
 
-  const images = useMemo(() => {
-    if (!data) return [];
-    return data.map((image, idx) => ({ id: idx, src: image.url }));
-  }, [data]);
+  const images = data?.images;
 
   return (
     <>
-      {images.map((image, idx) => (
+      {images?.map((image, idx) => (
         <div
           id={`gallery-image-${idx}`}
           key={image.id}
@@ -41,7 +35,7 @@ export const RenderGalleryImages = ({ eventId }: RenderGalleryImagesProps) => {
             className="transition md:cursor-pointer md:duration-300 md:hover:brightness-110"
           >
             <Image
-              src={image.src}
+              src={image.url}
               alt={`Gallery Image ${image.id}`}
               width={460}
               height={345}

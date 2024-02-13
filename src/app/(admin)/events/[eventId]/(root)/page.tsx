@@ -5,7 +5,6 @@ import { NoEventImages } from "@/components/partials/event/no-event-images";
 import { paths } from "@/routes/paths";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
-import { type ImageAttributes } from "@/types";
 import { redirect } from "next/navigation";
 
 export default async function EventIdPage({
@@ -21,13 +20,6 @@ export default async function EventIdPage({
   const event = await api.event.get.query({ id: params.eventId });
   if (!event?.id) redirect(paths.events.root);
 
-  const _images = await api.event.getImages.query({ eventId: event.id });
-
-  const images: ImageAttributes[] = _images.map((image, idx) => ({
-    id: idx,
-    src: image.url,
-  }));
-
   return (
     <div className="space-y-5 pb-20 md:space-y-8">
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center md:gap-0">
@@ -35,8 +27,10 @@ export default async function EventIdPage({
         <EventActionButtons event={event} />
       </div>
 
-      {images && <EditEventGallery eventId={event.id} images={images} />}
-      {!images && <NoEventImages event={event} />}
+      {event.images.length > 0 && (
+        <EditEventGallery eventId={event.id} images={event.images} />
+      )}
+      {event.images.length === 0 && <NoEventImages event={event} />}
     </div>
   );
 }

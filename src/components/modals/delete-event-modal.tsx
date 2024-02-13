@@ -24,13 +24,14 @@ export const DeleteEventModal = () => {
 
   const { eventId } = data;
 
-  const mutation = api.event.delete.useMutation();
+  const { mutate: deleteEvent, isLoading: isDeletingEvent } =
+    api.event.delete.useMutation();
 
   const router = useRouter();
 
   const handleDelete = () => {
     if (eventId) {
-      mutation.mutate(
+      deleteEvent(
         { id: eventId },
         {
           onSuccess: (event) => {
@@ -62,13 +63,13 @@ export const DeleteEventModal = () => {
         </DialogHeader>
         <DialogFooter className="flex flex-col gap-3">
           <Button
-            disabled={mutation.isLoading}
+            disabled={isDeletingEvent}
             variant="destructive"
             className="h-fit w-full"
             onClick={handleDelete}
           >
-            {!mutation.isLoading && <TrashIcon className="mr-1.5 h-4 w-4" />}
-            {mutation.isLoading && (
+            {!isDeletingEvent && <TrashIcon className="mr-1.5 h-4 w-4" />}
+            {isDeletingEvent && (
               <RotateCwIcon className="mr-1.5 h-4 w-4 animate-spin" />
             )}
             Delete
