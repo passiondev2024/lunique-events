@@ -68,7 +68,7 @@ export const ControlBar = ({
                 SELECT
               </p>
               <OpenModalButton
-                disabled={!isSelectMode || !!selectedCount}
+                disabled={!isSelectMode || selectedCount === 0}
                 className="h-8 px-3 text-white data-[disabled=true]:opacity-50"
                 modalType="delete-event-images"
                 modalData={{ galleryImages: selectedImages }}
