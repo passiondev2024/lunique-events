@@ -12,6 +12,8 @@ import {
 import { useToast } from "../ui/use-toast";
 import { Button } from "../ui/button";
 import { TrashIcon } from "lucide-react";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 export const DeleteEventImagesModal = () => {
   const { isOpen, type, onClose, data } = useModal();
@@ -19,19 +21,35 @@ export const DeleteEventImagesModal = () => {
 
   const isModalOpen = isOpen && type === "delete-event-images";
 
-  const { eventId, images } = data;
+  const { mutate: deleteImages } = api.event.deleteImages.useMutation();
+
+  const router = useRouter();
+  const utils = api.useUtils();
 
   const handleDelete = () => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify({ eventId, images }, null, 2)}
-          </code>
-        </pre>
-      ),
-    });
+    if (!data.galleryImages) return;
+
+    deleteImages(
+      { images: data.galleryImages },
+      {
+        onSuccess: ({ count }) => {
+          toast({
+            title: "Images deleted",
+            description: `Successfully deleted ${count} images`,
+          });
+
+          utils.invalidate().catch((e) => console.log(e));
+          router.refresh();
+        },
+        onError: () => {
+          toast({
+            title: "Images deleted",
+            description: "Failed to delete images",
+            variant: "destructive",
+          });
+        },
+      },
+    );
 
     onClose();
   };

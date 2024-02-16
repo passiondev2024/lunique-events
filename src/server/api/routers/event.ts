@@ -15,6 +15,8 @@ import {
   deleteCollection,
   indexImage,
 } from "@/server/aws/rekognition-utils";
+import { TRPCError } from "@trpc/server";
+import { DeleteObjectsCommand } from "@aws-sdk/client-s3";
 
 export const eventRouter = createTRPCRouter({
   list: protectedProcedure.query(async ({ ctx }) => {
@@ -174,6 +176,49 @@ export const eventRouter = createTRPCRouter({
 
       return await ctx.db.image.createMany({
         data,
+      });
+    }),
+  deleteImages: protectedProcedure
+    .input(
+      z.object({
+        images: z
+          .object({
+            id: z.string(),
+            key: z.string(),
+          })
+          .array(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { images } = input;
+
+      if (images.length === 0)
+        throw new TRPCError({ message: "No image IDs", code: "BAD_REQUEST" });
+
+      return await ctx.db.$transaction(async (tx) => {
+        const deleteObjectsCommand = new DeleteObjectsCommand({
+          Bucket: env.BUCKET_NAME,
+          Delete: { Objects: images.map((img) => ({ Key: img.key })) },
+        });
+
+        const res = await tx.image.deleteMany({
+          where: {
+            id: {
+              in: images.map((img) => img.id),
+            },
+          },
+        });
+
+        const s3Res = await ctx.s3.send(deleteObjectsCommand);
+
+        if (s3Res.$metadata.httpStatusCode !== 200) {
+          throw new TRPCError({
+            message: "Failed to delete S3 objects",
+            code: "INTERNAL_SERVER_ERROR",
+          });
+        }
+
+        return res;
       });
     }),
   indexImage: protectedProcedure

@@ -27,9 +27,7 @@ export default async function EventIdPage({
         <EventActionButtons event={event} />
       </div>
 
-      {event.images.length > 0 && (
-        <EditEventGallery eventId={event.id} images={event.images} />
-      )}
+      {event.images.length > 0 && <EditEventGallery eventId={event.id} />}
       {event.images.length === 0 && <NoEventImages event={event} />}
     </div>
   );

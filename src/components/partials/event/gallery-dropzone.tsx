@@ -53,6 +53,8 @@ export const GalleryDropzone = ({ eventId }: GalleryDropzoneProps) => {
     },
   });
 
+  const utils = api.useUtils();
+
   const onSubmit = async () => {
     if (files.length > 0 && session && session.user) {
       try {
@@ -112,6 +114,7 @@ export const GalleryDropzone = ({ eventId }: GalleryDropzoneProps) => {
               });
 
               router.refresh();
+              utils.invalidate().catch((e) => console.log(e));
               onClose();
             },
           },
