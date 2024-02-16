@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
-import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { cn } from "@/lib/utils";
@@ -33,7 +32,7 @@ export default function RootLayout({
           "bg-background antialiased",
         )}
       >
-        <TRPCReactProvider headers={headers()}>
+        <TRPCReactProvider>
           <NextAuthProvider>
             <ModalProvider />
             <Toaster />
