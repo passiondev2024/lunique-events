@@ -52,7 +52,7 @@ export const Gallery = ({
     (index: number) => {
       if (!mainCarouselApi || !thumbCarouselApi) return;
 
-      mainCarouselApi.scrollTo(index);
+      mainCarouselApi.scrollTo(index, true);
     },
     [mainCarouselApi, thumbCarouselApi],
   );
