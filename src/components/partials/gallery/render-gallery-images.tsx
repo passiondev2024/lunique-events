@@ -4,7 +4,6 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useModal } from "@/hooks/use-modal-store";
 import { api } from "@/trpc/react";
 import Image from "next/image";
-// import { useMemo } from "react";
 
 interface RenderGalleryImagesProps {
   eventId: string;
@@ -25,8 +24,10 @@ export const RenderGalleryImages = ({ eventId }: RenderGalleryImagesProps) => {
           key={image.id}
           onClick={() =>
             onOpen("event-gallery", {
-              galleryImages: images,
-              currentImage: idx,
+              gallery: {
+                images: images,
+                currentImage: idx,
+              },
             })
           }
         >

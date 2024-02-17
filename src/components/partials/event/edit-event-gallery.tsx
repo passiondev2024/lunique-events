@@ -6,7 +6,6 @@ import { api } from "@/trpc/react";
 import { ControlBar } from "./control-bar";
 import { EventSelectImages } from "./event-select-images";
 import { EventImagesPagination } from "./event-images-pagination";
-import { AnimatePresence, m } from "framer-motion";
 
 interface EditEventGalleryProps {
   eventId: string;

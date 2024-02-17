@@ -3,7 +3,6 @@ import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
 import { type $Enums, type Image as ImageType } from "@prisma/client";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { AnimatePresence, motion } from "framer-motion";
 import { CheckIcon } from "lucide-react";
 import Image from "next/image";
 import { Fragment } from "react";
@@ -41,8 +40,10 @@ export const EventSelectImages = ({
 
   const handlePreview = (idx: number) => {
     onOpen("event-gallery", {
-      galleryImages: images,
-      currentImage: idx,
+      gallery: {
+        images: images,
+        currentImage: idx,
+      },
     });
   };
   return (

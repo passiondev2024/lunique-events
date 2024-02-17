@@ -54,6 +54,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
+    "embla-carousel-react": "^8.0.0-rc22",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.290.0",
     "next": "^13.5.4",

@@ -9,9 +9,15 @@ export type ModalType =
   | "delete-event"
   | "event-gallery";
 
+type GalleryData = {
+  images: Image[];
+  currentImage?: number;
+};
+
 export type ModalData = {
   eventId?: string;
   images?: string[];
+  gallery?: GalleryData;
   galleryImages?: Image[];
   galleryId?: string;
   currentImage?: number;
