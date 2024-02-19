@@ -1,5 +1,5 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { useModal } from "@/hooks/use-modal-store";
+import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
 import { cn } from "@/lib/utils";
 import { type Image as ImageType } from "@prisma/client";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
@@ -10,40 +10,36 @@ import { Fragment } from "react";
 interface EventSelectImagesProps {
   images: ImageType[];
   isSelectMode: boolean;
-  selected: string[];
-  setSelected: React.Dispatch<React.SetStateAction<string[]>>;
+  selected: ImageType[];
 }
 
 export const EventSelectImages = ({
   images,
   isSelectMode,
   selected,
-  setSelected,
 }: EventSelectImagesProps) => {
-  const { onOpen } = useModal();
+  const { onOpen, updateSelected } = useGalleryModal();
 
   const handlePreview = (idx: number) => {
-    onOpen("event-gallery", {
-      gallery: {
-        images,
-        currentImage: idx,
-      },
-    });
+    onOpen(idx);
   };
+
   return (
     <ToggleGroup.Root
       disabled={!isSelectMode}
       type="multiple"
       orientation="horizontal"
-      value={selected}
-      onValueChange={setSelected}
+      value={selected.map((image) => image.id)}
+      onValueChange={(value: string[]) => {
+        updateSelected(images.filter((img) => value.includes(img.id)));
+      }}
       className="grid grid-cols-3 gap-1 md:grid-cols-5 "
     >
       {images.map((image, idx) => (
         <Fragment key={image.id}>
           {isSelectMode && (
             <ToggleGroup.Item
-              value={image.key}
+              value={image.id}
               className={cn(
                 "relative rounded-lg p-0.5 data-[state=on]:ring-2",
                 !isSelectMode && "data-[state=on]:ring-0",
@@ -63,13 +59,14 @@ export const EventSelectImages = ({
                 <div
                   className={cn(
                     "absolute left-3 top-3 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                    selected.includes(image.key) && "bg-primary shadow-white",
+                    selected.find((img) => img.id === image.id) &&
+                      "bg-primary shadow-white",
                   )}
                 >
                   <CheckIcon
                     className={cn(
                       "hidden text-primary-foreground",
-                      selected.includes(image.key) && "block",
+                      selected.find((img) => img.id === image.id) && "block",
                     )}
                   />
                 </div>

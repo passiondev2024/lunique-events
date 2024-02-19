@@ -1,36 +1,32 @@
 "use client";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { useModal } from "@/hooks/use-modal-store";
+import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
 import { api } from "@/trpc/react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface RenderGalleryImagesProps {
   eventId: string;
 }
 
 export const RenderGalleryImages = ({ eventId }: RenderGalleryImagesProps) => {
-  const { onOpen } = useModal();
+  const { onOpen, updateImages } = useGalleryModal();
 
-  const { data } = api.event.getImages.useQuery({ eventId });
+  const { data: images } = api.event.getImages.useQuery({ eventId });
 
-  const images = data?.images;
+  useEffect(() => {
+    if (!images) return;
+
+    updateImages(images);
+  }, [updateImages, images]);
+
+  if (!images) return <div>Loading...</div>;
 
   return (
     <>
-      {images?.map((image, idx) => (
-        <div
-          id={`gallery-image-${idx}`}
-          key={image.id}
-          onClick={() =>
-            onOpen("event-gallery", {
-              gallery: {
-                images: images,
-                currentImage: idx,
-              },
-            })
-          }
-        >
+      {images.map((image, idx) => (
+        <div key={image.id} onClick={() => onOpen(idx)}>
           <AspectRatio
             ratio={4 / 3}
             className="transition md:cursor-pointer md:duration-300 md:hover:brightness-110"

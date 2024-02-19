@@ -6,20 +6,18 @@ import { type Image } from "@prisma/client";
 import { TrashIcon } from "lucide-react";
 
 interface ControlBarProps {
-  selectedImages: Image[];
+  selected: Image[];
   isSelectMode: boolean;
-  setIsSelectMode: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedCount: number;
   max: number;
+  setIsSelectMode: React.Dispatch<React.SetStateAction<boolean>>;
   onSelectAll: () => void;
   onDeselectAll: () => void;
 }
 
 export const ControlBar = ({
-  selectedCount,
   max,
-  selectedImages,
   isSelectMode,
+  selected,
   setIsSelectMode,
   onSelectAll,
   onDeselectAll,
@@ -39,7 +37,7 @@ export const ControlBar = ({
         </div>
         <div className="flex w-full items-center justify-between gap-3 pl-3">
           <p className="text-xs text-primary-foreground">
-            {selectedCount} of {max} selected
+            {selected.length} of {max} selected
           </p>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
@@ -68,10 +66,10 @@ export const ControlBar = ({
                 SELECT
               </p>
               <OpenModalButton
-                disabled={!isSelectMode || selectedCount === 0}
+                disabled={selected.length === 0}
                 className="h-8 px-3 text-white data-[disabled=true]:opacity-50"
                 modalType="delete-event-images"
-                modalData={{ galleryImages: selectedImages }}
+                modalData={{ galleryImages: selected }}
               >
                 <TrashIcon className="h-5 w-5 " />
               </OpenModalButton>

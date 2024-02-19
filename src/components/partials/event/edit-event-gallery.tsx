@@ -1,44 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { type Image as ImageProps } from "@prisma/client";
 import { api } from "@/trpc/react";
 import { ControlBar } from "./control-bar";
 import { EventSelectImages } from "./event-select-images";
+import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
 
 interface EditEventGalleryProps {
   eventId: string;
 }
 
 export const EditEventGallery = ({ eventId }: EditEventGalleryProps) => {
-  const [selected, setSelected] = useState<string[]>([]);
-  const [selectedImages, setSelectedImages] = useState<ImageProps[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
+
+  const { selected, updateImages, selectAll, deselectAll } = useGalleryModal();
 
   const { data: images } = api.event.getImages.useQuery(
     { eventId },
-    { staleTime: Infinity, select: (data) => data.images },
+    { staleTime: Infinity },
   );
 
   useEffect(() => {
     if (!images) return;
-
-    setSelectedImages(() =>
-      images.filter((image) => selected.includes(image.key)),
-    );
-  }, [images, selected]);
-
-  const handleSelectAll = () => {
-    if (!images) return;
-
-    setSelected(() => images.map((img) => img.key));
-    setSelectedImages(images);
-  };
-
-  const handleDesectAll = () => {
-    setSelected([]);
-    setSelectedImages([]);
-  };
+    updateImages(images);
+  }, [images, updateImages]);
 
   return (
     <div className="space-y-3">
@@ -46,10 +31,9 @@ export const EditEventGallery = ({ eventId }: EditEventGalleryProps) => {
         isSelectMode={isSelectMode}
         setIsSelectMode={setIsSelectMode}
         max={images?.length ?? 0}
-        selectedCount={selected.length}
-        selectedImages={selectedImages}
-        onSelectAll={handleSelectAll}
-        onDeselectAll={handleDesectAll}
+        selected={selected ?? []}
+        onSelectAll={selectAll}
+        onDeselectAll={deselectAll}
       />
 
       {images && (
@@ -57,17 +41,9 @@ export const EditEventGallery = ({ eventId }: EditEventGalleryProps) => {
           images={images}
           isSelectMode={isSelectMode}
           selected={selected}
-          setSelected={setSelected}
         />
       )}
-      {/* <EventImagesPagination
-          handleFetchPreviousPage={handleFetchPreviousPage}
-          handleFetchNextPage={handleFetchNextPage}
-          page={page}
-          pagesCount={data.pages.length}
-          hasNextPage={!!hasNextPage}
-          imagesCount={imagesCount}
-        /> */}
+      {!images && <div>Loading Images...</div>}
     </div>
   );
 };

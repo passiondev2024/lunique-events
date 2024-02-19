@@ -1,28 +1,27 @@
 "use client";
 
-import { useModal } from "@/hooks/use-modal-store";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   Gallery,
+  type GalleryData,
   type GalleryHandlers,
   type GalleryOptions,
 } from "../ui/gallery";
+import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
+import { useMemo } from "react";
 
 export const GalleryModal = () => {
-  const {
-    isOpen,
-    type,
-    onClose,
-    data: { gallery },
-  } = useModal();
-
-  const isModalOpen = isOpen && type === "event-gallery";
+  const { isOpen, images, currentImage, selected, onClose, toggleSelected } =
+    useGalleryModal();
 
   const handleDownload = () => {
     alert("DOWNLOADING...");
   };
   const handleShare = () => {
     alert("SHARING...");
+  };
+  const handleSelectImage = (index: number) => {
+    toggleSelected(images[index]!);
   };
 
   const options: GalleryOptions = {
@@ -31,25 +30,41 @@ export const GalleryModal = () => {
     close: true,
     download: true,
     share: true,
+    select: true,
   };
 
   const handlers: GalleryHandlers = {
     onClose: onClose,
     onDownload: handleDownload,
     onShare: handleShare,
+    onImageSelect: handleSelectImage,
   };
 
-  if (!gallery) return;
+  const selectedIndexes = useMemo(
+    () =>
+      images
+        .map((img, idx) => {
+          if (selected.find((item) => item.id === img.id)) return idx;
+          return null;
+        })
+        .filter((v) => v !== null) as number[],
+    [images, selected],
+  );
+
+  const data: GalleryData = {
+    selected: selectedIndexes,
+  };
 
   return (
-    <Dialog.Root open={isModalOpen} onOpenChange={onClose} modal>
+    <Dialog.Root open={isOpen} onOpenChange={onClose} modal>
       <Dialog.Portal>
         <Dialog.Content className="fixed inset-0">
           <Gallery
-            images={gallery.images}
-            currentImage={gallery.currentImage ?? 0}
+            images={images}
+            currentImage={currentImage}
             {...options}
             {...handlers}
+            {...data}
           />
         </Dialog.Content>
       </Dialog.Portal>

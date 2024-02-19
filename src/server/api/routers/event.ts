@@ -107,48 +107,25 @@ export const eventRouter = createTRPCRouter({
         },
       });
     }),
-  getImagesCount: publicProcedure
-    .input(z.object({ eventId: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return await ctx.db.image.count({
-        where: {
-          eventId: input.eventId,
-        },
-      });
-    }),
   getImages: publicProcedure
     .input(
       z.object({
         eventId: z.string(),
-        limit: z.number().optional(),
-        cursor: z.number().optional(),
-        skip: z.number().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const { eventId, cursor, limit } = input;
+      const { eventId } = input;
 
       const images = await ctx.db.image.findMany({
         where: {
           eventId: eventId,
         },
-        take: limit ? limit + 1 : undefined,
-        skip: cursor,
         orderBy: {
           createdAt: "desc",
         },
       });
 
-      let nextCursor: typeof cursor | undefined = undefined;
-      if (limit && images.length > limit) {
-        images.pop();
-        nextCursor = cursor && limit ? cursor + limit : limit;
-      }
-
-      return {
-        images,
-        nextCursor,
-      };
+      return images;
     }),
   addImages: protectedProcedure
     .input(
