@@ -35,7 +35,7 @@ export const eventRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.db.event.findFirst({
         where: { id: input.id },
-        include: { images: { take: 1 } },
+        include: { images: { take: 1 }, owner: true },
       });
     }),
   settings: protectedProcedure

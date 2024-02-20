@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import NextAuthProvider from "@/components/providers/session-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,13 +33,20 @@ export default function RootLayout({
           "bg-background antialiased",
         )}
       >
-        <TRPCReactProvider>
-          <NextAuthProvider>
-            <ModalProvider />
-            <Toaster />
-            {children}
-          </NextAuthProvider>
-        </TRPCReactProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TRPCReactProvider>
+            <NextAuthProvider>
+              <ModalProvider />
+              <Toaster />
+              {children}
+            </NextAuthProvider>
+          </TRPCReactProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

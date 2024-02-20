@@ -37,7 +37,7 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
           <AvatarFallback className="h-9 w-9">A</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="absolute -right-5 -top-1">
+      <DropdownMenuContent className="absolute -right-5">
         <div className="p-2">
           {name && <p className="font-medium">{name}</p>}
           {email && <p className="text-sm text-zinc-500">{email}</p>}

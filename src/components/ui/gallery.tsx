@@ -87,7 +87,7 @@ export const Gallery = ({
     if (!mainCarouselApi || !thumbCarouselApi || !currentImage) return;
 
     mainCarouselApi.scrollTo(currentImage, true);
-    thumbCarouselApi.scrollTo(currentImage);
+    thumbCarouselApi.scrollTo(currentImage, true);
   }, [currentImage, mainCarouselApi, thumbCarouselApi]);
 
   useEffect(() => {
@@ -158,7 +158,7 @@ export const Gallery = ({
       </div>
 
       {thumbs && (
-        <div className="absolute bottom-3 z-10 flex w-full items-center justify-center">
+        <div className="absolute bottom-3 z-10 flex w-full items-center justify-center 2xl:bottom-8">
           <Thumbs
             images={images}
             carouselRef={thumbCarouselRef}
@@ -191,7 +191,7 @@ const CarouselSlide = ({ idx, url }: CarouselSlideProps) => (
       alt=""
     />
     <div className="flex h-full w-full items-center justify-center">
-      <div className="relative h-[500px] w-full lg:h-[800px]">
+      <div className="relative h-[500px] w-full lg:h-[800px] 2xl:h-[700px]">
         <Image src={url} fill alt="" className="object-contain" />
       </div>
       I
@@ -240,7 +240,7 @@ const ThumbButton = ({ index, selected, src, onClick }: ThumbButtonProps) => (
   <button
     onClick={() => onClick(index)}
     className={cn(
-      "h-12 w-1/5 flex-none flex-shrink-0 flex-grow-0 rounded-sm transition duration-200 md:h-16 md:w-[8%]",
+      "h-12 w-1/5 flex-none flex-shrink-0 flex-grow-0 rounded-sm transition duration-200 md:h-16 md:w-[8%] 2xl:h-20 2xl:w-[5%]",
       !selected && "scale-90 opacity-25 hover:opacity-50",
     )}
   >

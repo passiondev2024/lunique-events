@@ -33,7 +33,7 @@ export const EventSelectImages = ({
       onValueChange={(value: string[]) => {
         updateSelected(images.filter((img) => value.includes(img.id)));
       }}
-      className="grid grid-cols-3 gap-1 md:grid-cols-5 "
+      className="grid grid-cols-3 gap-1.5 md:grid-cols-5 "
     >
       {images.map((image, idx) => (
         <Fragment key={image.id}>
@@ -77,7 +77,7 @@ export const EventSelectImages = ({
             <AspectRatio
               ratio={1 / 1}
               onClick={() => handlePreview(idx)}
-              className="cursor-pointer transition-opacity duration-200 hover:opacity-90"
+              className="cursor-pointer p-0.5 transition-opacity duration-200 hover:opacity-90"
             >
               <Image
                 alt={image.name}
