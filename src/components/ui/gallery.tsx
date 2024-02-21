@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import * as Checkbox from "@radix-ui/react-checkbox";
+import { useArrowKey } from "@/hooks/use-arrow-key";
 
 export type GalleryOptions = {
   thumbs?: boolean;
@@ -107,39 +108,34 @@ export const Gallery = ({
     }
   }, [selectedIndex, selected]);
 
-  const handleArrowKeyDown = (event: KeyboardEvent) => {
-    const { key } = event;
-    if (key === "ArrowRight") handleRight();
-    if (key === "ArrowLeft") handleLeft();
-  };
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleArrowKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleArrowKeyDown);
-    };
-  }, [handleArrowKeyDown]);
-
-  const handleClose = () => {
-    if (onClose) onClose();
-  };
-  const handleDownload = () => {
-    if (onDownload) onDownload();
-  };
-  const handleShare = () => {
-    if (onShare) onShare();
-  };
-  const handleImageSelect = (index: number) => {
-    if (onImageSelect) onImageSelect(index);
-  };
-
-  const handleLeft = () => {
+  const handleLeft = useCallback(() => {
     mainCarouselApi?.scrollPrev();
-  };
-  const handleRight = () => {
+  }, [mainCarouselApi]);
+
+  const handleRight = useCallback(() => {
     mainCarouselApi?.scrollNext();
-  };
+  }, [mainCarouselApi]);
+
+  useArrowKey({ onArrowLeft: handleLeft, onArrowRight: handleRight });
+
+  const handleClose = useCallback(() => {
+    if (onClose) onClose();
+  }, [onClose]);
+
+  const handleDownload = useCallback(() => {
+    if (onDownload) onDownload();
+  }, [onDownload]);
+
+  const handleShare = useCallback(() => {
+    if (onShare) onShare();
+  }, [onShare]);
+
+  const handleImageSelect = useCallback(
+    (index: number) => {
+      if (onImageSelect) onImageSelect(index);
+    },
+    [onImageSelect],
+  );
 
   return (
     <div className="relative bg-primary">
