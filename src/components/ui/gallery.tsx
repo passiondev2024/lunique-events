@@ -271,7 +271,7 @@ type ActionButtonProps = {
 
 const ActionButton = ({ Icon, onAction }: ActionButtonProps) => (
   <button
-    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20  transition duration-200 hover:scale-110 hover:bg-white/20"
+    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20  transition duration-200 hover:bg-white/20 md:hover:scale-105"
     onClick={() => onAction()}
   >
     <Icon className="h-4 w-4 text-primary-foreground" />
@@ -291,10 +291,10 @@ const SelectButton = ({
 }: SelectButtonProps) => (
   <div
     onClick={() => onSelectChange()}
-    className="flex h-10 cursor-pointer select-none items-center justify-center gap-1.5 rounded-full bg-white/20 px-4 transition duration-200 hover:scale-110 hover:bg-white/20"
+    className="flex h-10 cursor-pointer select-none items-center justify-center gap-1.5 rounded-full bg-white/20 px-4 transition duration-200 hover:bg-white/20 md:hover:scale-105"
   >
     <span className="text-xs font-bold uppercase text-primary-foreground">
-      select
+      {isSelected ? "selected" : "select"}
     </span>
     <Checkbox.Root
       checked={isSelected}
@@ -325,7 +325,7 @@ const ChevronButton = ({ side, onAction }: ChevronButtonProps) => {
       )}
       onClick={onAction}
     >
-      <Icon className="h-6 w-6 bg-clip-content text-primary-foreground transition duration-200 group-hover:scale-110 md:h-10 md:w-10" />
+      <Icon className="h-6 w-6 bg-clip-content text-primary-foreground transition duration-200 md:h-10 md:w-10 md:group-hover:scale-105" />
     </button>
   );
 };

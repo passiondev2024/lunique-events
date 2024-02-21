@@ -1,9 +1,11 @@
-import { EventBanner } from "@/components/partials/gallery/event-banner";
+import { GallerySidebar } from "@/components/partials/gallery/gallery-sidebar";
 import { RenderGalleryImages } from "@/components/partials/gallery/render-gallery-images";
+import { ClientGallerySkeleton } from "@/components/skeletons/client-gallery-skeleton";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { paths } from "@/routes/paths";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export default async function GalleryIdPage({
   params,
@@ -15,29 +17,30 @@ export default async function GalleryIdPage({
   if (!galleryId) redirect(paths.gallery.error);
 
   const event = await api.event.get.query({ id: galleryId });
+  const images = await api.event.getImages.query({ eventId: galleryId });
 
-  if (!event) redirect(paths.gallery.error);
+  if (!event || !images) redirect(paths.gallery.error);
 
   return (
     <main className="grid grid-cols-1 bg-background md:h-[calc(100vh-65px)] md:grid-cols-3">
-      {/* TODO: Placeholder images */}
-      <div className="py-3 pl-3">
-        <EventBanner
-          {...event}
-          url={event.images[0]?.url ?? "/overlay.jpeg"}
-          owner={event.owner.name ?? ""}
-        />
-      </div>
-      <div className="col-span-2 hidden overflow-hidden md:block">
-        <ScrollArea className="relative h-screen p-3">
-          <RenderGalleryImages eventId={galleryId} />
-          <ScrollBar orientation="vertical" />
-        </ScrollArea>
+      <div className="p-3 md:pr-0">
+        <GallerySidebar event={event} />
       </div>
 
-      <div className="col-span-2 p-3 md:hidden">
-        <RenderGalleryImages eventId={galleryId} />
-      </div>
+      <Suspense fallback={<ClientGallerySkeleton />}>
+        <div className="col-span-2 hidden overflow-hidden md:block">
+          <ScrollArea className="relative h-screen p-3">
+            <RenderGalleryImages event={event} images={images} />
+            <ScrollBar orientation="vertical" />
+          </ScrollArea>
+        </div>
+      </Suspense>
+
+      <Suspense fallback={<ClientGallerySkeleton />}>
+        <div className=" p-3 md:hidden">
+          <RenderGalleryImages event={event} images={images} />
+        </div>
+      </Suspense>
     </main>
   );
 }

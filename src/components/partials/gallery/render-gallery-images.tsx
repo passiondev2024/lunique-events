@@ -2,26 +2,25 @@
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
-import { api } from "@/trpc/react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import * as Checkbox from "@radix-ui/react-checkbox";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect } from "react";
 import { CheckIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { type RouterOutputs } from "@/trpc/shared";
 
 interface RenderGalleryImagesProps {
-  eventId: string;
+  event: NonNullable<RouterOutputs["event"]["get"]>;
+  images: NonNullable<RouterOutputs["event"]["getImages"]>;
 }
 
-export const RenderGalleryImages = ({ eventId }: RenderGalleryImagesProps) => {
+export const RenderGalleryImages = ({ images }: RenderGalleryImagesProps) => {
   const { onOpen, updateImages, selected, updateSelected, toggleSelected } =
     useGalleryModal();
 
-  const { data: images } = api.event.getImages.useQuery({ eventId });
-
   useEffect(() => {
-    if (!images) return;
-
     updateImages(images);
   }, [updateImages, images]);
 
@@ -31,8 +30,6 @@ export const RenderGalleryImages = ({ eventId }: RenderGalleryImagesProps) => {
 
   const isSelected = (id: string) =>
     !!selected.find((item) => item.id === id) ?? false;
-
-  if (!images) return <div>Loading...</div>;
 
   return (
     <ToggleGroup.Root
@@ -80,9 +77,13 @@ type SelectButtonProps = {
 };
 
 const SelectButton = ({ isSelected, onSelectChange }: SelectButtonProps) => (
-  <div
+  <motion.div
+    className={cn(
+      "flex h-7 cursor-pointer select-none items-center justify-center gap-1 rounded-full bg-white/20 transition duration-200 hover:bg-white/20 md:hover:scale-105",
+    )}
+    animate={{ width: isSelected ? 96 : 80 }}
+    transition={{ duration: 0.2 }}
     onClick={() => onSelectChange()}
-    className="flex h-7 cursor-pointer select-none items-center justify-center gap-1 rounded-full bg-white/20 px-2.5 transition duration-200 hover:scale-105 hover:bg-white/20"
   >
     <p className="text-xs font-medium uppercase text-primary">
       {isSelected ? "selected" : "select"}
@@ -95,5 +96,5 @@ const SelectButton = ({ isSelected, onSelectChange }: SelectButtonProps) => (
         <CheckIcon className="h-2.5 w-2.5 text-primary" />
       </Checkbox.Indicator>
     </Checkbox.Root>
-  </div>
+  </motion.div>
 );
