@@ -107,6 +107,20 @@ export const Gallery = ({
     }
   }, [selectedIndex, selected]);
 
+  const handleArrowKeyDown = (event: KeyboardEvent) => {
+    const { key } = event;
+    if (key === "ArrowRight") handleRight();
+    if (key === "ArrowLeft") handleLeft();
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleArrowKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleArrowKeyDown);
+    };
+  }, [handleArrowKeyDown]);
+
   const handleClose = () => {
     if (onClose) onClose();
   };
