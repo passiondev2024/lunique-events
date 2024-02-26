@@ -1,24 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api } from "@/trpc/react";
 import { ControlBar } from "./control-bar";
 import { EventSelectImages } from "./event-select-images";
 import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
+import { type Image } from "@prisma/client";
 
 interface EditEventGalleryProps {
-  eventId: string;
+  images: Image[];
 }
 
-export const EditEventGallery = ({ eventId }: EditEventGalleryProps) => {
+export const EditEventGallery = ({ images }: EditEventGalleryProps) => {
   const [isSelectMode, setIsSelectMode] = useState(false);
 
   const { selected, updateImages, selectAll, deselectAll } = useGalleryModal();
-
-  const { data: images } = api.event.getImages.useQuery(
-    { eventId },
-    { staleTime: Infinity },
-  );
 
   useEffect(() => {
     if (!images) return;

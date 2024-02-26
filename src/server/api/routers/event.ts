@@ -24,6 +24,7 @@ export const eventRouter = createTRPCRouter({
       where: {
         ownerId: ctx.session?.user.id,
       },
+      include: { images: { take: 1 }, owner: true },
     });
   }),
   get: publicProcedure

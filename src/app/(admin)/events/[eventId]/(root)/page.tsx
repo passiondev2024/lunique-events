@@ -20,6 +20,9 @@ export default async function EventIdPage({
   const event = await api.event.get.query({ id: params.eventId });
   if (!event?.id) redirect(paths.events.root);
 
+  const images = await api.event.getImages.query({ eventId: event.id });
+  if (!images) redirect(paths.events.root);
+
   return (
     <div className="space-y-5 pb-20 md:space-y-8">
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center md:gap-0">
@@ -27,8 +30,8 @@ export default async function EventIdPage({
         <EventActionButtons event={event} />
       </div>
 
-      {event.images.length > 0 && <EditEventGallery eventId={event.id} />}
-      {event.images.length === 0 && <NoEventImages event={event} />}
+      {images.length > 0 && <EditEventGallery images={images} />}
+      {images.length === 0 && <NoEventImages id={event.id} />}
     </div>
   );
 }

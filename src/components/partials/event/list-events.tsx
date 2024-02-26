@@ -1,10 +1,10 @@
 import { EventCard } from "@/components/cards/event-card";
 import { paths } from "@/routes/paths";
-import { type Event } from "@prisma/client";
+import { type RouterOutputs } from "@/trpc/shared";
 import Link from "next/link";
 
 interface ListEventsProps {
-  events: Event[];
+  events: NonNullable<RouterOutputs["event"]["list"]>;
 }
 
 export const ListEvents = ({ events }: ListEventsProps) => (
@@ -15,7 +15,7 @@ export const ListEvents = ({ events }: ListEventsProps) => (
         key={event.id}
         className="transition duration-200 lg:hover:opacity-80"
       >
-        <EventCard {...event} />
+        <EventCard event={event} />
       </Link>
     ))}
   </div>

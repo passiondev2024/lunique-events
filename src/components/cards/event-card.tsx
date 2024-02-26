@@ -3,30 +3,30 @@ import { AspectRatio } from "../ui/aspect-ratio";
 import { Card, CardFooter } from "../ui/card";
 import { format } from "date-fns";
 import { CalendarIcon, GalleryThumbnailsIcon, MapPinIcon } from "lucide-react";
+import { type RouterOutputs } from "@/trpc/shared";
 
 interface EventCardProps {
-  name: string;
-  date: Date;
-  location?: string;
-  image?: string;
+  event: RouterOutputs["event"]["list"][number];
 }
 
-export const EventCard = ({ name, date, location, image }: EventCardProps) => {
+export const EventCard = ({ event }: EventCardProps) => {
+  const { images, name, date, location } = event;
+
   return (
-    <Card>
+    <Card className="border-t-[0px]">
       <AspectRatio ratio={16 / 9}>
-        {image && (
+        {images[0] && (
           <Image
-            src={image}
+            src={images[0].url ?? ""}
             alt={name}
             width={300}
             height={300}
             className="h-full w-full rounded-t-lg object-cover"
           />
         )}
-        {!image && (
-          <div className="flex h-full w-full items-center justify-center rounded-t-lg bg-primary/20">
-            <GalleryThumbnailsIcon className="h-24 w-24 text-primary-foreground" />
+        {!images[0] && (
+          <div className="flex h-full w-full items-center justify-center rounded-t-lg bg-muted-foreground">
+            <GalleryThumbnailsIcon className="h-24 w-24 text-muted" />
           </div>
         )}
       </AspectRatio>

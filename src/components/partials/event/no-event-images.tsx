@@ -3,10 +3,10 @@ import { type Event } from "@prisma/client";
 import { GalleryThumbnailsIcon, ShareIcon } from "lucide-react";
 
 interface NoEventImages {
-  event: Event;
+  id: Event["id"];
 }
 
-export const NoEventImages = ({ event }: NoEventImages) => (
+export const NoEventImages = ({ id }: NoEventImages) => (
   <div className="flex h-96 w-full flex-col items-center justify-center gap-5 rounded-lg border border-dashed text-center md:h-[500px]">
     <div className="h-fit w-fit rounded-full bg-primary/40 p-5">
       <GalleryThumbnailsIcon className="h-16 w-16 text-primary-foreground" />
@@ -20,7 +20,7 @@ export const NoEventImages = ({ event }: NoEventImages) => (
     </div>
     <OpenModalButton
       modalType="upload-event-images"
-      modalData={{ eventId: event.id }}
+      modalData={{ eventId: id }}
       variant="outline"
     >
       <ShareIcon className="mr-1.5 h-5 w-5" /> Upload
