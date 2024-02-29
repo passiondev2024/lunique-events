@@ -5,11 +5,11 @@ import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect } from "react";
 import { CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type RouterOutputs } from "@/trpc/shared";
+import Image from "next/image";
 
 interface RenderGalleryImagesProps {
   event: NonNullable<RouterOutputs["event"]["get"]>;
@@ -59,10 +59,11 @@ export const RenderGalleryImages = ({ images }: RenderGalleryImagesProps) => {
           >
             <Image
               src={image.url}
+              width={308}
+              height={231}
               alt={`Gallery Image ${image.id}`}
-              width={460}
-              height={345}
               className="h-full w-full rounded-lg object-cover"
+              loading="lazy"
             />
           </AspectRatio>
         </div>

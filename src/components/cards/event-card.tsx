@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Card, CardFooter } from "../ui/card";
 import { format } from "date-fns";
@@ -16,11 +15,10 @@ export const EventCard = ({ event }: EventCardProps) => {
     <Card className="border-t-[0px]">
       <AspectRatio ratio={16 / 9}>
         {images[0] && (
-          <Image
+          // eslint-disable-next-line
+          <img
             src={images[0].url ?? ""}
             alt={name}
-            width={300}
-            height={300}
             className="h-full w-full rounded-t-lg object-cover"
           />
         )}

@@ -38,7 +38,6 @@ export const EditEventGallery = ({ images }: EditEventGalleryProps) => {
           selected={selected}
         />
       )}
-      {!images && <div>Loading Images...</div>}
     </div>
   );
 };

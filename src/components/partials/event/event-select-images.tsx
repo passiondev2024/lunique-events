@@ -7,7 +7,7 @@ import { type Image as ImageType } from "@prisma/client";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { CheckIcon } from "lucide-react";
 import Image from "next/image";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 
 interface EventSelectImagesProps {
   images: ImageType[];
@@ -48,11 +48,13 @@ export const EventSelectImages = ({
               )}
             >
               <AspectRatio ratio={1 / 1}>
-                <LazyImage
+                <Image
                   alt={image.name}
                   src={image.url}
-                  width={200}
-                  height={200}
+                  width={172}
+                  height={172}
+                  className="h-full rounded-lg object-cover"
+                  loading="lazy"
                 />
               </AspectRatio>
 
@@ -83,8 +85,8 @@ export const EventSelectImages = ({
               <Image
                 alt={image.name}
                 src={image.url}
-                width={200}
-                height={200}
+                width={172}
+                height={172}
                 className="h-full rounded-lg object-cover"
                 loading="lazy"
               />
@@ -93,30 +95,5 @@ export const EventSelectImages = ({
         </Fragment>
       ))}
     </ToggleGroup.Root>
-  );
-};
-
-const LazyImage = ({
-  src,
-  alt,
-  width,
-  height,
-}: {
-  alt: string;
-  src: string;
-  width: number;
-  height: number;
-}) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  return (
-    <Image
-      alt={alt}
-      src={src}
-      onLoad={() => setIsLoaded(true)}
-      width={width}
-      height={height}
-      className="h-full rounded-lg object-cover"
-    />
   );
 };

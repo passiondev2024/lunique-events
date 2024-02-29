@@ -22,7 +22,6 @@ import {
   TrashIcon,
   UploadCloudIcon,
 } from "lucide-react";
-import Image from "next/image";
 import { type Key, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -134,7 +133,8 @@ const ImageUploadWidget = () => {
           <AnimateFade motionKey="selfie" isVisible={!!file}>
             <div className=" flex h-[220px] w-full items-center justify-evenly">
               <div className="flex flex-col items-center justify-center gap-3">
-                <Image
+                {/* eslint-disable-next-line */}
+                <img
                   src={URL.createObjectURL(file)}
                   alt=""
                   width={128}
