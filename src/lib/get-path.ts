@@ -8,3 +8,10 @@ export const getGalleryImagePath = (
 
   return `user-${userId}/event-${eventId}/${datePrefix}-${fileName}`;
 };
+
+export const getSelfieImagePath = (eventId: string, fileName: string) => {
+  const date = new Date();
+  const datePrefix = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+
+  return `search-by-image/${datePrefix}-${fileName}`;
+};

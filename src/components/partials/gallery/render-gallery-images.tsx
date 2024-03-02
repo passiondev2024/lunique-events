@@ -10,6 +10,7 @@ import { CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type RouterOutputs } from "@/trpc/shared";
 import Image from "next/image";
+import { useImagesStore } from "@/hooks/use-images-store";
 
 interface RenderGalleryImagesProps {
   event: NonNullable<RouterOutputs["event"]["get"]>;
@@ -20,16 +21,23 @@ export const RenderGalleryImages = ({ images }: RenderGalleryImagesProps) => {
   const { onOpen, updateImages, selected, updateSelected, toggleSelected } =
     useGalleryModal();
 
+  const { images: foundImages } = useImagesStore();
+
   useEffect(() => {
     updateImages(images);
   }, [updateImages, images]);
 
   useEffect(() => {
-    console.log({ selected });
-  }, [selected]);
+    if (foundImages.length === 0) return;
+
+    updateSelected([]);
+    updateImages(foundImages);
+  }, [foundImages, updateImages, updateSelected]);
 
   const isSelected = (id: string) =>
     !!selected.find((item) => item.id === id) ?? false;
+
+  const imagesToRender = foundImages.length ? foundImages : images;
 
   return (
     <ToggleGroup.Root
@@ -41,7 +49,7 @@ export const RenderGalleryImages = ({ images }: RenderGalleryImagesProps) => {
       }}
       className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-1.5 2xl:grid-cols-4 2xl:gap-2"
     >
-      {images.map((image, idx) => (
+      {imagesToRender.map((image, idx) => (
         <div key={image.id} onClick={() => onOpen(idx)} className="relative">
           <div
             onClick={(e) => e.stopPropagation()}

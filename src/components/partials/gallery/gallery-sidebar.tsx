@@ -10,8 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
+import { useImagesStore } from "@/hooks/use-images-store";
+import { getSelfieImagePath } from "@/lib/get-path";
+import { api } from "@/trpc/react";
 import { type EventWithOwner } from "@/types";
+import { type Image } from "@prisma/client";
 import { Share1Icon } from "@radix-ui/react-icons";
+import axios from "axios";
 import { format } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -22,17 +29,18 @@ import {
   TrashIcon,
   UploadCloudIcon,
 } from "lucide-react";
-import { type Key, useState } from "react";
+import { type Key, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 interface GallerySidebarProps {
   event: EventWithOwner;
+  images: Image[];
 }
 
-export const GallerySidebar = ({ event }: GallerySidebarProps) => (
+export const GallerySidebar = ({ event, images }: GallerySidebarProps) => (
   <div className="space-y-3">
     <DetailsWidget event={event} />
-    <ImageUploadWidget />
+    <ImageUploadWidget event={event} images={images} />
     <ActionsWidget />
   </div>
 );
@@ -70,8 +78,18 @@ const DetailsWidget = ({ event }: { event: EventWithOwner }) => (
   </Card>
 );
 
-const ImageUploadWidget = () => {
+const ImageUploadWidget = ({
+  event,
+  images,
+}: {
+  event: EventWithOwner;
+  images: Image[];
+}) => {
   const [file, setFile] = useState<File | null>(null);
+  const { updateImages: updateFoundImages, images: foundImages } =
+    useImagesStore();
+  const { updateImages: updateGalleryImages, updateSelected } =
+    useGalleryModal();
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
@@ -82,6 +100,63 @@ const ImageUploadWidget = () => {
     },
     onDropAccepted: (files) => setFile(files[0] ?? null),
   });
+
+  const { mutateAsync: fetchPresignedUrl } =
+    api.s3.getPresignedUrl.useMutation();
+
+  const { mutate: findImages } = api.event.findImages.useMutation();
+
+  const { toast } = useToast();
+
+  const handleFindImages = async () => {
+    if (!file) return;
+
+    const key = getSelfieImagePath(event.id, file.name);
+    const presignedUrl = await fetchPresignedUrl({
+      key,
+    });
+
+    await axios.put(presignedUrl, file.slice(), {
+      headers: { "Content-Type": file.type },
+    });
+
+    findImages(
+      { eventId: event.id, imageKey: key },
+      {
+        onSuccess: (images) => {
+          if (images.length > 0) {
+            updateFoundImages(images);
+          } else {
+            toast({
+              title: "We can not find you. :)",
+            });
+          }
+        },
+        onError: (err) => {
+          if (err.data?.code === "TOO_MANY_REQUESTS") {
+            toast({
+              variant: "destructive",
+              title: "Slow down man. :)",
+              description:
+                "We are still in development, so you can create only one request per two minutes",
+            });
+          } else {
+            toast({
+              title: "We can not find you.",
+              description: "Something went wront. Please try again.",
+            });
+          }
+        },
+      },
+    );
+  };
+
+  const handleRemoveImage = useCallback(() => {
+    setFile(null);
+    updateFoundImages([]);
+    updateSelected([]);
+    updateGalleryImages(images);
+  }, [images, updateGalleryImages, updateFoundImages, updateSelected]);
 
   return (
     <Card className="w-full">
@@ -137,16 +212,14 @@ const ImageUploadWidget = () => {
                 <img
                   src={URL.createObjectURL(file)}
                   alt=""
-                  width={128}
-                  height={128}
-                  className="h-32 w-32 rounded-full"
+                  className="h-32 w-32 rounded-full object-cover"
                 />
                 <Button
                   disabled={!file}
                   className="w-full"
                   size="sm"
                   variant="destructive"
-                  onClick={() => setFile(null)}
+                  onClick={handleRemoveImage}
                 >
                   <TrashIcon className="mr-1.5 h-4 w-4" />
                   Remove
@@ -154,16 +227,16 @@ const ImageUploadWidget = () => {
               </div>
               <div className="flex w-44 flex-col gap-3">
                 <Button
-                  disabled={!file}
+                  disabled={!file || !!foundImages.length}
                   size="sm"
                   className="w-full"
-                  onClick={() => alert(`File: ${file?.name}`)}
+                  onClick={handleFindImages}
                 >
                   <SparklesIcon className="mr-1.5 h-4 w-4" />
                   Find My Images
                 </Button>
                 <Button
-                  disabled={true}
+                  disabled={!foundImages.length}
                   size="sm"
                   variant="outline"
                   className="w-full"
@@ -173,7 +246,7 @@ const ImageUploadWidget = () => {
                   Download My Images
                 </Button>
                 <Button
-                  disabled={true}
+                  disabled={!foundImages.length}
                   size="sm"
                   variant="outline"
                   className="w-full"

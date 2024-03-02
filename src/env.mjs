@@ -33,6 +33,8 @@ export const env = createEnv({
     BUCKET_NAME: z.string(),
     REGION: z.string(),
     AWS_CLOUDFRONT_DOMAIN: z.string(),
+    UPSTASH_REDIS_REST_URL: z.string(),
+    UPSTASH_REDIS_REST_TOKEN: z.string(),
   },
 
   /**
@@ -65,6 +67,8 @@ export const env = createEnv({
     BUCKET_NAME: process.env.BUCKET_NAME,
     REGION: process.env.REGION,
     AWS_CLOUDFRONT_DOMAIN: process.env.AWS_CLOUDFRONT_DOMAIN,
+    UPSTASH_REDIS_REST_URL: process.env.AWS_CLOUDFRONT_DOMAIN,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

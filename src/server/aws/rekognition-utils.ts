@@ -3,8 +3,11 @@ import {
   CreateCollectionCommand,
   DeleteCollectionCommand,
   IndexFacesCommand,
+  ListFacesCommand,
+  SearchFacesByImageCommand,
   type RekognitionClient,
 } from "@aws-sdk/client-rekognition";
+import { type PrismaClient } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 export const createCollection = async (
@@ -92,4 +95,91 @@ export const indexImage = async (
   }));
 
   return facesData;
+};
+
+export const listFaces = async (
+  client: RekognitionClient,
+  collectionId: string,
+) => {
+  const listFacesCommand = new ListFacesCommand({
+    CollectionId: collectionId,
+  });
+
+  const response = await client.send(listFacesCommand);
+
+  if (response.$metadata.httpStatusCode !== 200) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Failed to list faces",
+    });
+  }
+
+  return response.Faces;
+};
+
+const searchFacesByImage = async (
+  client: RekognitionClient,
+  collectionId: string,
+  imageKey: string,
+) => {
+  const searchFacesByImage = new SearchFacesByImageCommand({
+    CollectionId: collectionId,
+    FaceMatchThreshold: 90,
+    Image: {
+      S3Object: {
+        Bucket: env.BUCKET_NAME,
+        Name: imageKey,
+      },
+    },
+  });
+
+  const response = await client.send(searchFacesByImage);
+
+  if (response.$metadata.httpStatusCode !== 200) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Failed to search faces by image",
+    });
+  }
+
+  console.log(response);
+
+  response.FaceMatches?.forEach((faceMatch) => console.log(faceMatch.Face));
+
+  return response.FaceMatches;
+};
+
+export const findImages = async (
+  prisma: PrismaClient,
+  rekognition: RekognitionClient,
+  collectionId: string,
+  imageKey: string,
+) => {
+  const faces = await searchFacesByImage(rekognition, collectionId, imageKey);
+
+  if (!faces) return [];
+
+  const faceIds = faces
+    .map((face) => (face.Face?.FaceId ? face.Face.FaceId : ""))
+    .filter((face) => !!face);
+
+  const foundFaces = await prisma.face.findMany({
+    where: {
+      indexedFaceId: {
+        in: faceIds,
+      },
+    },
+  });
+
+  const keys = foundFaces.map((face) => face.imageKey);
+
+  const images = await prisma.image.findMany({
+    where: {
+      key: {
+        in: keys,
+      },
+    },
+  });
+
+  return images;
 };

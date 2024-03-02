@@ -34,8 +34,9 @@ export const GalleryDropzone = ({ eventId }: GalleryDropzoneProps) => {
   const { mutateAsync: fetchPresignedUrls } =
     api.s3.getPresignedUrl.useMutation();
   const { mutate: saveImageDetails } = api.event.addImages.useMutation();
-
-  // const { mutate: indexImage } = api.event.indexImage.useMutation();
+  const { mutateAsync: checkAndUpdateLimit } =
+    api.event.checkAndUpdateLimit.useMutation();
+  const { mutate: indexImage } = api.event.indexImage.useMutation();
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: true,
@@ -58,6 +59,15 @@ export const GalleryDropzone = ({ eventId }: GalleryDropzoneProps) => {
   const onSubmit = async () => {
     if (files.length > 0 && session && session.user) {
       try {
+        const limit = await checkAndUpdateLimit({ count: files.length });
+        if (!limit) {
+          toast({
+            variant: "destructive",
+            title: "Buy more resources",
+          });
+          return;
+        }
+
         let progress = 0;
         const step = 100 / files.length;
 
@@ -86,14 +96,13 @@ export const GalleryDropzone = ({ eventId }: GalleryDropzoneProps) => {
 
           images.push({ key: imageKey, name: file.name, type: imageType });
 
-          // TODO: index images on upload
-          // indexImage(
-          //   { eventId, imageKey },
-          //   {
-          //     onSuccess: (res) => console.log({ index_images: res }),
-          //     onError: (error) => console.log({ error }),
-          //   },
-          // );
+          indexImage(
+            { eventId, imageKey },
+            {
+              onSuccess: (res) => console.log({ index_images: res }),
+              onError: (error) => console.log({ error }),
+            },
+          );
 
           progress = progress + step;
 
@@ -119,7 +128,8 @@ export const GalleryDropzone = ({ eventId }: GalleryDropzoneProps) => {
             },
           },
         );
-      } catch (error) {
+      } catch (err) {
+        console.error(err);
         toast({
           variant: "destructive",
           title: "Failed to upload images",

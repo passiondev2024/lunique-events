@@ -20,6 +20,8 @@ export const s3Router = createTRPCRouter({
       const putObjectCommand = new PutObjectCommand({
         Bucket: env.BUCKET_NAME,
         Key: key,
+        // TODO: delete after 1 day, solution below doesn't work
+        // Expires: deleteAfter ? addDays(new Date(), deleteAfter) : undefined,
       });
 
       return await getSignedUrl(s3, putObjectCommand);

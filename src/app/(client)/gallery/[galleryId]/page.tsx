@@ -24,7 +24,7 @@ export default async function GalleryIdPage({
   return (
     <main className="grid grid-cols-1 bg-background md:h-[calc(100vh-65px)] md:grid-cols-3">
       <div className="p-3 md:pr-0">
-        <GallerySidebar event={event} />
+        <GallerySidebar event={event} images={images} />
       </div>
 
       <Suspense fallback={<ClientGallerySkeleton />}>
