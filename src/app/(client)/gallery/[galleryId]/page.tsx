@@ -1,11 +1,8 @@
 import { GallerySidebar } from "@/components/partials/gallery/gallery-sidebar";
 import { RenderGalleryImages } from "@/components/partials/gallery/render-gallery-images";
-import { ClientGallerySkeleton } from "@/components/skeletons/client-gallery-skeleton";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { paths } from "@/routes/paths";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 
 export default async function GalleryIdPage({
   params,
@@ -27,20 +24,7 @@ export default async function GalleryIdPage({
         <GallerySidebar event={event} images={images} />
       </div>
 
-      <Suspense fallback={<ClientGallerySkeleton />}>
-        <div className="col-span-2 hidden overflow-hidden md:block">
-          <ScrollArea className="relative h-screen p-3">
-            <RenderGalleryImages event={event} images={images} />
-            <ScrollBar orientation="vertical" />
-          </ScrollArea>
-        </div>
-      </Suspense>
-
-      <Suspense fallback={<ClientGallerySkeleton />}>
-        <div className=" p-3 md:hidden">
-          <RenderGalleryImages event={event} images={images} />
-        </div>
-      </Suspense>
+      <RenderGalleryImages event={event} images={images} />
     </main>
   );
 }

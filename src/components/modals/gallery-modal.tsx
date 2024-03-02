@@ -14,9 +14,6 @@ export const GalleryModal = () => {
   const { isOpen, images, currentImage, selected, onClose, toggleSelected } =
     useGalleryModal();
 
-  const handleDownload = () => {
-    alert("DOWNLOADING...");
-  };
   const handleShare = () => {
     alert("SHARING...");
   };
@@ -35,7 +32,6 @@ export const GalleryModal = () => {
 
   const handlers: GalleryHandlers = {
     onClose: onClose,
-    onDownload: handleDownload,
     onShare: handleShare,
     onImageSelect: handleSelectImage,
   };
@@ -59,7 +55,7 @@ export const GalleryModal = () => {
     <Dialog.Root open={isOpen} onOpenChange={onClose} modal>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content className="fixed inset-0 z-[999] overflow-hidden">
+        <Dialog.Content className="fixed inset-0 z-[999] h-[calc(100vh-(100vh-100%))] overflow-hidden">
           <Gallery
             images={images}
             currentImage={currentImage}

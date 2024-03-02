@@ -29,7 +29,7 @@ const searchRatelimit = new Ratelimit({
 
 const uploadRatelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(100, "1 m"),
+  limiter: Ratelimit.slidingWindow(1000, "1 m"),
   analytics: true,
 });
 

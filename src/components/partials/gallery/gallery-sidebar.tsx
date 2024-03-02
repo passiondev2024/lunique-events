@@ -26,7 +26,7 @@ import {
   DownloadIcon,
   Loader2Icon,
   MapPinIcon,
-  ShareIcon,
+  // ShareIcon,
   SparklesIcon,
   TrashIcon,
   UploadCloudIcon,
@@ -303,28 +303,28 @@ const ImageUploadWidget = ({
   );
 };
 
-const ActionsWidget = () => (
-  <Card className="flex justify-evenly p-3">
-    <Button size="icon" variant="secondary" className="rounded-full ">
-      <DownloadIcon className="h-4 w-4" />
-    </Button>
-    <Button size="icon" variant="secondary" className="rounded-full">
-      <ShareIcon className="h-4 w-4" />
-    </Button>
-    <Button size="icon" variant="secondary" className="rounded-full">
-      <DownloadIcon className="h-4 w-4" />
-    </Button>
-    <Button size="icon" variant="secondary" className="rounded-full">
-      <ShareIcon className="h-4 w-4" />
-    </Button>
-    <Button size="icon" variant="secondary" className="rounded-full">
-      <DownloadIcon className="h-4 w-4" />
-    </Button>
-    <Button size="icon" variant="secondary" className="rounded-full">
-      <ShareIcon className="h-4 w-4" />
-    </Button>
-  </Card>
-);
+// const ActionsWidget = () => (
+//   <Card className="flex justify-evenly p-3">
+//     <Button size="icon" variant="secondary" className="rounded-full ">
+//       <DownloadIcon className="h-4 w-4" />
+//     </Button>
+//     <Button size="icon" variant="secondary" className="rounded-full">
+//       <ShareIcon className="h-4 w-4" />
+//     </Button>
+//     <Button size="icon" variant="secondary" className="rounded-full">
+//       <DownloadIcon className="h-4 w-4" />
+//     </Button>
+//     <Button size="icon" variant="secondary" className="rounded-full">
+//       <ShareIcon className="h-4 w-4" />
+//     </Button>
+//     <Button size="icon" variant="secondary" className="rounded-full">
+//       <DownloadIcon className="h-4 w-4" />
+//     </Button>
+//     <Button size="icon" variant="secondary" className="rounded-full">
+//       <ShareIcon className="h-4 w-4" />
+//     </Button>
+//   </Card>
+// );
 
 const AnimateFade = ({
   children,
