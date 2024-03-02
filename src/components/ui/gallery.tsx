@@ -58,7 +58,6 @@ export const Gallery = ({
   select,
   selected,
   onClose,
-  onDownload,
   onShare,
   onImageSelect,
 }: GalleryProps) => {
@@ -167,9 +166,19 @@ export const Gallery = ({
     if (onClose) onClose();
   }, [onClose]);
 
-  const handleDownload = useCallback(() => {
-    if (onDownload) onDownload();
-  }, [onDownload]);
+  const handleDownload = useCallback(async (href: string) => {
+    const res = await fetch(href, { method: "GET", headers: {} });
+    const buffer = await res.arrayBuffer();
+
+    const parts = href.split("/");
+
+    const url = window.URL.createObjectURL(new Blob([buffer]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", parts[parts.length - 1] ?? "");
+    document.body.appendChild(link);
+    link.click();
+  }, []);
 
   const handleShare = useCallback(() => {
     if (onShare) onShare();
@@ -192,7 +201,14 @@ export const Gallery = ({
             onSelectChange={() => handleImageSelect(selectedIndex)}
           />
         )}
-        {download && <ActionButton Icon={Download} onAction={handleDownload} />}
+        {download && (
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10  transition duration-200 hover:bg-primary/20 md:hover:scale-105"
+            onClick={() => handleDownload(images[selectedIndex]?.url ?? "")}
+          >
+            <Download className="h-4 w-4 text-primary" />
+          </button>
+        )}
         {share && <ActionButton Icon={Share} onAction={handleShare} />}
         {close && <ActionButton Icon={X} onAction={handleClose} />}
       </div>

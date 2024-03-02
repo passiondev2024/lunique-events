@@ -21,8 +21,10 @@ import { Share1Icon } from "@radix-ui/react-icons";
 import axios from "axios";
 import { format } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
+import JSZip from "jszip";
 import {
   DownloadIcon,
+  Loader2Icon,
   MapPinIcon,
   ShareIcon,
   SparklesIcon,
@@ -41,7 +43,8 @@ export const GallerySidebar = ({ event, images }: GallerySidebarProps) => (
   <div className="space-y-3">
     <DetailsWidget event={event} />
     <ImageUploadWidget event={event} images={images} />
-    <ActionsWidget />
+    {/* TODO: Implement action widget */}
+    {/* <ActionsWidget /> */}
   </div>
 );
 
@@ -85,7 +88,9 @@ const ImageUploadWidget = ({
   event: EventWithOwner;
   images: Image[];
 }) => {
+  const [searching, setSearching] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+
   const { updateImages: updateFoundImages, images: foundImages } =
     useImagesStore();
   const { updateImages: updateGalleryImages, updateSelected } =
@@ -110,6 +115,8 @@ const ImageUploadWidget = ({
 
   const handleFindImages = async () => {
     if (!file) return;
+
+    setSearching(true);
 
     const key = getSelfieImagePath(event.id, file.name);
     const presignedUrl = await fetchPresignedUrl({
@@ -149,6 +156,8 @@ const ImageUploadWidget = ({
         },
       },
     );
+
+    setSearching(false);
   };
 
   const handleRemoveImage = useCallback(() => {
@@ -157,6 +166,33 @@ const ImageUploadWidget = ({
     updateSelected([]);
     updateGalleryImages(images);
   }, [images, updateGalleryImages, updateFoundImages, updateSelected]);
+
+  const handleDownloadMyImages = useCallback(async () => {
+    const zip = new JSZip();
+
+    try {
+      const downloadPromises = foundImages.map(async (img) => {
+        const response = await fetch(img.url);
+        const blob = await response.blob();
+        const filename = img.url.substring(img.url.lastIndexOf("/") + 1);
+        zip.file(filename, blob);
+      });
+
+      await Promise.all(downloadPromises);
+
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+
+      const zipFileUrl = window.URL.createObjectURL(zipBlob);
+      const link = document.createElement("a");
+      link.href = zipFileUrl;
+      link.setAttribute("download", `${event.name.toLowerCase()}.zip`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [foundImages, event]);
 
   return (
     <Card className="w-full">
@@ -206,7 +242,7 @@ const ImageUploadWidget = ({
         )}
         {file && (
           <AnimateFade motionKey="selfie" isVisible={!!file}>
-            <div className=" flex h-[220px] w-full items-center justify-evenly">
+            <div className=" flex h-[220px] w-full items-center justify-between md:justify-evenly">
               <div className="flex flex-col items-center justify-center gap-3">
                 {/* eslint-disable-next-line */}
                 <img
@@ -227,26 +263,29 @@ const ImageUploadWidget = ({
               </div>
               <div className="flex w-44 flex-col gap-3">
                 <Button
-                  disabled={!file || !!foundImages.length}
+                  disabled={!file || !!foundImages.length || searching}
                   size="sm"
                   className="w-full"
                   onClick={handleFindImages}
                 >
                   <SparklesIcon className="mr-1.5 h-4 w-4" />
                   Find My Images
+                  {searching && (
+                    <Loader2Icon className="ml-1.5 h-4 w-4 animate-spin" />
+                  )}
                 </Button>
                 <Button
                   disabled={!foundImages.length}
                   size="sm"
                   variant="outline"
                   className="w-full"
-                  onClick={() => alert(`File: ${file?.name}`)}
+                  onClick={handleDownloadMyImages}
                 >
                   <DownloadIcon className="mr-1.5 h-4 w-4" />
                   Download My Images
                 </Button>
                 <Button
-                  disabled={!foundImages.length}
+                  disabled={true}
                   size="sm"
                   variant="outline"
                   className="w-full"

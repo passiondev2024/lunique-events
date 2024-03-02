@@ -58,6 +58,7 @@
     "date-fns": "^2.30.0",
     "embla-carousel-react": "^8.0.0-rc22",
     "framer-motion": "^10.16.4",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.290.0",
     "next": "^13.5.4",
     "next-auth": "^4.23.0",
