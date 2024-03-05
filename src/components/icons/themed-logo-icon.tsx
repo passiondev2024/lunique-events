@@ -1,20 +1,27 @@
 "use client";
-import lightLogo from "@/public/images/Events-lightLogo.png";
-import darkLogo from "@/public/images/Events-darkLogo.png";
+
+import lightLogo from "@/public/images/logo-light.webp";
+import darkLogo from "@/public/images/logo-dark.webp";
 import { useTheme } from "next-themes";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
 export const ThemedLogoIcon = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [src, setSrc] = useState(lightLogo.src);
+
+  useEffect(() => {
+    const logoSrc = resolvedTheme === "light" ? darkLogo.src : lightLogo.src;
+    setSrc(logoSrc);
+  }, [resolvedTheme]);
+
   return (
-    // eslint-disable-next-line
-    <img
-      src={
-        theme === "light"
-          ? darkLogo.src
-          : theme === "dark"
-          ? lightLogo.src
-          : lightLogo.src
-      }
-      width={150}
+    <Image
+      alt="Lunique Events Logo"
+      src={src}
+      width={120}
+      height={30}
+      className="object-contain"
     />
   );
 };

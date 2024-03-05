@@ -260,7 +260,7 @@ const CarouselSlide = ({ idx, url, isInView }: CarouselSlideProps) => (
     style={{
       flex: "0 0 100%",
     }}
-    className="relative h-screen"
+    className="h-fill relative"
     key={idx}
   >
     <div className="flex h-full w-full items-center justify-center">

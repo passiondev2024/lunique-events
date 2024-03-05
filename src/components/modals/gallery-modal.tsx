@@ -55,7 +55,7 @@ export const GalleryModal = () => {
     <Dialog.Root open={isOpen} onOpenChange={onClose} modal>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content className="fixed inset-0 z-[999] h-[calc(100vh-(100vh-100%))] overflow-hidden">
+        <Dialog.Content className="h-fill fixed inset-0 z-[999] overflow-hidden">
           <Gallery
             images={images}
             currentImage={currentImage}
