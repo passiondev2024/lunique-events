@@ -8,8 +8,6 @@ await import("./src/env.mjs");
 const config = {
   images: {
     domains: ["d3gfj4ev871o73.cloudfront.net"],
-    loader: "custom",
-    loaderFile: "./src/lib/image-loader.js",
   },
 };
 

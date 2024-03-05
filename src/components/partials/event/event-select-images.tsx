@@ -2,6 +2,7 @@
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
+import { awsImageLoader } from "@/lib/image-loader";
 import { cn } from "@/lib/utils";
 import { type Image as ImageType } from "@prisma/client";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
@@ -49,6 +50,7 @@ export const EventSelectImages = ({
             >
               <AspectRatio ratio={1 / 1}>
                 <Image
+                  loader={awsImageLoader}
                   alt={image.name}
                   src={image.url}
                   width={172}
@@ -83,6 +85,7 @@ export const EventSelectImages = ({
               className="cursor-pointer p-0.5 transition-opacity duration-200 hover:opacity-90"
             >
               <Image
+                loader={awsImageLoader}
                 alt={image.name}
                 src={image.url}
                 width={172}

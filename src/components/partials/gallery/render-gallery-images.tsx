@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useImagesStore } from "@/hooks/use-images-store";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Scrollbar } from "@radix-ui/react-scroll-area";
+import { awsImageLoader } from "@/lib/image-loader";
 
 interface RenderGalleryImagesProps {
   event: NonNullable<RouterOutputs["event"]["get"]>;
@@ -112,6 +113,7 @@ export const GalleryImages = ({ images }: RenderGalleryImagesProps) => {
               className="transition md:cursor-pointer md:duration-300 md:hover:brightness-110"
             >
               <Image
+                loader={awsImageLoader}
                 src={image.url}
                 width={308}
                 height={231}

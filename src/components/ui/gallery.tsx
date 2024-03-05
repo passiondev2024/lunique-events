@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { useArrowKey } from "@/hooks/use-arrow-key";
 import Image from "next/image";
+import { awsImageLoader } from "@/lib/image-loader";
 
 const PLACEHOLDER_URL = "/images/placeholder.jpg" as const;
 
@@ -332,6 +333,7 @@ const ThumbButton = ({
     )}
   >
     <Image
+      loader={awsImageLoader}
       className="rounded-sm object-cover"
       src={isInView ? src : PLACEHOLDER_URL}
       width={172}
