@@ -1,59 +1,100 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeftIcon,
-  ChevronsRightIcon,
-} from "lucide-react";
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationEnd,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationStart,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
-interface EventImagesPagination {
-  handleFetchNextPage: () => void;
-  handleFetchPreviousPage: () => void;
-  hasNextPage: boolean;
-  page: number;
-  pagesCount: number;
-  imagesCount: number;
-}
+export const EventImagesPagination = ({ pages }: { pages: number }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-export const EventImagesPagination = ({
-  page,
-  pagesCount,
-  imagesCount,
-  hasNextPage,
-  handleFetchPreviousPage,
-  handleFetchNextPage,
-}: EventImagesPagination) => {
+  const page = parseInt(searchParams.get("page") ?? "");
+
+  useEffect(() => {
+    if (!page || page <= 0 || page > pages) {
+      router.push(`${pathname}?page=1`);
+    }
+  }, [pathname, router, page, pages]);
+
   return (
-    <div className="flex items-center justify-center gap-5">
-      <Button size="icon" variant="secondary" disabled>
-        <ChevronsLeftIcon />
-      </Button>
-      <Button
-        size="icon"
-        variant="secondary"
-        onClick={handleFetchPreviousPage}
-        disabled={page === 0}
-      >
-        <ChevronLeftIcon />
-      </Button>
-      <p className="text-zinc-500">
-        Page {page + 1} of {Math.round(imagesCount / 20) + 1}
-      </p>
-      <Button
-        size="icon"
-        variant="secondary"
-        onClick={handleFetchNextPage}
-        disabled={!hasNextPage && page === pagesCount - 1}
-      >
-        <ChevronRightIcon />
-      </Button>
-      <Button
-        size="icon"
-        variant="secondary"
-        disabled={!hasNextPage && page === pagesCount - 1}
-      >
-        <ChevronsRightIcon />
-      </Button>
-    </div>
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationStart
+            href={{ pathname, query: { page: 1 } }}
+            className={cn(page === 1 && "pointer-events-none opacity-50 ")}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationPrevious
+            href={{ pathname, query: { page: page > 0 ? page - 1 : page } }}
+            className={cn(page === 1 && "pointer-events-none opacity-50 ")}
+          />
+        </PaginationItem>
+
+        {page > 2 && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+        {page > 1 && (
+          <PaginationItem>
+            <PaginationLink
+              href={{ pathname: pathname, query: { page: page - 1 } }}
+            >
+              {page - 1}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+        <PaginationItem>
+          <PaginationLink
+            isActive
+            href={{ pathname: pathname, query: { page } }}
+          >
+            {page}
+          </PaginationLink>
+        </PaginationItem>
+
+        {page < pages && (
+          <PaginationItem>
+            <PaginationLink
+              href={{ pathname: pathname, query: { page: page + 1 } }}
+            >
+              {page + 1}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+        {page < pages - 1 && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+
+        <PaginationItem>
+          <PaginationNext
+            href={{ pathname, query: { page: page < pages ? page + 1 : page } }}
+            className={cn(page === pages && "pointer-events-none opacity-50 ")}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEnd
+            href={{ pathname, query: { page: pages } }}
+            className={cn(page === pages && "pointer-events-none opacity-50 ")}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 };

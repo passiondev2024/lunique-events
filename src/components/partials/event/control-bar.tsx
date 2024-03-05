@@ -1,4 +1,3 @@
-import { CustomSwitch } from "@/components/buttons/custom-switch";
 import { OpenModalButton } from "@/components/buttons/open-modal-button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -37,14 +36,14 @@ export const ControlBar = ({
           />
         </div>
         <div className="flex w-full items-center justify-between gap-3 pl-3">
-          <p className="text-xs text-primary">
+          <p className="text-[10px] text-primary md:text-xs">
             {selected.length} of {max} selected
           </p>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
               <p
                 className={cn(
-                  "text-xs font-bold",
+                  "text-xs font-medium md:font-semibold",
                   isSelectMode ? "text-primary/60" : "text-primary",
                 )}
               >
@@ -56,7 +55,7 @@ export const ControlBar = ({
               />
               <p
                 className={cn(
-                  "text-xs font-bold",
+                  "text-xs font-medium md:font-semibold",
                   isSelectMode ? "text-primary" : "text-primary/60",
                 )}
               >

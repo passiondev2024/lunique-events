@@ -235,7 +235,7 @@ export const Gallery = ({
       </div>
 
       {thumbs && (
-        <div className="absolute bottom-3 z-10 flex w-full items-center justify-center 2xl:bottom-8">
+        <div className="absolute bottom-3 z-10 flex w-full items-center justify-center px-3 2xl:bottom-8">
           <Thumbs
             images={images}
             inView={thumbSlidesInView}
@@ -328,13 +328,13 @@ const ThumbButton = ({
   <button
     onClick={() => onClick(index)}
     className={cn(
-      "h-16 w-1/5 flex-none flex-shrink-0 flex-grow-0 rounded-sm transition duration-200 md:h-16 md:w-[8%] 2xl:h-20 2xl:w-[5%]",
+      "h-16 w-1/5 flex-none flex-shrink-0 flex-grow-0 rounded-sm transition duration-200 md:h-16 md:w-[7%] 2xl:h-20 ",
       !selected && "scale-90 opacity-25 hover:opacity-50",
     )}
   >
     <Image
       loader={awsImageLoader}
-      className="rounded-sm object-cover"
+      className="h-full w-full rounded-sm object-cover"
       src={isInView ? src : PLACEHOLDER_URL}
       width={172}
       height={60}
