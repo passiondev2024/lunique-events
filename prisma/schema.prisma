@@ -44,7 +44,8 @@ model User {
     sessions      Session[]
     limit         Int       @default(0)
 
-    Event Event[]
+    Event        Event[]
+    Subscription Subscription[]
 }
 
 model VerificationToken {
@@ -53,6 +54,64 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model BillingWebhookEvent {
+    id              String   @id @default(cuid())
+    name            String
+    processed       Boolean  @default(false)
+    body            Json
+    processingError String?
+    createdAt       DateTime @default(now())
+}
+
+model Plan {
+    id                 String  @id @default(cuid())
+    productId          Int
+    productName        String?
+    variantId          Int     @unique
+    name               String
+    description        String?
+    price              String
+    isUsageBased       Boolean @default(false)
+    interval           String?
+    intervalCount      Int?
+    trialInterval      String?
+    trialIntervalCount Int?
+    sort               Int?
+
+    features       PlanFeatures?  @relation(fields: [planFeaturesId], references: [id])
+    planFeaturesId String?
+    Subscription   Subscription[]
+}
+
+model PlanFeatures {
+    id       String  @id @default(cuid())
+    images   Int
+    branding Boolean
+
+    Plan Plan[]
+}
+
+model Subscription {
+    id                 String  @id @default(cuid())
+    lemonSqueezyId     String  @unique
+    orderId            Int
+    name               String
+    email              String
+    status             String
+    statusFormatted    String
+    renewsAt           String?
+    endsAt             String?
+    trialEndsAt        String?
+    price              String
+    isUsageBased       Boolean @default(false)
+    isPaused           Boolean @default(false)
+    subscriptionItemId Int?
+    user               User    @relation(fields: [userId], references: [id])
+    plan               Plan    @relation(fields: [planId], references: [id])
+    userId             String
+    planId             String
 }
 
 model Event {

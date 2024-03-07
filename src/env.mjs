@@ -35,6 +35,11 @@ export const env = createEnv({
     AWS_CLOUDFRONT_DOMAIN: z.string(),
     UPSTASH_REDIS_REST_URL: z.string(),
     UPSTASH_REDIS_REST_TOKEN: z.string(),
+    LEMONSQUEEZY_API_KEY: z.string(),
+    LEMONSQUEEZY_PRODUCT_ID: z.string(),
+    LEMONSQUEEZY_STORE_ID: z.string(),
+    LEMONSQUEEZY_WEBHOOK_SECRET: z.string(),
+    LEMONSQUEEZY_WEBHOOK_URL: z.string(),
   },
 
   /**
@@ -43,7 +48,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    //
+    NEXT_PUBLIC_VERCEL_URL: z.string(),
   },
 
   /**
@@ -69,6 +74,12 @@ export const env = createEnv({
     AWS_CLOUDFRONT_DOMAIN: process.env.AWS_CLOUDFRONT_DOMAIN,
     UPSTASH_REDIS_REST_URL: process.env.AWS_CLOUDFRONT_DOMAIN,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
+    LEMONSQUEEZY_PRODUCT_ID: process.env.LEMONSQUEEZY_PRODUCT_ID,
+    LEMONSQUEEZY_STORE_ID: process.env.LEMONSQUEEZY_STORE_ID,
+    NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
+    LEMONSQUEEZY_WEBHOOK_SECRET: process.env.LEMONSQUEEZY_WEBHOOK_SECRET,
+    LEMONSQUEEZY_WEBHOOK_URL: process.env.LEMONSQUEEZY_WEBHOOK_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
