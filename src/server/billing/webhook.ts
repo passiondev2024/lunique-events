@@ -152,11 +152,13 @@ export async function processWebhookEvent(
         };
 
         try {
-          await db.subscription.upsert({
-            where: { lemonSqueezyId: newSubscription.lemonSqueezyId },
-            create: newSubscription,
-            update: newSubscription,
-          });
+          // TODO: create or update
+          // await db.subscription.upsert({
+          //   where: { lemonSqueezyId: newSubscription.lemonSqueezyId },
+          //   create: newSubscription,
+          //   update: newSubscription,
+          // });
+          await db.subscription.create({ data: newSubscription });
         } catch (err) {
           processingError = `Failed to upsert Subscription #${newSubscription.lemonSqueezyId} to the database.`;
           console.error(err);
