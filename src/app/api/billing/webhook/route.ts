@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     );
 
     // Non-blocking call to process the webhook event.
-    void processWebhookEvent(db, webhookEventId);
+    await processWebhookEvent(db, webhookEventId);
 
     return new Response("OK", { status: 200 });
   }
