@@ -40,19 +40,29 @@ const ratelimit = new Ratelimit({
 });
 
 export const eventRouter = createTRPCRouter({
-  list: protectedProcedure.query(async ({ ctx }) => {
-    const { success } = await ratelimit.limit(ctx.session.user.id);
-    if (!success) {
-      throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
-    }
+  list: protectedProcedure
+    .input(
+      z.object({
+        eventTimeFrame: z.enum(["past", "upcoming"]).nullish(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { success } = await ratelimit.limit(ctx.session.user.id);
+      if (!success) {
+        throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+      }
 
-    return await ctx.db.event.findMany({
-      where: {
-        ownerId: ctx.session?.user.id,
-      },
-      include: { images: { take: 1 }, owner: true },
-    });
-  }),
+      return await ctx.db.event.findMany({
+        where: {
+          ownerId: ctx.session?.user.id,
+          date: {
+            gt: input.eventTimeFrame === "upcoming" ? new Date() : undefined,
+            lte: input.eventTimeFrame === "past" ? new Date() : undefined,
+          },
+        },
+        include: { images: { take: 1 }, owner: true },
+      });
+    }),
   get: publicProcedure
     .input(
       z.object({
