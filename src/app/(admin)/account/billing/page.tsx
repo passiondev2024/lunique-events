@@ -1,8 +1,13 @@
 import { BillingPlanCard } from "@/components/cards/billing-plan-card";
 import { LicenseCodeCard } from "@/components/cards/license-code-card";
-import { SubscriptionCard } from "@/components/cards/subscription-card";
+import { api } from "@/trpc/server";
 
-export default function UsagePage() {
+export default async function UsagePage() {
+  const subscription = await api.billing.getSubscription.query();
+  const professionalPlan = await api.billing.getPlan.query({
+    type: "professional",
+  });
+
   return (
     <div className="space-y-8">
       <header>
@@ -12,12 +17,12 @@ export default function UsagePage() {
         </p>
       </header>
 
-      <div className="grid gap-5 md:grid-cols-2">
-        <BillingPlanCard />
-        <div className="flex flex-col gap-5">
-          <SubscriptionCard />
-          <LicenseCodeCard />
-        </div>
+      <div className="space-y-3">
+        <BillingPlanCard
+          subscription={subscription}
+          professionalPlan={professionalPlan}
+        />
+        <LicenseCodeCard />
       </div>
     </div>
   );

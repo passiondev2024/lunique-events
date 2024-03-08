@@ -98,12 +98,19 @@ export async function processWebhookEvent(
   }
 
   let processingError = "";
-  const eventBody = webhookEvent.body;
+  const eventBody = JSON.parse(event.body) as unknown;
+
+  console.log(typeof eventBody);
 
   if (!webhookHasMeta(eventBody)) {
+    console.log("MISSING META DATA");
+
     processingError = "Event body is missing the 'meta' property.";
   } else if (webhookHasData(eventBody)) {
+    console.log("WEBHOOK HAS BODY DATA");
+
     if (webhookEvent.name.startsWith("subscription_payment_")) {
+      // TODO
       // Save subscription invoices; eventBody is a SubscriptionInvoice
       // Not implemented.
     } else if (webhookEvent.name.startsWith("subscription_")) {
@@ -119,7 +126,6 @@ export async function processWebhookEvent(
         processingError = `Plan with variantId ${variantId} not found.`;
       } else {
         // Update the subscription in the database.
-
         const priceId = attributes.first_subscription_item.price_id;
 
         // Get the price data from Lemon Squeezy.
@@ -152,22 +158,18 @@ export async function processWebhookEvent(
         };
 
         try {
-          // TODO: create or update
-          // await db.subscription.upsert({
-          //   where: { lemonSqueezyId: newSubscription.lemonSqueezyId },
-          //   create: newSubscription,
-          //   update: newSubscription,
-          // });
-          await db.subscription.create({ data: newSubscription });
+          await db.subscription.upsert({
+            where: { userId: newSubscription.userId },
+            create: newSubscription,
+            update: newSubscription,
+          });
         } catch (err) {
+          console.log(err);
           processingError = `Failed to upsert Subscription #${newSubscription.lemonSqueezyId} to the database.`;
-          console.error(err);
         }
       }
-    } else if (webhookEvent.name.startsWith("order_")) {
-      // Save orders; eventBody is a "Order"
-      /* Not implemented */
     } else if (webhookEvent.name.startsWith("license_")) {
+      // TODO
       // Save license keys; eventBody is a "License key"
       /* Not implemented */
     }
@@ -187,13 +189,13 @@ export async function processWebhookEvent(
 export async function storeWebhookEvent(
   db: PrismaClient,
   name: string,
-  body: BillingWebhookEvent["body"],
+  body: string,
 ) {
   return await db.billingWebhookEvent.create({
     data: {
       name,
       processed: false,
-      body: JSON.stringify(body),
+      body: body,
     },
   });
 }

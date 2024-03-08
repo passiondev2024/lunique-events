@@ -28,3 +28,16 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
 lukiano's edit
+
+## Test webhooks on localhost
+
+- Create Ngrok account
+- Run following commands to install on macOS
+
+```
+brew install ngrok/ngrok/ngrok
+ngrok config add-authtoken <auth_token>
+ngrok http http://localhost:3000
+```
+
+- Copy Forwarding URL to your webhook service

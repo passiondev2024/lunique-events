@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 
 export const LicenseCodeCard = () => {
+  // TODO: License Code Form
   return (
     <Card>
       <CardHeader className="space-y-0">

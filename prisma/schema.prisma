@@ -45,7 +45,7 @@ model User {
     limit         Int       @default(0)
 
     Event        Event[]
-    Subscription Subscription[]
+    Subscription Subscription?
 }
 
 model VerificationToken {
@@ -60,7 +60,7 @@ model BillingWebhookEvent {
     id              String   @id @default(cuid())
     name            String
     processed       Boolean  @default(false)
-    body            Json
+    body            String
     processingError String?
     createdAt       DateTime @default(now())
 }
@@ -110,7 +110,7 @@ model Subscription {
     subscriptionItemId Int?
     user               User    @relation(fields: [userId], references: [id])
     plan               Plan    @relation(fields: [planId], references: [id])
-    userId             String
+    userId             String  @unique
     planId             String
 }
 

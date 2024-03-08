@@ -1,12 +1,14 @@
 import { create } from "zustand";
 import { type Image } from "@prisma/client";
+import { type RouterOutputs } from "@/trpc/shared";
 
 export type ModalType =
   | "create-event"
   | "share-event"
   | "upload-event-images"
   | "delete-event-images"
-  | "delete-event";
+  | "delete-event"
+  | "cancel-subscription";
 
 export type ModalData = {
   eventId?: string;
@@ -14,6 +16,7 @@ export type ModalData = {
   galleryImages?: Image[];
   galleryId?: string;
   currentImage?: number;
+  subscription?: RouterOutputs["billing"]["getSubscription"];
 };
 
 interface ModalStore {

@@ -7,6 +7,7 @@ import { UploadImagesModal } from "../modals/upload-images-modal";
 import { DeleteEventImagesModal } from "../modals/delete-images-modal";
 import { DeleteEventModal } from "../modals/delete-event-modal";
 import { GalleryModal } from "../modals/gallery-modal";
+import { CancelSubscriptionModal } from "../modals/cancel-subscription-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -27,6 +28,7 @@ export const ModalProvider = () => {
       <DeleteEventModal />
       <DeleteEventImagesModal />
       <GalleryModal />
+      <CancelSubscriptionModal />
     </>
   );
 };
