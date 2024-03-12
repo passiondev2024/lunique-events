@@ -17,9 +17,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { useArrowKey } from "@/hooks/use-arrow-key";
+
 import Image from "next/image";
 import { awsImageLoader } from "@/lib/image-loader";
+import { useActionKeys } from "@/hooks/use-action-keys";
 
 const PLACEHOLDER_URL = "/images/placeholder.jpg" as const;
 
@@ -161,7 +162,15 @@ export const Gallery = ({
     mainCarouselApi?.scrollNext();
   }, [mainCarouselApi]);
 
-  useArrowKey({ onArrowLeft: handleLeft, onArrowRight: handleRight });
+  const handleSelectKey = () => {
+    handleImageSelect(selectedIndex);
+  };
+
+  useActionKeys({
+    onArrowLeft: handleLeft,
+    onArrowRight: handleRight,
+    onImageSelect: handleSelectKey,
+  });
 
   const handleClose = useCallback(() => {
     if (onClose) onClose();
