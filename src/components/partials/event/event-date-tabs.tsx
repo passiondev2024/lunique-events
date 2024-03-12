@@ -8,7 +8,10 @@ interface EventDateTabsProps {
   onValueChange: (value: EventDate) => void;
 }
 
-export const EventDateTabs = ({ value, onValueChange }: EventDateTabsProps) => {
+export const EventTimeframeTabs = ({
+  value,
+  onValueChange,
+}: EventDateTabsProps) => {
   return (
     <Tabs
       value={value}

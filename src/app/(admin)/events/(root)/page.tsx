@@ -1,15 +1,10 @@
 import { OpenModalButton } from "@/components/buttons/open-modal-button";
-import { ListEvents } from "@/components/partials/event/list-events";
-import { NoEvents } from "@/components/partials/event/no-events";
-// import { NoEvents } from "@/components/partials/event/no-events";
-import { api } from "@/trpc/server";
+import { Events } from "@/components/partials/event/events";
 import { PlusCircleIcon } from "lucide-react";
 
-export default async function EventsPage() {
-  const events = await api.event.list.query({ eventTimeFrame: "upcoming" });
-
+export default function EventsPage() {
   return (
-    <div className="space-y-5  md:space-y-8">
+    <div className="mx-auto max-w-4xl space-y-5 md:space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold md:text-2xl">Events</h1>
@@ -21,7 +16,8 @@ export default async function EventsPage() {
           <PlusCircleIcon className="mr-1.5 h-4 w-4" /> Create
         </OpenModalButton>
       </div>
-      {events && <ListEvents events={events} />}
+
+      <Events />
     </div>
   );
 }

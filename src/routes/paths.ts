@@ -5,7 +5,14 @@ export const paths = {
   },
   events: {
     root: "/events",
+    error: "/error",
     event: (id: string) => `/events/${id}`,
+    overview: (id: string) => `/events/${id}/overview`,
+    guests: (id: string) => `/events/${id}/guests`,
+    registration: (id: string) => `/events/${id}/registration`,
+    emails: (id: string) => `/events/${id}/emails`,
+    insights: (id: string) => `/events/${id}/insights`,
+    photos: (id: string) => `/events/${id}/photos`,
     settings: (id: string) => `/events/${id}/settings`,
   },
   account: {

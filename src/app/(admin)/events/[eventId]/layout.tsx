@@ -1,6 +1,15 @@
 import { SidebarNav } from "@/components/navigation/sidebar-nav";
 import { paths } from "@/routes/paths";
-import { ChevronLeftIcon, ImageIcon, SettingsIcon } from "lucide-react";
+import {
+  BarChart3Icon,
+  ChevronLeftIcon,
+  ClipboardListIcon,
+  ImageIcon,
+  MailsIcon,
+  PanelLeftIcon,
+  SettingsIcon,
+  UsersIcon,
+} from "lucide-react";
 
 interface SettingsLayoutProps {
   params: { eventId: string };
@@ -18,9 +27,34 @@ export default function SettingsLayout({
       icon: <ChevronLeftIcon className="mr-1.5 h-4 w-4" />,
     },
     {
+      title: "Overview",
+      href: paths.events.overview(eventId),
+      icon: <PanelLeftIcon className="mr-1.5 h-4 w-4" />,
+    },
+    {
+      title: "Guests",
+      href: paths.events.guests(eventId),
+      icon: <UsersIcon className="mr-1.5 h-4 w-4" />,
+    },
+    {
+      title: "Registration",
+      href: paths.events.registration(eventId),
+      icon: <ClipboardListIcon className="mr-1.5 h-4 w-4" />,
+    },
+    {
+      title: "Emails",
+      href: paths.events.emails(eventId),
+      icon: <MailsIcon className="mr-1.5 h-4 w-4" />,
+    },
+    {
       title: "Photos",
-      href: paths.events.event(eventId),
+      href: paths.events.photos(eventId),
       icon: <ImageIcon className="mr-1.5 h-4 w-4" />,
+    },
+    {
+      title: "Insights",
+      href: paths.events.insights(eventId),
+      icon: <BarChart3Icon className="mr-1.5 h-4 w-4" />,
     },
     {
       title: "Settings",

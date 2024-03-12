@@ -1,9 +1,6 @@
-import { AspectRatio } from "../ui/aspect-ratio";
-import { Card, CardFooter } from "../ui/card";
-import { format } from "date-fns";
+import { Card, CardHeader, CardTitle } from "../ui/card";
 import {
   ArrowRight,
-  CalendarIcon,
   GalleryThumbnailsIcon,
   MapPinIcon,
   Users2Icon,
@@ -12,6 +9,8 @@ import { type RouterOutputs } from "@/trpc/shared";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { paths } from "@/routes/paths";
+import Image from "next/image";
+import { awsImageLoader } from "@/lib/image-loader";
 
 interface EventCardProps {
   event: RouterOutputs["event"]["list"][number];
@@ -19,71 +18,63 @@ interface EventCardProps {
 type TargetClick = "eventPage" | "manageEventPage";
 
 export const EventCard = ({ event }: EventCardProps) => {
-  const { images, name, date, location, guests } = event;
+  const { images, name, location, guests } = event;
   const router = useRouter();
 
   const handleClick = (dest: TargetClick) => {
-    console.log(dest);
     if (dest === "eventPage") {
-      router.push(paths.events.event(String(event.id)));
-      return;
+      router.push(paths.events.event(event.id));
     }
     if (dest === "manageEventPage") {
-      router.push(paths.events.settings(String(event.id)));
-      return;
+      router.push(paths.events.settings(event.id));
     }
   };
 
   return (
-    <Card className="border-t-[0px] transition duration-200 lg:hover:brightness-125">
-      <AspectRatio ratio={16 / 9} onClick={() => handleClick("eventPage")}>
-        {images[0] && (
-          // eslint-disable-next-line
-          <img
-            src={images[0].url ?? ""}
-            alt={name}
-            className="h-full w-full cursor-pointer rounded-t-lg object-cover"
-          />
-        )}
-        {!images[0] && (
-          <div className="flex h-full w-full items-center justify-center rounded-t-lg bg-muted-foreground">
-            <GalleryThumbnailsIcon className="h-24 w-24 text-muted" />
-          </div>
-        )}
-      </AspectRatio>
-      <CardFooter className="relative flex  flex-col items-baseline gap-1 py-3">
-        <p
-          className="cursor-pointer text-lg font-semibold"
-          onClick={() => handleClick("eventPage")}
-        >
+    <Card className="flex flex-col rounded-lg border-t-[0px] md:flex-row">
+      {images[0] && (
+        <Image
+          loader={awsImageLoader}
+          width={500}
+          height={281}
+          src={images[0].url ?? ""}
+          alt={name}
+          className="rounded-t-lg object-cover md:h-[225px] md:w-[300px] md:rounded-l-lg md:rounded-tr-none"
+        />
+      )}
+      {!images[0] && (
+        <div className="flex h-full w-full items-center justify-center rounded-l-lg bg-muted-foreground md:rounded-l-lg md:rounded-t-none">
+          <GalleryThumbnailsIcon className="h-24 w-24 text-muted" />
+        </div>
+      )}
+      <CardHeader className="py-3">
+        <CardTitle className="cursor-pointer text-lg font-semibold">
           {name}
-        </p>
+        </CardTitle>
         <div className="space-y-2">
-          <p className="flex items-center gap-2 text-sm text-zinc-500">
+          {/* <p className="flex items-center gap-2 text-sm text-zinc-500">
             <CalendarIcon className="h-4 w-4" />
             {format(date, "do MMMM, yyy")}
+          </p> */}
+          <p className="flex items-center gap-2 text-sm text-zinc-500">
+            <MapPinIcon className="h-4 w-4" />
+            {location ? location : "Missing location "}
           </p>
-          {location && (
-            <p className="flex items-center gap-2 text-sm text-zinc-500">
-              <MapPinIcon className="h-4 w-4" />
-              {location}
-            </p>
-          )}
-          {guests && (
-            <p className="flex items-center gap-2 text-sm text-zinc-500">
-              <Users2Icon className="h-4 w-4" />
-              {guests.length}
-            </p>
-          )}
+          <p className="flex items-center gap-2 text-sm text-zinc-500">
+            <Users2Icon className="h-4 w-4" />
+            {guests.length !== 0 ? `${guests.length} guests` : "No guests yet"}
+          </p>
         </div>
         <Button
-          className="h-8 gap-x-2 bg-slate-500 "
+          variant="secondary"
+          size="sm"
           onClick={() => handleClick("manageEventPage")}
+          className="hover:bg-secondary/60"
         >
           <p>Manage Event</p>
-          <ArrowRight className="h-4" />
+          <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
         </Button>
-      </CardFooter>
+      </CardHeader>
     </Card>
   );
 };
