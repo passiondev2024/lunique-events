@@ -34,13 +34,7 @@ export const ListEvents = ({ events }: ListEventsProps) => {
         <EventDateTabs value={tab} onValueChange={setTab} />
         <div className="grid gap-3 md:grid-cols-4">
           {eventsData.map((event) => (
-            <Link
-              href={paths.events.event(String(event.id))}
-              key={event.id}
-              className="transition duration-200 lg:hover:opacity-80"
-            >
-              <EventCard event={event} />
-            </Link>
+            <EventCard event={event} key={event.id} />
           ))}
         </div>
       </div>
