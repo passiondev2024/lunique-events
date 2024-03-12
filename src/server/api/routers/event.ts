@@ -60,7 +60,7 @@ export const eventRouter = createTRPCRouter({
             lte: input.eventTimeFrame === "past" ? new Date() : undefined,
           },
         },
-        include: { images: { take: 1 }, owner: true },
+        include: { images: { take: 1 }, owner: true, guests: true },
       });
     }),
   get: publicProcedure
@@ -77,7 +77,7 @@ export const eventRouter = createTRPCRouter({
 
       return await ctx.db.event.findFirst({
         where: { id: input.id },
-        include: { images: { take: 1 }, owner: true },
+        include: { images: { take: 1 }, owner: true, guests: true },
       });
     }),
   settings: protectedProcedure
