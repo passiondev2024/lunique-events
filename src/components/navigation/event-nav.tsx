@@ -67,26 +67,26 @@ export const EventNav = ({ id, name }: { id: string; name: string }) => {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center md:gap-1.5">
           <Link
             href={paths.events.root}
             className={buttonVariants({ variant: "ghost", size: "icon" })}
           >
             <ChevronLeft />
           </Link>
-          <h1 className="text-2xl font-semibold">{name}</h1>
+          <h1 className="text-xl font-semibold md:text-2xl">{name}</h1>
         </div>
         <Link href={`/${id}`} className={buttonVariants({ variant: "ghost" })}>
           Event Page <ChevronRightCircle className="ml-1.5 h-4 w-4" />
         </Link>
       </div>
       <Tabs className="flex" onValueChange={onValueChange} value={pathname}>
-        <TabsList className="gap-5 bg-transparent text-muted-foreground">
+        <TabsList className="justify-start gap-5 overflow-x-auto overflow-y-hidden rounded-none bg-transparent px-3 text-muted-foreground md:overflow-hidden md:px-0">
           {items.map((item) => (
             <TabsTrigger
               key={item.title}
               value={item.href}
-              className="rounded-none border-b-2 border-transparent px-0 py-2 shadow-none transition duration-300 hover:text-primary/90 data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none"
+              className="rounded-none border-b-4 border-transparent px-0 py-2 shadow-none transition duration-300 hover:text-primary/90 data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none"
             >
               <item.Icon className="mr-1.5 h-4 w-4" />
               {item.title}

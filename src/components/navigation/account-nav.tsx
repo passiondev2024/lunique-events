@@ -42,7 +42,9 @@ export const AccountNav = () => {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h1 className="px-1.5 text-2xl font-semibold">Account</h1>
+        <h1 className="px-3 text-lg font-semibold md:px-1.5 md:text-2xl">
+          Account
+        </h1>
         <Link
           href={paths.events.root}
           className={buttonVariants({ variant: "ghost" })}
@@ -51,7 +53,7 @@ export const AccountNav = () => {
         </Link>
       </div>
       <Tabs className="flex" onValueChange={onValueChange} value={pathname}>
-        <TabsList className="gap-5 bg-transparent text-muted-foreground">
+        <TabsList className="gap-5 rounded-none bg-transparent px-3 text-muted-foreground md:px-0">
           {items.map((item) => (
             <TabsTrigger
               key={item.title}

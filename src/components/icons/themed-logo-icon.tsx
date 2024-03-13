@@ -21,7 +21,7 @@ export const ThemedLogoIcon = () => {
       src={src}
       width={120}
       height={30}
-      className="object-contain"
+      className="w-24 object-contain"
     />
   );
 };

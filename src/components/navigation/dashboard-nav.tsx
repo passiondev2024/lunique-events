@@ -9,7 +9,7 @@ export const DashboardNav = async () => {
   const session = await getServerAuthSession();
 
   return (
-    <nav className="container mx-auto flex h-16 items-center justify-between">
+    <nav className="container mx-auto flex h-12 items-center justify-between">
       <Link href={paths.events.root}>
         <ThemedLogoIcon />
       </Link>

@@ -22,7 +22,7 @@ export default async function SettingsLayout({
           <EventNav id={eventId} name={event.name} />
         </div>
       </div>
-      <main className="mx-auto max-w-4xl py-5">{children}</main>
+      <main className="mx-auto max-w-4xl p-3 md:px-0 md:py-5">{children}</main>
     </>
   );
 }
