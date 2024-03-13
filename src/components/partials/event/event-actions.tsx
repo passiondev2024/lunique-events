@@ -23,7 +23,7 @@ export const EventActions = () => {
 
     const query = new URLSearchParams();
     query.set("tab", "upcoming");
-    router.push(`${pathname}?${query.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${query.toString()}`, { scroll: false });
   }, [timeframe, pathname, router]);
 
   const onValueChange = (value: Timeframe) => {
@@ -34,7 +34,9 @@ export const EventActions = () => {
 
   return (
     <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
-      <h1 className="text-xl font-semibold md:text-4xl">Events</h1>
+      <h1 className="hidden px-1.5 text-lg font-semibold md:block md:text-2xl">
+        Events
+      </h1>
 
       <div className="flex flex-row-reverse justify-between gap-3 md:flex-row">
         <Button variant="ghost" onClick={() => onOpen("create-event")}>

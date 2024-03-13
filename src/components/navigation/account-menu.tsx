@@ -30,7 +30,7 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
   const { mutate, isLoading } = useSignOut();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <Avatar className="h-9 w-9">
           {image && <AvatarImage src={image} className="h-9 w-9" />}

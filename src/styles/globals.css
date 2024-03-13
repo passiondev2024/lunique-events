@@ -53,6 +53,10 @@
   * {
     @apply border-border;
   }
+  html {
+    /* Fix scrollbar layout shifts */
+    padding-left: calc(100vw - 100%);
+  }
   body {
     @apply bg-background text-foreground;
   }

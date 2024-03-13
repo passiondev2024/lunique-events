@@ -46,18 +46,18 @@ export const RenderTimeframe = ({ timeframe }: RenderTimeframeProps) => {
             className="flex w-full gap-4 md:h-[250px] md:gap-0"
           >
             <div className="flex w-1/12 flex-col justify-between md:w-1/3 md:flex-row">
-              <div className="hidden px-5 md:block">
+              <div className="hidden px-1.5 md:block">
                 <EventDate date={event.date} />
               </div>
               <div className="flex h-full flex-col items-center md:px-10  ">
                 <CircleIcon className="h-4 w-4 text-border" />
                 <div
                   className={cn(
-                    "relative -mb-6 h-full w-[1px] border-l-2 border-dashed border-border/80 md:mb-0",
+                    "relative -mb-6 h-[105%] w-[1px] border-l-2 border-dashed border-border/80 md:mb-0",
                   )}
                 >
                   {idx === data.length - 1 && (
-                    <div className="h-full w-2 bg-gradient-to-b from-background/0 via-background/70 to-background"></div>
+                    <div className="absolute -right-2.5 top-0 h-full w-5 bg-gradient-to-b from-background/0 via-background/70 to-background"></div>
                   )}
                 </div>
               </div>

@@ -9,21 +9,12 @@ export default async function UsagePage() {
   });
 
   return (
-    <div className="space-y-8">
-      <header>
-        <h1 className="text-3xl font-bold">Billing</h1>
-        <p className="text-zinc-500">
-          Manage billing and your subscription plan.
-        </p>
-      </header>
-
-      <div className="space-y-3">
-        <BillingPlanCard
-          subscription={subscription}
-          professionalPlan={professionalPlan}
-        />
-        <LicenseCodeCard />
-      </div>
+    <div className="space-y-3 md:space-y-5">
+      <BillingPlanCard
+        subscription={subscription}
+        professionalPlan={professionalPlan}
+      />
+      <LicenseCodeCard />
     </div>
   );
 }

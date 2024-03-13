@@ -9,19 +9,17 @@ export const DashboardNav = async () => {
   const session = await getServerAuthSession();
 
   return (
-    <nav className="border-b">
-      <div className="container mx-auto flex h-16 w-full items-center justify-between">
-        <Link href={paths.events.root}>
-          <ThemedLogoIcon />
-        </Link>
-        <div className="flex items-center gap-5">
-          <ThemeToggle />
-          <AccountMenu
-            name={session?.user.name}
-            email={session?.user.email}
-            image={session?.user.image}
-          />
-        </div>
+    <nav className="container mx-auto flex h-12 items-center justify-between">
+      <Link href={paths.events.root}>
+        <ThemedLogoIcon />
+      </Link>
+      <div className="flex items-center gap-5">
+        <ThemeToggle />
+        <AccountMenu
+          name={session?.user.name}
+          email={session?.user.email}
+          image={session?.user.image}
+        />
       </div>
     </nav>
   );
