@@ -62,13 +62,12 @@ export const EventNav = ({ id }: { id: string }) => {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center md:gap-1.5">
-          <Link
-            href={paths.events.root}
-            className={buttonVariants({ variant: "ghost", size: "icon" })}
-          >
-            <ChevronLeft />
+          <Link href={paths.events.root}>
+            <div className="flex items-center gap-1.5 rounded-lg px-3 py-1 hover:bg-accent hover:text-accent-foreground">
+              <ChevronLeft />
+              <h1 className="text-xl font-semibold md:text-2xl">Events</h1>
+            </div>
           </Link>
-          <h1 className="text-xl font-semibold md:text-2xl">Events</h1>
         </div>
         <Link href={`/${id}`} className={buttonVariants({ variant: "ghost" })}>
           Event Page <ChevronRightCircle className="ml-1.5 h-4 w-4" />
