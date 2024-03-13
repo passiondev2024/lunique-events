@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 
-export const EventNav = ({ id, name }: { id: string; name: string }) => {
+export const EventNav = ({ id }: { id: string }) => {
   const items = [
     {
       title: "Overview",
@@ -74,7 +74,7 @@ export const EventNav = ({ id, name }: { id: string; name: string }) => {
           >
             <ChevronLeft />
           </Link>
-          <h1 className="text-xl font-semibold md:text-2xl">{name}</h1>
+          <h1 className="text-xl font-semibold md:text-2xl">Events</h1>
         </div>
         <Link href={`/${id}`} className={buttonVariants({ variant: "ghost" })}>
           Event Page <ChevronRightCircle className="ml-1.5 h-4 w-4" />
