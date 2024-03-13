@@ -1,20 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { EventTimeframeTabs } from "./event-date-tabs";
 import { RenderTimeframe } from "./render-events";
+import { useSearchParams } from "next/navigation";
 
 export type Timeframe = "upcoming" | "past";
 
 export const Events = () => {
-  const [timeframe, setTimeframe] = useState<Timeframe>("upcoming");
+  const searchParams = useSearchParams();
+  const timeframe = searchParams.get("tab") ?? "";
 
-  return (
-    <div className="space-y-3 md:space-y-5">
-      <EventTimeframeTabs value={timeframe} onValueChange={setTimeframe} />
-      <RenderTimeframe timeframe={timeframe} />
-    </div>
-  );
-
-  return null;
+  return <RenderTimeframe timeframe={timeframe as Timeframe} />;
 };

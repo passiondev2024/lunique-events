@@ -1,11 +1,12 @@
+"use client";
+
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tabs } from "@radix-ui/react-tabs";
-
-export type EventDate = "upcoming" | "past";
+import { type Timeframe } from "./events";
 
 interface EventDateTabsProps {
-  value: EventDate;
-  onValueChange: (value: EventDate) => void;
+  value: Timeframe;
+  onValueChange: (value: Timeframe) => void;
 }
 
 export const EventTimeframeTabs = ({
@@ -15,7 +16,7 @@ export const EventTimeframeTabs = ({
   return (
     <Tabs
       value={value}
-      onValueChange={(value) => onValueChange(value as EventDate)}
+      onValueChange={(value) => onValueChange(value as Timeframe)}
     >
       <TabsList>
         <TabsTrigger value="upcoming" className="w-24">
