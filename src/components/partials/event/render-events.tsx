@@ -16,10 +16,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { api } from "@/trpc/react";
 import { type Timeframe } from "./events";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type RenderTimeframeProps = {
   timeframe: Timeframe;
@@ -94,23 +95,17 @@ const EventDate = ({ date }: { date: Date }) => (
 interface EventCardProps {
   event: RouterOutputs["event"]["list"][number];
 }
-type TargetClick = "eventPage" | "manageEventPage";
 
 export const EventCard = ({ event }: EventCardProps) => {
   const { images, name, location } = event;
+
   const router = useRouter();
 
-  const handleClick = (dest: TargetClick) => {
-    if (dest === "eventPage") {
-      router.push(paths.events.event(event.id));
-    }
-    if (dest === "manageEventPage") {
-      router.push(paths.events.overview(event.id));
-    }
-  };
-
   return (
-    <Card className="flex flex-col-reverse rounded-lg md:flex-row ">
+    <Card
+      onClick={() => router.push(paths.event.root(event.id))}
+      className="flex flex-col-reverse rounded-lg md:flex-row "
+    >
       <CardHeader className="flex flex-1 flex-col justify-around gap-3 py-3">
         <CardDescription className="hidden md:block">
           {/* TODO: add real time */}
@@ -130,15 +125,18 @@ export const EventCard = ({ event }: EventCardProps) => {
             No Guests
           </p>
         </div>
-        <Button
-          variant="default"
-          size="sm"
-          onClick={() => handleClick("manageEventPage")}
-          className="md:w-44"
+        <Link
+          href={paths.events.overview(event.id)}
+          className={buttonVariants({
+            size: "sm",
+            variant: "default",
+            className: "md:w-44",
+          })}
+          onClick={(e) => e.stopPropagation()}
         >
           <p>Manage Event</p>
           <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-        </Button>
+        </Link>
       </CardHeader>
       {images[0] && (
         <CardContent className="p-3 pb-0 md:p-5">

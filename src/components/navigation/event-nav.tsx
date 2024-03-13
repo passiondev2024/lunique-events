@@ -13,10 +13,9 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { useRouter } from "next/navigation";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export const EventNav = ({ id }: { id: string }) => {
   const items = [
@@ -58,11 +57,6 @@ export const EventNav = ({ id }: { id: string }) => {
   ];
 
   const pathname = usePathname();
-  const router = useRouter();
-
-  const onValueChange = (href: string) => {
-    router.push(href, { scroll: false });
-  };
 
   return (
     <div className="space-y-3">
@@ -80,20 +74,23 @@ export const EventNav = ({ id }: { id: string }) => {
           Event Page <ChevronRightCircle className="ml-1.5 h-4 w-4" />
         </Link>
       </div>
-      <Tabs className="flex" onValueChange={onValueChange} value={pathname}>
-        <TabsList className="justify-start gap-5 overflow-x-auto overflow-y-hidden rounded-none bg-transparent px-3 text-muted-foreground md:overflow-hidden md:px-0">
+      <div className="flex">
+        <ul className="flex justify-start gap-5 overflow-x-auto overflow-y-hidden rounded-none bg-transparent px-3 text-muted-foreground md:overflow-hidden md:px-0">
           {items.map((item) => (
-            <TabsTrigger
-              key={item.title}
-              value={item.href}
-              className="rounded-none border-b-4 border-transparent px-0 py-2 shadow-none transition duration-300 hover:text-primary/90 data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none"
-            >
-              <item.Icon className="mr-1.5 h-4 w-4" />
-              {item.title}
-            </TabsTrigger>
+            <Link key={item.title} href={item.href}>
+              <li
+                className={cn(
+                  "flex items-center rounded-none border-b-2 border-transparent py-2 text-sm font-medium transition duration-300 hover:text-primary/90",
+                  pathname === item.href && "border-primary text-primary",
+                )}
+              >
+                <item.Icon className="mr-1.5 h-4 w-4" />
+                {item.title}
+              </li>
+            </Link>
           ))}
-        </TabsList>
-      </Tabs>
+        </ul>
+      </div>
     </div>
   );
 };

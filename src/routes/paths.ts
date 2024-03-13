@@ -15,6 +15,9 @@ export const paths = {
     photos: (id: string) => `/events/${id}/photos`,
     settings: (id: string) => `/events/${id}/settings`,
   },
+  event: {
+    root: (id: string) => `/${id}`,
+  },
   account: {
     root: "/account",
     settings: "/account/settings",
