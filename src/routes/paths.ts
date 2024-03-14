@@ -6,6 +6,7 @@ export const paths = {
   events: {
     root: "/events",
     error: "/error",
+    create: "/events/create",
     event: (id: string) => `/events/${id}`,
     overview: (id: string) => `/events/${id}/overview`,
     guests: (id: string) => `/events/${id}/guests`,

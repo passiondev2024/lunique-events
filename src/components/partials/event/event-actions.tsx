@@ -3,10 +3,11 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { EventTimeframeTabs } from "./event-date-tabs";
 import { type Timeframe } from "./events";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { useEffect } from "react";
 import { PlusCircleIcon } from "lucide-react";
-import { useModal } from "@/hooks/use-modal-store";
+import Link from "next/link";
+import { paths } from "@/routes/paths";
 
 const timeframes: Timeframe[] = ["upcoming", "past"];
 
@@ -15,8 +16,6 @@ export const EventActions = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const timeframe = searchParams.get("tab");
-
-  const { onOpen } = useModal();
 
   useEffect(() => {
     if (timeframe && timeframes.includes(timeframe as Timeframe)) return;
@@ -39,9 +38,12 @@ export const EventActions = () => {
       </h1>
 
       <div className="flex flex-row-reverse justify-between gap-3 md:flex-row">
-        <Button variant="ghost" onClick={() => onOpen("create-event")}>
+        <Link
+          href={paths.events.create}
+          className={buttonVariants({ variant: "ghost" })}
+        >
           Create Event <PlusCircleIcon className="ml-1.5 h-4 w-4" />
-        </Button>
+        </Link>
         <EventTimeframeTabs
           value={timeframe as Timeframe}
           onValueChange={onValueChange}

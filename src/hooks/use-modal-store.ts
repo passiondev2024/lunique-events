@@ -8,7 +8,8 @@ export type ModalType =
   | "upload-event-images"
   | "delete-event-images"
   | "delete-event"
-  | "cancel-subscription";
+  | "cancel-subscription"
+  | "choose-event-thumbnail";
 
 export type ModalData = {
   eventId?: string;
