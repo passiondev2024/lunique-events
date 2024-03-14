@@ -11,7 +11,7 @@ export default function EventIdLayout({
 }: SettingsLayoutProps) {
   return (
     <>
-      <div className="sticky top-0 border-b bg-background">
+      <div className="sticky top-0 z-50 border-b bg-background">
         <div className="mx-auto max-w-4xl pt-3">
           <EventNav id={eventId} />
         </div>
