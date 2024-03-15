@@ -1,6 +1,20 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CheckCheckIcon, RotateCwIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+import { useModal } from "@/hooks/use-modal-store";
+import { paths } from "@/routes/paths";
+import { api } from "@/trpc/react";
+import {
+  type CreateEventFields,
+  createEventSchema,
+} from "@/validation/create-event";
+
+import { Button } from "../ui/button";
+import { DatePicker } from "../ui/date-picker";
 import {
   Form,
   FormControl,
@@ -10,20 +24,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { DatePicker } from "../ui/date-picker";
-import { CheckCheckIcon, RotateCwIcon } from "lucide-react";
 import { useToast } from "../ui/use-toast";
-import { useModal } from "@/hooks/use-modal-store";
-import { api } from "@/trpc/react";
-import { useRouter } from "next/navigation";
-import { paths } from "@/routes/paths";
-import {
-  createEventSchema,
-  type CreateEventFields,
-} from "@/validation/create-event";
 
 export const CreateEventForm = () => {
   const form = useForm<CreateEventFields>({
@@ -120,9 +122,9 @@ export const CreateEventForm = () => {
         />
         <Button className="w-full" disabled={mutation.isLoading}>
           {mutation.isLoading && (
-            <RotateCwIcon className="mr-1.5 h-4 w-4 animate-spin" />
+            <RotateCwIcon className="mr-1.5 size-4 animate-spin" />
           )}
-          {!mutation.isLoading && <CheckCheckIcon className="mr-1.5 h-4 w-4" />}
+          {!mutation.isLoading && <CheckCheckIcon className="mr-1.5 size-4" />}
           Create Event
         </Button>
       </form>

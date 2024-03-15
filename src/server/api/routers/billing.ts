@@ -1,3 +1,11 @@
+import {
+  cancelSubscription,
+  createCheckout,
+} from "@lemonsqueezy/lemonsqueezy.js";
+import { type PrismaClient } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+
 import { env } from "@/env.mjs";
 import {
   createTRPCRouter,
@@ -6,13 +14,6 @@ import {
 } from "@/server/api/trpc";
 import { configureLemonSqueezy } from "@/server/billing/lemon-squeeze";
 import { syncPlans } from "@/server/billing/sync";
-import {
-  cancelSubscription,
-  createCheckout,
-} from "@lemonsqueezy/lemonsqueezy.js";
-import { type PrismaClient } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 
 const PROFESSIONAL_PLAN_ID = 281950 as const;
 const PERSONAL_PLAN_ID = 281951 as const;

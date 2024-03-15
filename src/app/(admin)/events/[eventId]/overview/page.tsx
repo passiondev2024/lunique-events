@@ -1,11 +1,11 @@
 import { ActionButtons } from "./_components/action-buttons";
-import { EventPagePreview } from "./_components/event-page-preview";
-import { SocialButtons } from "./_components/social-buttons";
-import { EventDetails } from "./_components/event-details";
 import { CheckInButton } from "./_components/check-in-button";
 import { EditButtons } from "./_components/edit-buttons";
-import { InviteInsights } from "./_components/invite-insights";
+import { EventDetails } from "./_components/event-details";
+import { EventPagePreview } from "./_components/event-page-preview";
 import { GuestList } from "./_components/guest-list";
+import { InviteInsights } from "./_components/invite-insights";
+import { SocialButtons } from "./_components/social-buttons";
 
 export default function EventOverviewPage({} // params: { eventId },
 : {

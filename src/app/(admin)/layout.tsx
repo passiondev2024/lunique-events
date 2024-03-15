@@ -1,7 +1,8 @@
+import { redirect } from "next/navigation";
+
 import { DashboardNav } from "@/components/navigation/dashboard-nav";
 import { paths } from "@/routes/paths";
 import { getServerAuthSession } from "@/server/auth";
-import { redirect } from "next/navigation";
 
 export default async function RootLayout({
   children,

@@ -1,10 +1,12 @@
-import { EditEventGallery } from "@/components/partials/event/edit-event-gallery";
-import { EventActionButtons } from "@/components/partials/event/event-action-buttons";
-import { NoEventImages } from "@/components/partials/event/no-event-images";
+import { redirect } from "next/navigation";
+
 import { paths } from "@/routes/paths";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
-import { redirect } from "next/navigation";
+
+import { EditEventGallery } from "./_components/edit-event-gallery";
+import { EventActionButtons } from "./_components/event-action-buttons";
+import { NoEventImages } from "./_components/no-event-images";
 
 // TODO:
 // - replace root with redirect to overview

@@ -4,11 +4,11 @@ import {
   ChevronRightIcon,
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
-
-import { cn } from "@/lib/utils";
-import { type ButtonProps, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
 import { ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
+import Link from "next/link";
+
+import { type ButtonProps, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -75,7 +75,7 @@ const PaginationPrevious = ({
     className={cn(className)}
     {...props}
   >
-    <ChevronLeftIcon className="h-4 w-4" />
+    <ChevronLeftIcon className="size-4" />
   </PaginationLink>
 );
 PaginationPrevious.displayName = "PaginationPrevious";
@@ -90,7 +90,7 @@ const PaginationNext = ({
     className={cn(className)}
     {...props}
   >
-    <ChevronRightIcon className="h-4 w-4" />
+    <ChevronRightIcon className="size-4" />
   </PaginationLink>
 );
 PaginationNext.displayName = "PaginationNext";
@@ -105,7 +105,7 @@ const PaginationStart = ({
     className={cn(className)}
     {...props}
   >
-    <ChevronsLeftIcon className="h-4 w-4" />
+    <ChevronsLeftIcon className="size-4" />
   </PaginationLink>
 );
 PaginationNext.displayName = "PaginationStart";
@@ -120,7 +120,7 @@ const PaginationEnd = ({
     className={cn(className)}
     {...props}
   >
-    <ChevronsRightIcon className="h-4 w-4" />
+    <ChevronsRightIcon className="size-4" />
   </PaginationLink>
 );
 PaginationNext.displayName = "PaginationEnd";
@@ -134,7 +134,7 @@ const PaginationEllipsis = ({
     className={cn("flex h-9 w-9 items-center justify-center", className)}
     {...props}
   >
-    <DotsHorizontalIcon className="h-4 w-4" />
+    <DotsHorizontalIcon className="size-4" />
     <span className="sr-only">More pages</span>
   </span>
 );
@@ -143,11 +143,11 @@ PaginationEllipsis.displayName = "PaginationEllipsis";
 export {
   Pagination,
   PaginationContent,
-  PaginationLink,
-  PaginationItem,
-  PaginationStart,
-  PaginationEnd,
-  PaginationPrevious,
-  PaginationNext,
   PaginationEllipsis,
+  PaginationEnd,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationStart,
 };

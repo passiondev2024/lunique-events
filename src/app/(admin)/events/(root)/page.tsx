@@ -1,5 +1,5 @@
-import { EventActions } from "@/components/partials/event/event-actions";
-import { Events } from "@/components/partials/event/events";
+import { EventActions } from "./_components/event-actions";
+import { Events } from "./_components/events";
 
 export default function EventsPage() {
   return (

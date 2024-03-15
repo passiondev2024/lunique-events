@@ -1,5 +1,6 @@
-import { env } from "@/env.mjs";
 import { RekognitionClient } from "@aws-sdk/client-rekognition";
+
+import { env } from "@/env.mjs";
 
 export const rekognition = new RekognitionClient({
   region: env.REGION,

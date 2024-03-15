@@ -1,7 +1,8 @@
+import { type SendVerificationRequestParams } from "next-auth/providers";
+import { Resend } from "resend";
+
 import { VerificationEmail } from "@/components/email/verification-email";
 import { env } from "@/env.mjs";
-import { Resend } from "resend";
-import { type SendVerificationRequestParams } from "next-auth/providers";
 
 const resend = new Resend(env.EMAIL_SERVER_PASSWORD);
 

@@ -1,10 +1,11 @@
 "use client";
 
-import lightLogo from "@/public/images/logo-light.webp";
-import darkLogo from "@/public/images/logo-dark.webp";
-import { useTheme } from "next-themes";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useTheme } from "next-themes";
+
+import darkLogo from "@/public/images/logo-dark.webp";
+import lightLogo from "@/public/images/logo-light.webp";
 
 export const ThemedLogoIcon = () => {
   const { resolvedTheme } = useTheme();

@@ -1,6 +1,3 @@
-import { z } from "zod";
-import { env } from "@/env.mjs";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   DeleteObjectsCommand,
   type DeleteObjectsCommandInput,
@@ -9,6 +6,10 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+
+import { env } from "@/env.mjs";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const s3Router = createTRPCRouter({
   getPresignedUrl: protectedProcedure
@@ -64,8 +65,8 @@ export const s3Router = createTRPCRouter({
         Delete: { Objects: [] },
       };
 
-      listObjectsRes.Contents?.forEach(
-        ({ Key }) => deleteOptions.Delete?.Objects?.push({ Key }),
+      listObjectsRes.Contents?.forEach(({ Key }) =>
+        deleteOptions.Delete?.Objects?.push({ Key }),
       );
 
       const deleteObjectsCommand = new DeleteObjectsCommand(deleteOptions);

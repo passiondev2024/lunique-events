@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { useToast } from "../ui/use-toast";
 import { useRouter, useSearchParams } from "next/navigation";
+
 import { paths } from "@/routes/paths";
+
+import { useToast } from "../ui/use-toast";
 
 export const AuthErrorProvider = () => {
   const router = useRouter();

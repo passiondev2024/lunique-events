@@ -1,6 +1,12 @@
 "use client";
 
+import { TrashIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import { useModal } from "@/hooks/use-modal-store";
+import { api } from "@/trpc/react";
+
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,10 +16,6 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { useToast } from "../ui/use-toast";
-import { Button } from "../ui/button";
-import { TrashIcon } from "lucide-react";
-import { api } from "@/trpc/react";
-import { useRouter } from "next/navigation";
 
 export const DeleteEventImagesModal = () => {
   const { isOpen, type, onClose, data } = useModal();
@@ -67,7 +69,7 @@ export const DeleteEventImagesModal = () => {
             className="h-fit w-full"
             onClick={handleDelete}
           >
-            <TrashIcon className="mr-1.5 h-4 w-4" /> Delete
+            <TrashIcon className="mr-1.5 size-4" /> Delete
           </Button>
           <Button
             variant="secondary"

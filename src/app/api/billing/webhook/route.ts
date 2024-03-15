@@ -1,12 +1,12 @@
 import crypto from "node:crypto";
 
+import { env } from "@/env.mjs";
+import { webhookHasMeta } from "@/lib/typeguards";
 import {
   processWebhookEvent,
   storeWebhookEvent,
 } from "@/server/billing/webhook";
-import { webhookHasMeta } from "@/lib/typeguards";
 import { db } from "@/server/db";
-import { env } from "@/env.mjs";
 
 export async function POST(request: Request) {
   const rawBody = await request.text();

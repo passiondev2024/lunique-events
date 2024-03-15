@@ -1,6 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { CopyCheckIcon, CopyIcon } from "lucide-react";
+
 import { useModal } from "@/hooks/use-modal-store";
+
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,10 +15,6 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { CopyCheckIcon, CopyIcon } from "lucide-react";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useToast } from "../ui/use-toast";
 
 export const ShareEventModal = () => {
@@ -64,8 +66,8 @@ export const ShareEventModal = () => {
             size="icon"
             variant="secondary"
           >
-            {!copied && <CopyIcon className="h-5 w-5" />}
-            {copied && !isLoading && <CopyCheckIcon className="h-5 w-5" />}
+            {!copied && <CopyIcon className="size-5" />}
+            {copied && !isLoading && <CopyCheckIcon className="size-5" />}
           </Button>
         </div>
       </DialogContent>

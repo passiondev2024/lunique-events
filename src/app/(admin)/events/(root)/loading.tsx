@@ -1,4 +1,4 @@
-import { EventsSleketon } from "@/components/skeletons/events-skeleton";
+import { EventsSleketon } from "./_components/events-skeleton";
 
 export default function Loading() {
   return (

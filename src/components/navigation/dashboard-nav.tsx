@@ -1,9 +1,12 @@
-import { getServerAuthSession } from "@/server/auth";
-import { AccountMenu } from "./account-menu";
 import Link from "next/link";
+
 import { paths } from "@/routes/paths";
-import { ThemeToggle } from "../ui/theme-toggle";
+import { getServerAuthSession } from "@/server/auth";
+
 import { ThemedLogoIcon } from "../icons/themed-logo-icon";
+import { ThemeToggle } from "../ui/theme-toggle";
+
+import { AccountMenu } from "./account-menu";
 
 export const DashboardNav = async () => {
   const session = await getServerAuthSession();

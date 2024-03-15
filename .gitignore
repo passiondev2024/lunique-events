@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# eslint
+.eslintcache
+
 # database
 /prisma/db.sqlite
 /prisma/db.sqlite-journal

@@ -1,5 +1,6 @@
-import { AccountNav } from "@/components/navigation/account-nav";
 import React from "react";
+
+import { AccountNav } from "@/components/navigation/account-nav";
 
 export default function AccountLayout({
   children,

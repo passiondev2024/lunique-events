@@ -26,7 +26,7 @@ const UserItem = (props: { src?: string; name: string; email: string }) => {
   const { name, email } = props;
   return (
     <div className="flex items-center gap-1.5 px-3 py-1.5">
-      <Avatar className="h-7 w-7">
+      <Avatar className="size-7">
         <AvatarImage />
         <AvatarFallback className="bg-muted-foreground/20">N</AvatarFallback>
       </Avatar>

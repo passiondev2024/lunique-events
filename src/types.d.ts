@@ -1,5 +1,5 @@
-import { type Event, type User } from "@prisma/client";
 import { type SVGProps } from "react";
+import { type Event, type User } from "@prisma/client";
 
 type Icon = SVGProps<SVGSVGElement>;
 

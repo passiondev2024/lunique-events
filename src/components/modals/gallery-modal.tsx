@@ -1,14 +1,15 @@
 "use client";
 
+import { useMemo } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
+
 import {
   Gallery,
   type GalleryData,
   type GalleryHandlers,
   type GalleryOptions,
-} from "../ui/gallery";
+} from "@/components/gallery";
 import { useGalleryModal } from "@/hooks/use-gallery-modal-store";
-import { useMemo } from "react";
 
 export const GalleryModal = () => {
   const { isOpen, images, currentImage, selected, onClose, toggleSelected } =

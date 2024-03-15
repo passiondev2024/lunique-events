@@ -7,7 +7,13 @@ import {
   RotateCwIcon,
   UserIcon,
 } from "lucide-react";
+import Link from "next/link";
+
+import { useSignOut } from "@/hooks/use-sign-out";
+import { paths } from "@/routes/paths";
+
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Badge } from "../ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +21,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import Link from "next/link";
-import { paths } from "@/routes/paths";
-import { useSignOut } from "@/hooks/use-sign-out";
-import { Badge } from "../ui/badge";
 
 interface AccountMenuProps {
   image?: string | null;
@@ -32,9 +34,9 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
-        <Avatar className="h-9 w-9">
-          {image && <AvatarImage src={image} className="h-9 w-9" />}
-          <AvatarFallback className="h-9 w-9">A</AvatarFallback>
+        <Avatar className="size-9">
+          {image && <AvatarImage src={image} className="size-9" />}
+          <AvatarFallback className="size-9">A</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="absolute -right-5">
@@ -45,19 +47,19 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
         <DropdownMenuSeparator />
         <Link href={paths.events.root}>
           <DropdownMenuItem>
-            <LayoutDashboardIcon className="mr-1.5 h-4 w-4" />
+            <LayoutDashboardIcon className="mr-1.5 size-4" />
             Events
           </DropdownMenuItem>
         </Link>
         <Link href={paths.account.settings}>
           <DropdownMenuItem>
-            <UserIcon className="mr-1.5 h-4 w-4" />
+            <UserIcon className="mr-1.5 size-4" />
             Account
           </DropdownMenuItem>
         </Link>
         <Link href={paths.account.billing}>
           <DropdownMenuItem>
-            <CreditCardIcon className="mr-1.5 h-4 w-4" />
+            <CreditCardIcon className="mr-1.5 size-4" />
             Billing
             <Badge className="ml-auto">Free</Badge>
           </DropdownMenuItem>
@@ -69,9 +71,9 @@ export const AccountMenu = ({ name, email, image }: AccountMenuProps) => {
             onClick={() => mutate()}
             className="flex w-full items-center"
           >
-            {!isLoading && <LogOutIcon className="mr-1.5 h-4 w-4" />}
+            {!isLoading && <LogOutIcon className="mr-1.5 size-4" />}
             {isLoading && (
-              <RotateCwIcon className="mr-1.5 h-4 w-4 animate-spin" />
+              <RotateCwIcon className="mr-1.5 size-4 animate-spin" />
             )}
             Sign out
           </button>

@@ -1,16 +1,18 @@
 "use client";
 
-import { paths } from "@/routes/paths";
 import {
   BarChart3Icon,
   ChevronRightCircle,
   CreditCardIcon,
   UserIcon,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { buttonVariants } from "../ui/button";
+import { usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
+import { paths } from "@/routes/paths";
+
+import { buttonVariants } from "../ui/button";
 
 export const AccountNav = () => {
   const items = [
@@ -43,7 +45,7 @@ export const AccountNav = () => {
           href={paths.events.root}
           className={buttonVariants({ variant: "ghost" })}
         >
-          Events <ChevronRightCircle className="ml-1.5 h-4 w-4" />
+          Events <ChevronRightCircle className="ml-1.5 size-4" />
         </Link>
       </div>
       <div className="flex">
@@ -56,7 +58,7 @@ export const AccountNav = () => {
                   pathname === item.href && "border-primary text-primary",
                 )}
               >
-                <item.Icon className="mr-1.5 h-4 w-4" />
+                <item.Icon className="mr-1.5 size-4" />
                 {item.title}
               </li>
             </Link>

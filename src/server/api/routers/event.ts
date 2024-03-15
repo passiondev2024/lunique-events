@@ -1,25 +1,25 @@
+import { DeleteObjectsCommand } from "@aws-sdk/client-s3";
+import { ImageType } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 import { z } from "zod";
 
+import { env } from "@/env.mjs";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { createEventSchema } from "@/validation/create-event";
-import { eventSettingsSchema } from "@/validation/event-settings";
-import { ImageType } from "@prisma/client";
-import { env } from "@/env.mjs";
-import { deleteS3EventFolder } from "@/server/aws/s3-utils";
 import {
   createCollection,
   deleteCollection,
   findImages,
   indexImage,
 } from "@/server/aws/rekognition-utils";
-import { TRPCError } from "@trpc/server";
-import { DeleteObjectsCommand } from "@aws-sdk/client-s3";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+import { deleteS3EventFolder } from "@/server/aws/s3-utils";
+import { createEventSchema } from "@/validation/create-event";
+import { eventSettingsSchema } from "@/validation/event-settings";
 
 const searchRatelimit = new Ratelimit({
   redis: Redis.fromEnv(),

@@ -1,5 +1,6 @@
-import { env } from "@/env.mjs";
 import { S3 } from "@aws-sdk/client-s3";
+
+import { env } from "@/env.mjs";
 
 export const s3 = new S3({
   region: env.REGION,

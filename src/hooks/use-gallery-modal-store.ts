@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { type Image } from "@prisma/client";
+import { create } from "zustand";
 
 type GalleryData = {
   images: Image[];

@@ -1,5 +1,6 @@
-import { CalendarIcon } from "@/components/icons/calendar-icon";
 import { MapPinIcon } from "lucide-react";
+
+import { CalendarIcon } from "@/components/icons/calendar-icon";
 
 export const EventDetails = () => {
   return (
@@ -17,7 +18,7 @@ export const EventDetails = () => {
       </div>
       <div className="flex items-center gap-3">
         <div className="rounded-md border border-muted-foreground/20 p-[11px]">
-          <MapPinIcon className="h-5 w-5" />
+          <MapPinIcon className="size-5" />
         </div>
         <div className="flex flex-col">
           <p className="text-lg font-medium leading-5">Belgrade</p>

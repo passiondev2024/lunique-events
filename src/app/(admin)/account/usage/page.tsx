@@ -1,4 +1,4 @@
-import { UsageCard } from "@/components/cards/usage-card";
+import { UsageCard } from "./_components/usage-card";
 
 export default function UsagePage() {
   return (

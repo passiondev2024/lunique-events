@@ -1,14 +1,15 @@
-import { env } from "@/env.mjs";
 import {
   CreateCollectionCommand,
   DeleteCollectionCommand,
   IndexFacesCommand,
   ListFacesCommand,
-  SearchFacesByImageCommand,
   type RekognitionClient,
+  SearchFacesByImageCommand,
 } from "@aws-sdk/client-rekognition";
 import { type PrismaClient } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+
+import { env } from "@/env.mjs";
 
 export const createCollection = async (
   client: RekognitionClient,

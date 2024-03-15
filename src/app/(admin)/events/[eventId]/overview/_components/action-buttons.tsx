@@ -41,7 +41,7 @@ const ActionButton = (props: {
       className="flex min-w-fit items-center gap-3 rounded-md bg-muted p-1.5 pr-16 text-sm font-medium"
     >
       <div className="h-full rounded-md bg-muted-foreground/10 p-1.5">
-        <Icon className="h-6 w-6" />
+        <Icon className="size-6" />
       </div>
       {title}
     </button>

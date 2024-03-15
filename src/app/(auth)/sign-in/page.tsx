@@ -1,5 +1,6 @@
-import { EmailSignInForm } from "@/components/auth/email-sign-in";
-import { SocialSignInForm } from "@/components/auth/social-sign-in";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
 import {
   Card,
   CardDescription,
@@ -9,8 +10,9 @@ import {
 } from "@/components/ui/card";
 import { paths } from "@/routes/paths";
 import { getServerAuthSession } from "@/server/auth";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+
+import { EmailSignInForm } from "./_components/email-sign-in";
+import { SocialSignInForm } from "./_components/social-sign-in";
 
 export default async function SignIn() {
   const session = await getServerAuthSession();
@@ -31,9 +33,9 @@ export default async function SignIn() {
           <div className="space-y-5 px-5 md:px-10">
             <EmailSignInForm />
             <div className="flex items-center gap-1.5">
-              <div className="h-[1px] flex-1 bg-border" />
+              <div className="h-px flex-1 bg-border" />
               <span className="text-sm text-zinc-400">OR CONTINUE WITH</span>
-              <div className="h-[1px] flex-1 bg-border" />
+              <div className="h-px flex-1 bg-border" />
             </div>
             <SocialSignInForm />
           </div>

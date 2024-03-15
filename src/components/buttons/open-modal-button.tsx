@@ -1,11 +1,12 @@
 "use client";
 
-import { Button, type ButtonProps } from "../ui/button";
 import {
   type ModalData,
   type ModalType,
   useModal,
 } from "@/hooks/use-modal-store";
+
+import { Button, type ButtonProps } from "../ui/button";
 
 interface OpenModalButtonProps extends ButtonProps {
   modalType: ModalType;

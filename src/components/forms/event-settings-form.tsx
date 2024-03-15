@@ -1,20 +1,22 @@
 "use client";
 
-import { type EventSettings } from "@prisma/client";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { type EventSettings } from "@prisma/client";
+import { RotateCwIcon, SaveIcon } from "lucide-react";
+
+import { api } from "@/trpc/react";
 import {
   type EventSettingsFields,
   eventSettingsSchema,
 } from "@/validation/event-settings";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Switch } from "../ui/switch";
+
 import { Badge } from "../ui/badge";
-import { useEffect } from "react";
 import { Button } from "../ui/button";
-import { api } from "@/trpc/react";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Switch } from "../ui/switch";
 import { useToast } from "../ui/use-toast";
-import { RotateCwIcon, SaveIcon } from "lucide-react";
 
 interface EventSettingsFormProps {
   settings: EventSettings;
@@ -107,9 +109,9 @@ export const EventSettingsForm = ({ settings }: EventSettingsFormProps) => {
           )}
         />
         <Button disabled={!form.formState.isDirty || mutation.isLoading}>
-          {!mutation.isLoading && <SaveIcon className="mr-1.5 h-5 w-5" />}
+          {!mutation.isLoading && <SaveIcon className="mr-1.5 size-5" />}
           {mutation.isLoading && (
-            <RotateCwIcon className="mr-1.5 h-5 w-5 animate-spin" />
+            <RotateCwIcon className="mr-1.5 size-5 animate-spin" />
           )}
           Save
         </Button>

@@ -1,5 +1,6 @@
-import { env } from "@/env.mjs";
 import { lemonSqueezySetup } from "@lemonsqueezy/lemonsqueezy.js";
+
+import { env } from "@/env.mjs";
 
 export const configureLemonSqueezy = () => {
   lemonSqueezySetup({

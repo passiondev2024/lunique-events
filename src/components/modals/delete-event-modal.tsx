@@ -1,6 +1,13 @@
 "use client";
 
+import { RotateCwIcon, TrashIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import { useModal } from "@/hooks/use-modal-store";
+import { paths } from "@/routes/paths";
+import { api } from "@/trpc/react";
+
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,11 +17,6 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { useToast } from "../ui/use-toast";
-import { Button } from "../ui/button";
-import { RotateCwIcon, TrashIcon } from "lucide-react";
-import { api } from "@/trpc/react";
-import { useRouter } from "next/navigation";
-import { paths } from "@/routes/paths";
 
 export const DeleteEventModal = () => {
   const { isOpen, type, onClose, data } = useModal();
@@ -68,9 +70,9 @@ export const DeleteEventModal = () => {
             className="h-fit w-full"
             onClick={handleDelete}
           >
-            {!isDeletingEvent && <TrashIcon className="mr-1.5 h-4 w-4" />}
+            {!isDeletingEvent && <TrashIcon className="mr-1.5 size-4" />}
             {isDeletingEvent && (
-              <RotateCwIcon className="mr-1.5 h-4 w-4 animate-spin" />
+              <RotateCwIcon className="mr-1.5 size-4 animate-spin" />
             )}
             Delete
           </Button>

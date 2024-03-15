@@ -1,5 +1,5 @@
-import { ThemeToggle } from "../ui/theme-toggle";
 import { ThemedLogoIcon } from "../icons/themed-logo-icon";
+import { ThemeToggle } from "../ui/theme-toggle";
 
 export const ClientNav = () => {
   return (

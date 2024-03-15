@@ -1,4 +1,4 @@
-import { EventSettingsSkeleton } from "@/components/skeletons/event-settings-skeleton";
+import { EventSettingsSkeleton } from "./_components/event-settings-skeleton";
 
 export default function Loading() {
   return <EventSettingsSkeleton />;

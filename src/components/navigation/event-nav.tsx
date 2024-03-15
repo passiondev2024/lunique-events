@@ -1,6 +1,5 @@
 "use client";
 
-import { paths } from "@/routes/paths";
 import {
   BarChart3Icon,
   ChevronLeft,
@@ -12,10 +11,13 @@ import {
   SettingsIcon,
   UsersIcon,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { buttonVariants } from "../ui/button";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
+import { paths } from "@/routes/paths";
+
+import { buttonVariants } from "../ui/button";
 
 export const EventNav = ({ id }: { id: string }) => {
   const items = [
@@ -70,7 +72,7 @@ export const EventNav = ({ id }: { id: string }) => {
           </Link>
         </div>
         <Link href={`/${id}`} className={buttonVariants({ variant: "ghost" })}>
-          Event Page <ChevronRightCircle className="ml-1.5 h-4 w-4" />
+          Event Page <ChevronRightCircle className="ml-1.5 size-4" />
         </Link>
       </div>
       <div className="flex">
@@ -83,7 +85,7 @@ export const EventNav = ({ id }: { id: string }) => {
                   pathname === item.href && "border-primary text-primary",
                 )}
               >
-                <item.Icon className="mr-1.5 h-4 w-4" />
+                <item.Icon className="mr-1.5 size-4" />
                 {item.title}
               </li>
             </Link>

@@ -1,6 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { type Event } from "@prisma/client";
+import { RotateCwIcon, SaveIcon } from "lucide-react";
+import * as z from "zod";
+
+import { api } from "@/trpc/react";
+
+import { Button } from "../ui/button";
+import { DatePicker } from "../ui/date-picker";
 import {
   Form,
   FormControl,
@@ -10,16 +20,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { DatePicker } from "../ui/date-picker";
-import { RotateCwIcon, SaveIcon } from "lucide-react";
 import { useToast } from "../ui/use-toast";
-import { useEffect } from "react";
-import { type Event } from "@prisma/client";
-import { api } from "@/trpc/react";
 
 const formSchema = z.object({
   name: z
@@ -129,9 +131,9 @@ export const EditEventForm = ({ event }: EditEventFormProps) => {
           )}
         />
         <Button disabled={!form.formState.isDirty || mutation.isLoading}>
-          {!mutation.isLoading && <SaveIcon className="mr-1.5 h-5 w-5" />}
+          {!mutation.isLoading && <SaveIcon className="mr-1.5 size-5" />}
           {mutation.isLoading && (
-            <RotateCwIcon className="mr-1.5 h-5 w-5 animate-spin" />
+            <RotateCwIcon className="mr-1.5 size-5 animate-spin" />
           )}
           Save
         </Button>

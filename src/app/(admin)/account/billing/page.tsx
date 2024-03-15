@@ -1,6 +1,7 @@
-import { BillingPlanCard } from "@/components/cards/billing-plan-card";
-import { LicenseCodeCard } from "@/components/cards/license-code-card";
 import { api } from "@/trpc/server";
+
+import { BillingPlanCard } from "./_components/billing-plan-card";
+import { LicenseCodeCard } from "./_components/license-code-card";
 
 export default async function UsagePage() {
   const subscription = await api.billing.getSubscription.query();

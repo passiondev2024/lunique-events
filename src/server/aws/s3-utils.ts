@@ -1,11 +1,12 @@
-import { env } from "@/env.mjs";
 import {
-  type DeleteObjectsCommandInput,
-  type S3,
   DeleteObjectsCommand,
+  type DeleteObjectsCommandInput,
   ListObjectsV2Command,
+  type S3,
 } from "@aws-sdk/client-s3";
 import { TRPCError } from "@trpc/server";
+
+import { env } from "@/env.mjs";
 
 export const deleteS3EventFolder = async (
   s3: S3,
@@ -36,8 +37,8 @@ export const deleteS3EventFolder = async (
     Delete: { Objects: [] },
   };
 
-  listObjectsRes.Contents?.forEach(
-    ({ Key }) => deleteOptions.Delete?.Objects?.push({ Key }),
+  listObjectsRes.Contents?.forEach(({ Key }) =>
+    deleteOptions.Delete?.Objects?.push({ Key }),
   );
 
   const deleteObjectsCommand = new DeleteObjectsCommand(deleteOptions);

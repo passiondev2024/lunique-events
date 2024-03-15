@@ -12,9 +12,9 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { getServerAuthSession } from "@/server/auth";
+import { rekognition } from "@/server/aws/rekognition";
+import { s3 } from "@/server/aws/s3";
 import { db } from "@/server/db";
-import {s3} from "@/server/aws/s3"
-import {rekognition} from "@/server/aws/rekognition"
 
 /**
  * 1. CONTEXT

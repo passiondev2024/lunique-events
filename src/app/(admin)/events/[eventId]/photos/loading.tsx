@@ -1,4 +1,4 @@
-import { EventImagesSkeleton } from "@/components/skeletons/event-images-skeleton";
+import { EventImagesSkeleton } from "./_components/event-images-skeleton";
 
 export default function Loading() {
   return <EventImagesSkeleton />;

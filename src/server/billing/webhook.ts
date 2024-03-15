@@ -3,14 +3,16 @@ import {
   getPrice,
   listWebhooks,
 } from "@lemonsqueezy/lemonsqueezy.js";
-import { configureLemonSqueezy } from "./lemon-squeeze";
-import { env } from "@/env.mjs";
 import {
   type BillingWebhookEvent,
   type PrismaClient,
   type Subscription,
 } from "@prisma/client";
+
+import { env } from "@/env.mjs";
 import { webhookHasData, webhookHasMeta } from "@/lib/typeguards";
+
+import { configureLemonSqueezy } from "./lemon-squeeze";
 
 /**
  * This function will check if a webhook exists on Lemon Squeezy. It will return

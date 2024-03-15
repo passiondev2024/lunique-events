@@ -1,10 +1,11 @@
 import {
-  type Variant,
   getProduct,
   listPrices,
   listProducts,
+  type Variant,
 } from "@lemonsqueezy/lemonsqueezy.js";
 import { type PrismaClient } from "@prisma/client";
+
 import { configureLemonSqueezy } from "./lemon-squeeze";
 
 type PlanFeatures = {
