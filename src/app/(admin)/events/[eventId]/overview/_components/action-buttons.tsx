@@ -29,7 +29,7 @@ export const ActionButtons = () => {
   );
 };
 
-const ActionButton = (props: {
+export const ActionButton = (props: {
   title: string;
   Icon: LucideIcon;
   onClick: () => void;
