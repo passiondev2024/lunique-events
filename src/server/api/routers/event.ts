@@ -219,7 +219,7 @@ export const eventRouter = createTRPCRouter({
         key: image.key,
         eventId,
         name: image.name,
-        url: `${env.AWS_CLOUDFRONT_DOMAIN}/${image.key}`,
+        url: `${env.NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN}/${image.key}`,
         type: image.type,
       }));
 

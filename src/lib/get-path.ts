@@ -15,3 +15,10 @@ export const getSelfieImagePath = (eventId: string, fileName: string) => {
 
   return `search-by-image/${datePrefix}-${fileName}`;
 };
+
+export const getThumbnailImagePath = (fileName: string) => {
+  const date = new Date();
+  const datePrefix = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+
+  return `thumbnails/${datePrefix}-${fileName}`;
+};

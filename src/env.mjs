@@ -32,7 +32,6 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: z.string(),
     BUCKET_NAME: z.string(),
     REGION: z.string(),
-    AWS_CLOUDFRONT_DOMAIN: z.string(),
     UPSTASH_REDIS_REST_URL: z.string(),
     UPSTASH_REDIS_REST_TOKEN: z.string(),
     LEMONSQUEEZY_API_KEY: z.string(),
@@ -49,6 +48,9 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_VERCEL_URL: z.string(),
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string(),
+    NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID: z.string(),
+    NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN: z.string(),
   },
 
   /**
@@ -71,8 +73,9 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     BUCKET_NAME: process.env.BUCKET_NAME,
     REGION: process.env.REGION,
-    AWS_CLOUDFRONT_DOMAIN: process.env.AWS_CLOUDFRONT_DOMAIN,
-    UPSTASH_REDIS_REST_URL: process.env.AWS_CLOUDFRONT_DOMAIN,
+    NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN:
+      process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN,
+    UPSTASH_REDIS_REST_URL: process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
     LEMONSQUEEZY_PRODUCT_ID: process.env.LEMONSQUEEZY_PRODUCT_ID,
@@ -80,6 +83,9 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
     LEMONSQUEEZY_WEBHOOK_SECRET: process.env.LEMONSQUEEZY_WEBHOOK_SECRET,
     LEMONSQUEEZY_WEBHOOK_URL: process.env.LEMONSQUEEZY_WEBHOOK_URL,
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
+      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID: process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

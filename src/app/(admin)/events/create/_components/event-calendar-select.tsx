@@ -4,6 +4,7 @@ import { CalendarIcon } from "lucide-react";
 
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+// TODO: create calendars feature
 export function CalendarSelect() {
   return (
     <div>

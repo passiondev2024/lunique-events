@@ -65,4 +65,11 @@
     min-height: 100vh;
     min-height: 100svh;
   }
+
+    /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
