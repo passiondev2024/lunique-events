@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 
 import { ModalProvider } from "@/components/providers/modal-provider";
 import NextAuthProvider from "@/components/providers/session-provider";
@@ -9,9 +9,10 @@ import { TRPCReactProvider } from "@/trpc/react";
 
 import "@/styles/globals.css";
 
-const inter = Inter({
+const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 export const metadata = {
@@ -29,7 +30,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `font-sans ${inter.variable}`,
+          `font-sans ${roboto.variable}`,
           "bg-background antialiased",
         )}
       >

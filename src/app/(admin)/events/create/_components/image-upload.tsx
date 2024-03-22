@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import axios from "axios";
-import { ImagePlusIcon, XIcon } from "lucide-react";
+import { DownloadIcon, ImagePlusIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { getThumbnailImagePath } from "@/lib/get-path";
 import { getImageUrl } from "@/lib/get-url";
 import { cn } from "@/lib/utils";
-import thumbImage from "@/public/images/placeholder.jpg";
 import { api } from "@/trpc/react";
 
 interface ImageUploadProps {
@@ -82,7 +81,7 @@ export const ImageUpload = ({ onChange }: ImageUploadProps) => {
               src={URL.createObjectURL(file)}
               fill
               alt=""
-              className="w-full rounded-xl border border-border object-cover"
+              className="w-full rounded-md border border-border object-cover"
             />
           </AspectRatio>
           {file && (
@@ -101,26 +100,26 @@ export const ImageUpload = ({ onChange }: ImageUploadProps) => {
       {!file && (
         <div className="relative" {...getRootProps()}>
           <input {...getInputProps()} />
-          <AspectRatio ratio={1 / 1}>
-            <Image
-              src={thumbImage}
-              fill
-              alt=""
+          <AspectRatio ratio={1 / 1} className="">
+            <div
               className={cn(
-                "w-full rounded-xl border border-border object-cover",
+                "flex h-full w-full items-center justify-center rounded-md border border-border bg-muted object-cover",
                 isDragActive && "border-muted-foreground/50",
               )}
-            />
-            {!file && (
+            >
               <Button
                 type="button"
-                variant="secondary"
                 size="icon"
-                className="absolute bottom-3 right-3 rounded-full"
+                className="size-20 rounded-full bg-muted-foreground/10 hover:bg-muted-foreground/20"
               >
-                <ImagePlusIcon className="size-4" />
+                {!isDragActive && (
+                  <ImagePlusIcon className="size-8 text-muted-foreground" />
+                )}
+                {isDragActive && (
+                  <DownloadIcon className="size-8 text-muted-foreground" />
+                )}
               </Button>
-            )}
+            </div>
           </AspectRatio>
         </div>
       )}

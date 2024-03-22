@@ -86,7 +86,7 @@ export const defaultValues: EventSchema = {
   description: "",
   theme: {
     font: "Roboto",
-    theme: "slate",
+    theme: "rose",
     mode: "system",
   },
   startDateTime: {

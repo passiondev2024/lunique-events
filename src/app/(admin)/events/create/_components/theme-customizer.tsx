@@ -33,12 +33,12 @@ export const Customizer = ({ value, onChange }: CustomizerProps) => {
   const font = fonts.find((item) => item.name === value.font) ?? fonts[0];
 
   return (
-    <div className="space-y-10 md:grid md:grid-cols-4 md:place-items-start md:space-y-6">
+    <div className="space-y-10 md:space-y-20">
       <ThemeVizualizer config={value} />
-      <div className="grid grid-cols-2 grid-rows-2 gap-1.5">
+      <div className="mx-auto grid max-w-5xl grid-cols-2 grid-rows-2 gap-1.5 md:grid-cols-4 md:grid-rows-1 md:gap-3">
         <Popover>
           <PopoverTrigger className="flex w-full items-center justify-between rounded-md border border-border bg-muted/60 px-2 py-1  data-[state=open]:bg-muted">
-            <span className="flex items-center gap-3">
+            <span className="flex items-center gap-3 md:gap-5">
               <span
                 className="block size-6 rounded-full bg-white"
                 style={{
@@ -54,7 +54,7 @@ export const Customizer = ({ value, onChange }: CustomizerProps) => {
           </PopoverTrigger>
           <PopoverContent
             align="start"
-            className="grid grid-cols-6 grid-rows-2 place-items-center bg-muted p-1.5"
+            className="grid grid-cols-6 grid-rows-2 place-items-center p-1.5 md:w-fit md:grid-cols-12 md:grid-rows-1 md:gap-1.5"
           >
             {themes.map((theme) => {
               const isActive = value.theme === theme.name;
@@ -93,7 +93,7 @@ export const Customizer = ({ value, onChange }: CustomizerProps) => {
         </button>
         <Popover>
           <PopoverTrigger className="flex w-full items-center justify-between rounded-md border border-border bg-muted/60 px-2  py-1">
-            <span className="flex items-center gap-3">
+            <span className="flex items-center gap-3  md:gap-5">
               <span className={cn("block text-xl font-bold", font?.className)}>
                 Ag
               </span>
@@ -106,7 +106,7 @@ export const Customizer = ({ value, onChange }: CustomizerProps) => {
           </PopoverTrigger>
           <PopoverContent
             align="start"
-            className="grid grid-cols-3 grid-rows-2 gap-1.5 bg-muted p-1.5"
+            className="grid grid-cols-3 grid-rows-2 gap-1.5 p-1.5"
           >
             {fonts.map((font) => {
               const isActive = font.name === value.font;
@@ -136,7 +136,7 @@ export const Customizer = ({ value, onChange }: CustomizerProps) => {
         </Popover>
         <Popover>
           <PopoverTrigger className="flex w-full items-center justify-between rounded-md border border-border bg-muted/60 px-2  py-1">
-            <span className="flex items-center gap-3">
+            <span className="flex items-center gap-3  md:gap-5">
               {value.mode === "light" && <SunIcon className="mx-0.5 size-5" />}
               {value.mode === "dark" && <MoonIcon className="mx-0.5 size-5 " />}
               {value.mode === "system" && (
@@ -151,7 +151,7 @@ export const Customizer = ({ value, onChange }: CustomizerProps) => {
           </PopoverTrigger>
           <PopoverContent
             align="end"
-            className="grid w-fit grid-cols-3 grid-rows-1 gap-1.5 bg-muted p-3"
+            className="grid w-fit grid-cols-3 grid-rows-1 gap-1.5 p-3"
           >
             <Button
               variant="outline"
@@ -233,7 +233,7 @@ const ThemeVizualizer = ({ config }: { config: EventSchema["theme"] }) => {
   return (
     <ThemeWrapper
       config={config}
-      className="w-full space-y-3 rounded-md  border border-[--border] bg-[--background] px-3 py-5 text-[--card-foreground]"
+      className="mx-auto w-full space-y-3 rounded-md border  border-[--border] bg-[--background] px-3 py-5 text-[--card-foreground] md:max-w-lg"
     >
       <div>
         <h1 className="text-xl font-semibold leading-5 text-[--accent-foreground]">
@@ -243,35 +243,37 @@ const ThemeVizualizer = ({ config }: { config: EventSchema["theme"] }) => {
           Description
         </p>
       </div>
-      <div className="space-y-3">
-        <div className="flex h-full flex-col justify-center gap-1.5 rounded-md border border-[--border] bg-[--card] px-3 py-5">
-          <div className="h-3 w-44 rounded-sm bg-[--primary] opacity-70" />
-          <div className="h-3 w-32 rounded-sm bg-[--primary] opacity-65" />
-          <div className="h-3 w-36 rounded-sm bg-[--primary] opacity-75" />
-          <div className="h-3 w-28 rounded-sm bg-[--primary] opacity-60" />
-          <div className="h-3 w-48 rounded-sm bg-[--primary] opacity-80" />
+      <div className="flex flex-col gap-5 md:flex-row">
+        <div className="space-y-3">
+          <div className="flex h-full flex-col justify-center gap-1.5 rounded-md border border-[--border] bg-[--card] px-3 py-5 md:h-52">
+            <div className="h-3 w-44 rounded-sm bg-[--primary] opacity-70" />
+            <div className="h-3 w-32 rounded-sm bg-[--primary] opacity-65" />
+            <div className="h-3 w-36 rounded-sm bg-[--primary] opacity-75" />
+            <div className="h-3 w-28 rounded-sm bg-[--primary] opacity-60" />
+            <div className="h-3 w-48 rounded-sm bg-[--primary] opacity-80" />
+          </div>
         </div>
-        <p className="text-sm text-[--foreground]">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. At ratione
-          voluptates consequatur neque cupiditate nesciunt ut qui aliquam enim
-          ab perspiciatis ex, vero, similique facilis fugiat voluptate excepturi
-          illo molestiae?
-        </p>
-      </div>
-      <div className="flex flex-col justify-between">
-        <div className="flex w-full gap-1.5">
-          <Button
-            size="sm"
-            className="w-full bg-[--primary] text-[--primary-foreground] hover:bg-[--primary]"
-          >
-            Primary
-          </Button>
-          <Button
-            size="sm"
-            className="w-full  bg-[--secondary] text-[--secondary-foreground] hover:bg-[--secondary]"
-          >
-            Secondary
-          </Button>
+        <div className="flex flex-col justify-between">
+          <p className="text-sm text-[--foreground]">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. At ratione
+            voluptates consequatur neque cupiditate nesciunt ut qui aliquam enim
+            ab perspiciatis ex, vero, similique facilis fugiat voluptate
+            excepturi illo molestiae?
+          </p>
+          <div className="flex w-full gap-1.5">
+            <Button
+              size="sm"
+              className="w-full bg-[--primary] text-[--primary-foreground] hover:bg-[--primary]"
+            >
+              Primary
+            </Button>
+            <Button
+              size="sm"
+              className="w-full  bg-[--secondary] text-[--secondary-foreground] hover:bg-[--secondary]"
+            >
+              Secondary
+            </Button>
+          </div>
         </div>
       </div>
     </ThemeWrapper>

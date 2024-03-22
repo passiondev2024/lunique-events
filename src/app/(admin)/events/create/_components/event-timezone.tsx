@@ -43,7 +43,7 @@ export const EventTimezone = ({ value, onChange }: EventTimezoneProps) => {
       <PopoverTrigger asChild>
         <button
           type="button"
-          className="flex w-24 flex-col justify-between gap-1.5 rounded-md bg-muted px-3 py-1.5 data-[state=open]:bg-muted-foreground/30"
+          className="flex w-24 flex-col justify-between gap-1.5 rounded-md border bg-muted px-3 py-1.5 transition duration-200 hover:border-muted-foreground/60 hover:bg-muted-foreground/30 data-[state=open]:bg-muted-foreground/30"
         >
           <GlobeIcon className="size-5 text-muted-foreground" />
           <span className="flex flex-col items-start">
