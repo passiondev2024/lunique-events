@@ -1,28 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppWindowIcon, PenIcon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { type Theme } from "@/lib/themes";
 
 import { Customizer } from "./theme-customizer";
-import { ThemeWrapper } from "./theme-wrapper";
 import { type EventSchema } from "./validation";
+
+type Mode = "light" | "dark" | "system";
 
 export type Config = {
   theme: Theme["name"];
   font: string;
-  mode: "light" | "dark" | "system";
+  mode: Mode;
 };
 
 interface EventThemeProps {
@@ -34,9 +36,15 @@ export const EventTheme = ({ onChange }: EventThemeProps) => {
   const [open, setOpen] = useState(false);
   const [config, setConfig] = useState<Config>({
     font: "roboto",
-    theme: "zinc",
+    theme: "slate",
     mode: "dark",
   });
+
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setConfig((prev) => ({ ...prev, mode: resolvedTheme as Mode }));
+  }, [resolvedTheme]);
 
   const handleSaveTheme = () => {
     onChange(config);
@@ -44,8 +52,8 @@ export const EventTheme = ({ onChange }: EventThemeProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex w-full items-center justify-between gap-3 rounded-md border border-border bg-muted px-3 py-1.5 transition duration-300 hover:border-muted-foreground/60 hover:bg-muted-foreground/30 disabled:opacity-50 disabled:hover:border-border disabled:hover:bg-muted">
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger className="flex w-full items-center justify-between gap-3 rounded-md border border-border bg-muted px-3 py-1.5 transition duration-300 hover:border-muted-foreground/60 hover:bg-muted-foreground/30 disabled:opacity-50 disabled:hover:border-border disabled:hover:bg-muted">
         <span className="flex items-center gap-3">
           <AppWindowIcon className="size-12 text-muted-foreground" />
           <span className="flex flex-col items-start gap-0.5">
@@ -56,32 +64,23 @@ export const EventTheme = ({ onChange }: EventThemeProps) => {
           </span>
         </span>
         <PenIcon className="size-5" />
-      </DialogTrigger>
-      <DialogContent className="p-0">
-        <ThemeWrapper
-          config={config}
-          className="space-y-3 rounded-md bg-[--background] p-5 text-[--accent-foreground]"
-        >
-          <DialogHeader>
-            <DialogTitle>Customize</DialogTitle>
-            <DialogDescription>
-              Pick a style and color for your event page.
-            </DialogDescription>
-          </DialogHeader>
+      </DrawerTrigger>
+      <DrawerContent className="px-3">
+        <DrawerHeader>
+          <DrawerTitle>Customize</DrawerTitle>
+          <DrawerDescription>
+            Pick a style and color for your event page.
+          </DrawerDescription>
+        </DrawerHeader>
 
-          <Customizer value={config} onChange={setConfig} />
+        <Customizer value={config} onChange={setConfig} />
 
-          <DialogFooter>
-            <Button
-              size="lg"
-              onClick={handleSaveTheme}
-              className="w-full bg-[--primary] text-[--primary-foreground] hover:bg-[--primary] hover:opacity-90"
-            >
-              Save Theme
-            </Button>
-          </DialogFooter>
-        </ThemeWrapper>
-      </DialogContent>
-    </Dialog>
+        <DrawerFooter className="px-0">
+          <Button size="lg" onClick={handleSaveTheme} className="w-full">
+            Save Theme
+          </Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 };
