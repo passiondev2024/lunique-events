@@ -32,18 +32,34 @@ export const ActionButtons = () => {
 export const ActionButton = (props: {
   title: string;
   Icon: LucideIcon;
+  bgColor?: string;
+  iconColor?: string;
+  description?: string;
   onClick: () => void;
 }) => {
-  const { title, Icon, onClick } = props;
+  const { title, Icon, bgColor, iconColor, description, onClick } = props;
   return (
     <button
       onClick={onClick}
-      className="flex min-w-fit items-center gap-3 rounded-md bg-muted p-1.5 pr-16 text-sm font-medium"
+      className="flex min-w-fit items-center gap-3 rounded-md bg-muted/50 p-1.5 pr-16 text-sm font-medium transition-all hover:bg-muted/30"
     >
-      <div className="h-full rounded-md bg-muted-foreground/10 p-1.5">
+      <div
+        className="size-fit rounded-md bg-muted-foreground/10 p-1.5"
+        style={{
+          backgroundColor: bgColor && bgColor,
+          color: iconColor && iconColor,
+        }}
+      >
         <Icon className="size-6" />
       </div>
-      {title}
+      <div className="flex flex-col items-start">
+        <p className="text-base">{title}</p>
+        {description && (
+          <p className="text-xs font-medium text-foreground/50">
+            {description}
+          </p>
+        )}
+      </div>
     </button>
   );
 };
