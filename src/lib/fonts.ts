@@ -7,6 +7,8 @@ import {
   Roboto,
 } from "next/font/google";
 
+import { type EventSchema } from "@/app/(admin)/events/create/_components/validation";
+
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
   subsets: ["latin"],
@@ -32,7 +34,12 @@ const pottaOne = Potta_One({
   subsets: ["latin"],
 });
 
-export const fonts = [
+type Font = {
+  name: EventSchema["theme"]["font"];
+  className: string;
+};
+
+export const fonts: Font[] = [
   { name: "Roboto", className: roboto.className },
   { name: "Borel", className: averiaLibre.className },
   { name: "Limelight", className: limelight.className },

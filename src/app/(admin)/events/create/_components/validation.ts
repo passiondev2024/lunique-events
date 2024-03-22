@@ -8,9 +8,29 @@ const dateTimeSchema = z.object({
 });
 
 const themeSchema = z.object({
-  theme: z.string(),
-  font: z.string(),
-  mode: z.string(),
+  theme: z.enum([
+    "zinc",
+    "slate",
+    "stone",
+    "gray",
+    "neutral",
+    "red",
+    "rose",
+    "orange",
+    "green",
+    "blue",
+    "yellow",
+    "violet",
+  ]),
+  font: z.enum([
+    "Roboto",
+    "Borel",
+    "Limelight",
+    "Mallanna",
+    "Baumans",
+    "Potta One",
+  ]),
+  mode: z.enum(["light", "dark", "system"]),
 });
 
 const timezoneSchema = z.object({
@@ -65,9 +85,9 @@ export const defaultValues: EventSchema = {
   name: "",
   description: "",
   theme: {
-    theme: "zinc",
+    font: "Roboto",
+    theme: "slate",
     mode: "system",
-    font: "inter",
   },
   startDateTime: {
     date: date,

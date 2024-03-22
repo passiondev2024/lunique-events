@@ -1,55 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AppWindowIcon, PenIcon } from "lucide-react";
-import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { type Theme } from "@/lib/themes";
 
 import { Customizer } from "./theme-customizer";
 import { type EventSchema } from "./validation";
-
-type Mode = "light" | "dark" | "system";
-
-export type Config = {
-  theme: Theme["name"];
-  font: string;
-  mode: Mode;
-};
 
 interface EventThemeProps {
   value: EventSchema["theme"];
   onChange: (value: EventSchema["theme"]) => void;
 }
 
-export const EventTheme = ({ onChange }: EventThemeProps) => {
+export const EventTheme = ({ value, onChange }: EventThemeProps) => {
   const [open, setOpen] = useState(false);
-  const [config, setConfig] = useState<Config>({
-    font: "roboto",
-    theme: "slate",
-    mode: "dark",
-  });
-
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setConfig((prev) => ({ ...prev, mode: resolvedTheme as Mode }));
-  }, [resolvedTheme]);
-
-  const handleSaveTheme = () => {
-    onChange(config);
-    setOpen(false);
-  };
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
@@ -59,7 +31,7 @@ export const EventTheme = ({ onChange }: EventThemeProps) => {
           <span className="flex flex-col items-start gap-0.5">
             <span className="text-xs text-muted-foreground">Theme</span>
             <span className="font-medium capitalize">
-              {config.theme}, {config.font}, {config.mode}
+              {value.theme}, {value.font}, {value.mode}
             </span>
           </span>
         </span>
@@ -73,13 +45,9 @@ export const EventTheme = ({ onChange }: EventThemeProps) => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <Customizer value={config} onChange={setConfig} />
-
-        <DrawerFooter className="px-0">
-          <Button size="lg" onClick={handleSaveTheme} className="w-full">
-            Save Theme
-          </Button>
-        </DrawerFooter>
+        <div className="pb-3">
+          <Customizer value={value} onChange={onChange} />
+        </div>
       </DrawerContent>
     </Drawer>
   );

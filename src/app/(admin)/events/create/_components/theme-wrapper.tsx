@@ -1,20 +1,21 @@
 "use client";
 
+import { useTheme } from "next-themes";
+
 import { fonts } from "@/lib/fonts";
 import { type Theme, themes } from "@/lib/themes";
 import { cn } from "@/lib/utils";
 
-import { type Config } from "./event-theme";
+import { type EventSchema } from "./validation";
 
 interface ThemeWrapperProps extends React.ComponentProps<"div"> {
-  config: Config;
+  config: EventSchema["theme"];
   defaultTheme?: string;
 }
 
-const createCSSVariables = (
-  theme: Theme,
-  mode: "light" | "dark" | "system",
-) => {
+type Mode = "light" | "dark";
+
+const createCSSVariables = (theme: Theme, mode: Mode) => {
   const variables: Record<string, string> = {};
 
   // eslint-disable-next-line
@@ -46,9 +47,18 @@ export function ThemeWrapper({
       (item) => item.name.toLowerCase() === config.font.toLowerCase(),
     ) ?? fonts[0];
 
+  const { resolvedTheme } = useTheme();
+
   return (
     <div
-      style={createCSSVariables(theme, config.mode) as React.CSSProperties}
+      style={
+        createCSSVariables(
+          theme,
+          config.mode === "system"
+            ? (resolvedTheme as Mode)
+            : (config.mode as Mode),
+        ) as React.CSSProperties
+      }
       className={cn(className, font?.className)}
     >
       {children}
