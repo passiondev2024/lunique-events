@@ -57,7 +57,7 @@ export const EventLocation = ({ value, onChange }: EventLocationProps) => {
 
           <Popover.Overlay className="fixed inset-0 -top-3 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 md:hidden" />
 
-          <Popover.Content className="fixed left-1/2  top-0 z-50 w-full max-w-lg -translate-x-1/2 p-3 duration-200  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-bottom-1/2 data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-bottom-1/2 data-[state=open]:slide-in-from-left-1/2 sm:rounded-lg md:absolute md:left-0 md:top-16  md:w-full md:max-w-full md:translate-x-0 md:p-0 md:data-[state=closed]:slide-out-to-bottom-0 md:data-[state=closed]:slide-out-to-left-0 md:data-[state=open]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-left-0">
+          <Popover.Content className="fixed left-1/2 top-0 z-50  w-full max-w-lg -translate-x-1/2 p-3 shadow-lg duration-200  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-bottom-1/2 data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-bottom-1/2 data-[state=open]:slide-in-from-left-1/2 sm:rounded-lg md:absolute md:left-0 md:top-16  md:w-full md:max-w-full md:translate-x-0 md:p-0 md:data-[state=closed]:slide-out-to-bottom-0 md:data-[state=closed]:slide-out-to-left-0 md:data-[state=open]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-left-0">
             {isLoaded && (
               <PlacesAutocomplete setOpen={setOpen} onChange={onChange} />
             )}
@@ -198,7 +198,7 @@ const AutocompleteInput = ({
         disabled={disabled}
         placeholder={placeholder}
         className={cn(
-          "h-10 rounded-b-none bg-background pl-10 focus-visible:ring-0",
+          "h-10 rounded-b-none border-none bg-popover pl-10 shadow-none focus-visible:ring-0",
           className,
         )}
         value={value}
@@ -223,7 +223,7 @@ interface AutocompleteResultProps {
 }
 
 const AutocompleteResult = (props: AutocompleteResultProps) => (
-  <div className="space-y-1.5 overflow-x-auto rounded-b-md border border-t-0 bg-background p-1.5">
+  <div className="space-y-1.5 overflow-x-auto rounded-b-md bg-popover p-1.5">
     {props.children}
   </div>
 );

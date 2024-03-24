@@ -63,7 +63,7 @@ export const EventCapacity = ({ value, onChange }: EventCapacityProps) => {
           <PencilIcon className="size-4 text-muted-foreground" />
         </span>
       </DialogTrigger>
-      <DialogContent className="max-w-[350px]">
+      <DialogContent className="md:max-w-xs">
         <DialogHeader className="text-left">
           <DialogTitle>Max Capacity</DialogTitle>
           <DialogDescription>
