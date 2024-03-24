@@ -223,7 +223,7 @@ interface AutocompleteResultProps {
 }
 
 const AutocompleteResult = (props: AutocompleteResultProps) => (
-  <div className="space-y-1.5 rounded-b-md border border-t-0 bg-background p-1.5">
+  <div className="space-y-1.5 overflow-x-auto rounded-b-md border border-t-0 bg-background p-1.5">
     {props.children}
   </div>
 );

@@ -109,14 +109,13 @@ export const ImageUpload = ({ onChange }: ImageUploadProps) => {
             >
               <Button
                 type="button"
-                size="icon"
-                className="size-20 rounded-full bg-muted-foreground/10 hover:bg-muted-foreground/20"
+                className="h-fit rounded-full bg-muted-foreground/10 p-8 hover:bg-muted-foreground/20"
               >
                 {!isDragActive && (
-                  <ImagePlusIcon className="size-8 text-muted-foreground" />
+                  <ImagePlusIcon className="size-10 text-muted-foreground" />
                 )}
                 {isDragActive && (
-                  <DownloadIcon className="size-8 text-muted-foreground" />
+                  <DownloadIcon className="size-10 text-muted-foreground" />
                 )}
               </Button>
             </div>
