@@ -13,7 +13,10 @@ export type ModalType =
   | "choose-event-thumbnail"
   | "show-guest-list"
   | "check-guests"
-  | "invite-guests";
+  | "invite-guests"
+  | "confirm-registration"
+  | "group-registration"
+  | "event-capacity";
 
 export type ModalData = {
   eventId?: string;
